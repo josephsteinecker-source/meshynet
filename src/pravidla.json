@@ -1,0 +1,21 @@
+{
+  "facebook": [
+    {
+      "id": "ogilvy",
+      "nazov": "Ogilvy",
+      "url": "https://rss.app/feeds/v1.1/m0a4tfPzdLsge7aC.json"
+    },
+    {
+      "id": "tesco",
+      "nazov": "Tesco SK",
+      "url": "https://rss.app/feeds/v1.1/tH6OCCLJHUR6jayS.json"
+    },
+    {
+      "id": "fender",
+      "nazov": "Fender com",
+      "url": "https://rss.app/feeds/v1.1/R7pEPI8YwGjUgyhw.json"
+    }
+  ],
+  "instagram": [],
+  "youtube": []
+}

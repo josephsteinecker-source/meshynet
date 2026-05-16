@@ -1,0 +1,2119 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MeshyNet — Všetky tvoje obľúbené profily na jednom mieste</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,600;1,9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #000000;
+    --bg-soft: #0a0a0a;
+    --fg: #ffffff;
+    --muted: rgba(255,255,255,0.55);
+    --line: rgba(255,255,255,0.10);
+    --grad-start: #4061ad;
+    --grad-mid: #6059a7;
+    --grad-end: #2fbebe;
+    --accent: #2fbebe;
+    --fb: #1877f2;
+    --ig-1: #f09433;
+    --ig-2: #e6683c;
+    --ig-3: #dc2743;
+    --ig-4: #cc2366;
+    --ig-5: #bc1888;
+    --yt: #ff0033;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Manrope', -apple-system, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .display {
+    font-family: 'Fraunces', Georgia, serif;
+    font-optical-sizing: auto;
+    font-variation-settings: "opsz" 144, "SOFT" 50;
+    letter-spacing: -0.02em;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ===== NAV ===== */
+  nav.top {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 40px;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 32px;
+  }
+  .logo svg {
+    height: 36px;
+    width: auto;
+  }
+  .logo .st3 { fill: #ffffff !important; }
+
+  nav .nav-links {
+    display: flex;
+    gap: 38px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  nav .nav-links a {
+    color: rgba(255,255,255,0.85);
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  nav .nav-links a:hover { color: var(--fg); }
+  nav .nav-links a svg { opacity: 0.6; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 22px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    border: none;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: linear-gradient(110deg, var(--grad-start) 0%, var(--grad-mid) 45%, var(--grad-end) 100%);
+    color: #fff;
+    box-shadow: 0 6px 24px rgba(47, 190, 190, 0.25);
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.08);
+    box-shadow: 0 10px 32px rgba(47, 190, 190, 0.4);
+  }
+  .btn-ghost {
+    background: rgba(255,255,255,0.06);
+    color: var(--fg);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .btn-ghost:hover {
+    background: rgba(255,255,255,0.10);
+    transform: translateY(-1px);
+  }
+  .btn-lg {
+    padding: 16px 30px;
+    font-size: 16px;
+  }
+
+  /* ===== LANG SWITCHER ===== */
+  .lang-switcher {
+    position: relative;
+  }
+  .lang-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 12px;
+    background: transparent;
+    color: rgba(255,255,255,0.85);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .lang-toggle:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.2);
+  }
+  .lang-toggle svg {
+    width: 11px;
+    height: 11px;
+    transition: transform 0.2s;
+    opacity: 0.6;
+  }
+  .lang-menu.open + .lang-toggle svg,
+  .lang-toggle.open svg {
+    transform: rotate(180deg);
+  }
+  .lang-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: rgba(15,15,15,0.97);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    min-width: 200px;
+    max-height: 360px;
+    overflow-y: auto;
+    padding: 6px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: opacity 0.18s, transform 0.18s;
+  }
+  .lang-menu::-webkit-scrollbar { width: 8px; }
+  .lang-menu::-webkit-scrollbar-track { background: transparent; }
+  .lang-menu::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+  .lang-menu::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+  .lang-menu.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .lang-menu a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+    transition: background 0.15s;
+  }
+  .lang-menu a:hover { background: rgba(255,255,255,0.07); color: var(--fg); }
+  .lang-menu a.active { background: rgba(47,190,190,0.12); color: var(--accent); }
+  .lang-menu a .code {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    padding: 180px 40px 100px;
+    text-align: center;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(47,190,190,0.18) 0%, rgba(64,97,173,0.08) 35%, transparent 70%);
+    filter: blur(60px);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  h1.hero-title {
+    font-size: clamp(48px, 9vw, 132px);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    margin-bottom: 28px;
+    animation: fadeUp 0.9s ease-out;
+  }
+  h1.hero-title .accent {
+    font-style: italic;
+    font-weight: 600;
+    background: linear-gradient(110deg, var(--grad-start), var(--grad-end));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-right: 0.05em;
+  }
+
+  .hero-sub {
+    font-size: clamp(15px, 1.3vw, 18px);
+    color: var(--muted);
+    max-width: 640px;
+    margin: 0 auto 36px;
+    line-height: 1.55;
+    animation: fadeUp 0.9s ease-out 0.15s both;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.9s ease-out 0.3s both;
+  }
+
+  .hero-note {
+    margin-top: 22px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    animation: fadeUp 0.9s ease-out 0.45s both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== FEED TILES ===== */
+  .tiles {
+    position: relative;
+    padding: 40px 24px 140px;
+    overflow: hidden;
+  }
+
+  .tiles-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: nowrap;
+    max-width: 1500px;
+    margin: 0 auto;
+    perspective: 1200px;
+  }
+
+  .tile {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #111;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    flex-shrink: 0;
+    animation: tileIn 1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  .tile:hover { transform: translateY(-6px) scale(1.02) !important; }
+
+  @keyframes tileIn {
+    from { opacity: 0; transform: translateY(40px) scale(0.92); }
+    to { opacity: 1; }
+  }
+
+  .tile-1 { width: 160px; height: 200px; transform: rotate(-4deg); animation-delay: 0.5s;
+            box-shadow: 0 0 0 2px rgba(220, 39, 67, 0.7), 0 20px 50px -10px rgba(220, 39, 67, 0.3); }
+  .tile-2 { width: 230px; height: 290px; transform: rotate(2deg); animation-delay: 0.6s;
+            box-shadow: 0 0 0 2px rgba(255, 0, 51, 0.7), 0 20px 50px -10px rgba(255, 0, 51, 0.3); }
+  .tile-3 { width: 380px; height: 420px; transform: rotate(-1deg); animation-delay: 0.7s; z-index: 2;
+            box-shadow: 0 0 0 2px rgba(47, 190, 190, 0.8), 0 30px 80px -10px rgba(47, 190, 190, 0.45); }
+  .tile-4 { width: 230px; height: 290px; transform: rotate(3deg); animation-delay: 0.8s;
+            box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.7), 0 20px 50px -10px rgba(24, 119, 242, 0.3); }
+  .tile-5 { width: 160px; height: 200px; transform: rotate(-3deg); animation-delay: 0.9s;
+            box-shadow: 0 0 0 2px rgba(228, 100, 60, 0.7), 0 20px 50px -10px rgba(228, 100, 60, 0.3); }
+
+  /* Tile photo backgrounds — gradient-based "social post" mockups */
+  .photo {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .photo-ig {
+    background:
+      radial-gradient(circle at 30% 20%, #ffd200 0%, transparent 35%),
+      radial-gradient(circle at 80% 30%, #f09433 0%, transparent 45%),
+      radial-gradient(circle at 70% 80%, #dc2743 0%, transparent 50%),
+      radial-gradient(circle at 20% 90%, #bc1888 0%, transparent 50%),
+      linear-gradient(135deg, #833ab4, #fd1d1d);
+  }
+  .photo-yt {
+    background:
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+      linear-gradient(160deg, #1a1a1a 0%, #2d0a0a 60%, #5a0010 100%);
+  }
+  .photo-fb {
+    background:
+      radial-gradient(circle at 20% 30%, #6ba8ff 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, #1877f2 0%, transparent 60%),
+      linear-gradient(135deg, #0c3d8a, #1877f2);
+  }
+  .photo-ig2 {
+    background:
+      radial-gradient(circle at 40% 30%, #fff 0%, transparent 30%),
+      radial-gradient(circle at 70% 60%, #fdb6c9 0%, transparent 50%),
+      linear-gradient(160deg, #ff6b9d, #c44569 70%, #6a1b3a);
+  }
+  .photo-fb2 {
+    background:
+      radial-gradient(circle at 50% 40%, #8ec5ff 0%, transparent 50%),
+      linear-gradient(135deg, #4a5568 0%, #1a365d 100%);
+  }
+
+  /* Platform badge in corner */
+  .platform-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .platform-badge svg { width: 14px; height: 14px; fill: #fff; }
+
+  /* YouTube play overlay */
+  .play-icon {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(255, 0, 51, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.4);
+  }
+  .play-icon::after {
+    content: "";
+    width: 0; height: 0;
+    border-left: 18px solid #fff;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    margin-left: 5px;
+  }
+  .yt-duration {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 6px;
+    border-radius: 4px;
+  }
+
+  /* Bottom caption on tiles */
+  .tile-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 14px 12px 10px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.85));
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  .tile-caption .author { font-weight: 700; margin-right: 4px; }
+
+  /* ===== FEATURES ===== */
+  .features {
+    padding: 100px 40px 140px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+  }
+  .feature {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .feature-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(47,190,190,0.10);
+    border: 1px solid rgba(47,190,190,0.25);
+    margin-bottom: 4px;
+  }
+  .feature-icon svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 1.8; }
+  .feature h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .feature p {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 50px 40px 40px;
+  }
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .footer-brand { max-width: 340px; }
+  .footer-brand .copy {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 14px;
+    line-height: 1.55;
+  }
+  .footer-cols {
+    display: flex;
+    gap: 64px;
+    flex-wrap: wrap;
+  }
+  .footer-col h4 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.4);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .footer-col a {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--fg); }
+  .footer-bottom {
+    border-top: 1px solid var(--line);
+    margin-top: 40px;
+    padding-top: 22px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  /* ===== COOKIE BANNER ===== */
+  .cookie {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    right: 24px;
+    max-width: 520px;
+    background: rgba(15,15,15,0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 20px;
+    z-index: 200;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .cookie.visible {
+    display: block;
+    animation: slideUp 0.5s cubic-bezier(0.2,0.8,0.2,1) both;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .cookie h5 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .cookie p { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 14px; }
+  .cookie p a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+  .cookie-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+  .cookie .btn { padding: 9px 16px; font-size: 13px; }
+
+  /* ===== COOKIE MODAL ===== */
+  .cookie-modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 300;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .cookie-modal-backdrop.visible {
+    display: flex;
+    opacity: 1;
+  }
+  .cookie-modal {
+    background: rgba(15,15,15,0.98);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 560px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    transform: scale(0.96);
+    transition: transform 0.2s;
+  }
+  .cookie-modal-backdrop.visible .cookie-modal {
+    transform: scale(1);
+  }
+  .cookie-modal::-webkit-scrollbar { width: 8px; }
+  .cookie-modal::-webkit-scrollbar-track { background: transparent; }
+  .cookie-modal::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+  .cookie-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 24px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .cookie-modal-header h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .cookie-modal-close {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s;
+  }
+  .cookie-modal-close:hover {
+    background: rgba(255,255,255,0.08);
+    color: var(--fg);
+  }
+  .cookie-modal-body { padding: 8px 24px 8px; }
+  .cookie-cat {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .cookie-cat:last-child { border-bottom: none; }
+  .cookie-cat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 6px;
+  }
+  .cookie-cat-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--fg);
+  }
+  .cookie-cat-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  .cookie-cat-always-on {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  /* Toggle switch */
+  .toggle {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+    flex-shrink: 0;
+  }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.15);
+    border-radius: 22px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .toggle-slider::before {
+    content: '';
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    top: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.2s;
+  }
+  .toggle input:checked + .toggle-slider {
+    background: linear-gradient(110deg, var(--grad-start), var(--grad-mid), var(--grad-end));
+  }
+  .toggle input:checked + .toggle-slider::before {
+    transform: translateX(18px);
+  }
+  .cookie-modal-footer {
+    padding: 16px 24px 22px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .cookie-modal-footer .btn {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1100px) {
+    .tile-1, .tile-5 { display: none; }
+    .tile-3 { width: 320px; height: 360px; }
+  }
+  @media (max-width: 768px) {
+    nav.top { padding: 16px 20px; }
+    nav .nav-links { display: none; }
+    .hero { padding: 140px 20px 60px; }
+    .tiles { padding: 20px 16px 80px; }
+    .tiles-inner { gap: 14px; }
+    .tile-2, .tile-4 { width: 140px; height: 180px; }
+    .tile-3 { width: 200px; height: 240px; }
+    .features { padding: 60px 20px 80px; }
+    .features-grid { grid-template-columns: 1fr; gap: 36px; }
+    .footer-inner { flex-direction: column; gap: 32px; }
+    .footer-cols { gap: 40px; }
+    .cookie { left: 12px; right: 12px; bottom: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========= NAV ========= -->
+<nav class="top">
+  <div class="logo" aria-label="MeshyNet">
+    <!-- Inline logo SVG; .st3 will be overridden to white via CSS -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 232.19 189.69">
+      <defs>
+        <linearGradient id="lg" x1="61.23" y1="63.44" x2="170.96" y2="63.44" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#4061ad"/>
+          <stop offset=".12" stop-color="#505ca9"/>
+          <stop offset=".26" stop-color="#5c59a7"/>
+          <stop offset=".4" stop-color="#6059a7"/>
+          <stop offset=".67" stop-color="#4788c7"/>
+          <stop offset="1" stop-color="#2fbebe"/>
+        </linearGradient>
+        <linearGradient id="lg1" x1="151.65" y1="134.8" x2="215.52" y2="134.8" href="#lg"/>
+        <linearGradient id="lg2" x1="-149.27" y1="167.49" x2="36.86" y2="167.49" gradientTransform="translate(194.16 140.2) rotate(89.82)" href="#lg"/>
+        <linearGradient id="lg3" x1="195.35" y1="167.49" x2="388.89" y2="167.49" href="#lg"/>
+      </defs>
+      <path fill="url(#lg)" d="M141.97,68.97c-1.49.13-2.54-.2-3.8-.66l-9.67,11-6.27,7.04c.89,2.05,1.25,4.43,0,6.6-.96,1.68-2.65,3.28-4.9,3.62-2.71.4-5.15-.7-6.67-2.54-1.85-2.25-1.73-5.14-.65-7.63l-7.84-8.84-8.1-9.27c-1.32.54-2.44.74-3.8.73l-11.02,26.94c2.8,3,2.33,7.32-.7,9.93-1.98,1.71-4.65,2.13-7.19,1.09-2.22-.91-3.95-3.01-4.28-5.62s.94-4.69,2.84-6.37l-3.84-16.28c-3.03-.54-4.94-2.87-4.84-5.68s2.26-5.23,5.38-5.43l10.93-35.81c-2.24-1.96-3.23-4.61-2.39-7.46.71-2.4,2.86-4.47,5.64-4.88,2.57-.38,5.12.61,6.61,2.48,1.66,2.1,2.06,4.74.96,7.25l2.83,2.33,21.93,19.02c1.94-1.24,4.11-1.13,6.06-.08l24.61-21.36c-1.73-3.86.47-8.27,4.43-9.45s8.37,1.39,9.03,5.73c.37,2.41-.63,4.7-2.54,6.35l2.03,7.06,8.83,28.78c3.07.19,5.15,2.48,5.36,5.24.23,2.93-1.8,5.34-4.78,5.9l-3.92,16.23c2.1,1.47,3.07,3.66,2.88,6.16-.28,3.68-3.41,6.41-6.93,6.39s-6.71-2.65-7.06-6.38c-.19-2,.56-3.74,1.84-5.17l-6.03-14.63-4.97-12.35ZM135.61,65.93c-1.55-2.39-1.59-5.09-.23-7.46,1.06-1.85,3.23-3.2,5.76-3.45l5.39-22.23c.09-.37-.12-.63-.35-.74-.31-.15-.49.08-.74.3l-6.79,5.83-17.27,14.98c1.05,2.63.19,5.27-1.86,6.77-2.17,1.58-4.93,1.46-7.01-.18s-2.63-4.21-1.64-6.6l-24.47-21.14c-.18-.15-.78.27-.84.48l5.45,22.59c2.66.08,4.79,1.6,5.92,3.64,1.29,2.31,1.08,4.87-.33,7.22l6.03,6.81,9.97,11.15c2.27-1.35,4.77-1.42,7.07-.04l15.95-17.93ZM83.89,62.94c-.4-3.29,1.2-5.81,3.73-7.19l-5.42-22.34c-.52-.12-.95-.15-1.45-.06l-3.55,11.85-7.09,23.12c-.1.32.81.98,1.12.87l12.66-6.25ZM161.13,69.24c.36-.23,1.01-.55,1.01-.9l-9.15-29.69-1.62-5.27c-.25-.26-1.14-.2-1.36.09l-2.29,9.64-3.16,12.7c2.68,1.34,4.14,4.14,3.74,7.2l12.83,6.23ZM76.26,93.94l10.72-26-1.75-1.74-12.81,6.16c.39,2.54-.74,4.58-2.88,5.76l3.83,15.57c1.02,0,1.89-.06,2.9.24ZM158.97,93.7l3.63-15.56c-2.12-1.18-3.27-3.3-2.88-5.81l-12.65-6.08-1.85,1.75,10.75,25.95c1.04-.24,1.93-.28,3-.25Z"/>
+      <g class="st3">
+        <path d="M43.86,149.08l-.06-23.33-10.86,16.05c-.27.4-1.25.35-1.5,0l-10.97-16.08-.05,23.36-3.75.04v-29.18s4.37,0,4.37,0l11.15,16.7,11.05-16.71,4.39.04.06,29.14-3.84-.02Z"/>
+        <path d="M60.39,145.49c3.6,1.88,7.93,1.15,10.74-1.79.9.56,1.67,1.21,2.48,2.06-4.25,4.89-12.75,5.19-17.31.94-4.91-4.59-4.31-14.21,2.09-17.67,3.42-1.85,7.55-1.93,11.06-.3,4.12,1.91,5.82,6.7,5.32,11.13l-9.29.02-8.75.05c.28,2.44,1.46,4.43,3.65,5.57ZM71.31,136.99c-.22-3.85-3.18-6.1-6.73-6.23-3.9-.15-7.34,2.3-7.79,6.26l14.53-.02Z"/>
+        <path d="M118.47,149.12l-.06-12.53c0-1.57-.59-3.19-1.79-4.17-2.65-2.16-6.45-2.01-9,.26-1.29,1.15-2.05,2.82-2.05,4.59l-.04,11.85h-3.65s0-29.24,0-29.24l3.63-.05.07,11.58c3.04-4.4,9.59-4.99,13.54-1.71,1.93,1.6,2.93,4.13,2.95,6.65l.08,12.73-3.67.04Z"/>
+        <polygon points="147.04 128.14 137.92 148.97 133.83 158.17 129.89 158.13 134.07 148.87 125.3 128.1 129.28 128.05 136.06 144.84 143.12 128.11 147.04 128.14"/>
+        <path d="M96.38,145.5c-1.96,5.45-13.64,5.55-18.03.39l2.21-2.46c2.16,2.18,4.83,3.25,7.85,3.08,1.41-.08,2.87-.2,3.93-1.17.72-.66,1.06-1.65.9-2.64-.13-.79-.87-1.78-1.86-1.98l-4.58-.92c-1.82-.37-3.68-.64-5.25-1.61-1.8-1.11-2.54-3.03-2.31-5.1.2-1.83,1.35-3.44,3.18-4.35,4.03-2.03,10.5-1.47,13.77,1.76l-2.25,2.26-1.57-1.07c-4.36-2.07-10.14-.9-9.58,2.37.18,1.08,1.03,1.87,2.2,2.09l6.53,1.23c1.77.33,3.43,1.11,4.48,2.64s1.07,3.58.39,5.49Z"/>
+      </g>
+      <path fill="url(#lg1)" d="M175.38,120.1l-.03,29.01-3.22-.06-17.22-23.79-.07,23.81h-3.18s-.02-28.98-.02-28.98l3.42-.05,4.17,5.95,12.86,17.66.08-23.56h3.2ZM183.54,139.67l15.23-.04c.56,0,1.04.18,1.54-.09.49-5.62-1.93-10.64-7.51-11.65-3.37-.61-6.86.12-9.39,2.5-3.69,3.47-4.11,10.54-1.21,14.97,2.01,3.07,5.45,4.27,9.01,4.18,3.25-.09,6.26-1.17,8.33-3.85l-2.08-1.87c-1.7,2.13-4.16,3.01-7.05,2.91-4.07-.15-6.89-3.14-6.87-7.06ZM183.55,137.13c.09-3.94,3.07-6.64,6.98-6.64s6.86,2.57,6.81,6.71l-13.79-.07ZM211.04,146.28c-.87-.35-1.39-1.32-1.39-2.29l-.06-13.21,5.55-.05c.14-.9.11-1.78.03-2.58l-5.59-.02.02-5.79-3.07-.02v5.8s-3.67.07-3.67.07l.05,2.57,3.58-.04.13,13.8c.02,2.31,1.72,4.16,3.84,4.64,1.75.4,3.46.22,5.07-.43l-.35-2.69c-1.2.57-2.73.77-4.13.22Z"/>
+    </svg>
+  </div>
+
+  <div class="nav-links">
+    <a href="#tiles" data-i18n="nav.features">Funkcie</a>
+    <a href="#features" data-i18n="nav.about">O aplikácii</a>
+    <a href="#footer" data-i18n="nav.contact">Kontakt</a>
+  </div>
+
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-toggle" id="lang-toggle" aria-label="Jazyk">
+        <span id="lang-current">SK</span>
+        <svg viewBox="0 0 12 12" fill="currentColor"><path d="M6 8.5L1.5 4h9z"/></svg>
+      </button>
+      <div class="lang-menu" id="lang-menu">
+        <a href="#" data-lang="cs"><span>Čeština</span><span class="code">CS</span></a>
+        <a href="#" data-lang="da"><span>Dansk</span><span class="code">DA</span></a>
+        <a href="#" data-lang="de"><span>Deutsch</span><span class="code">DE</span></a>
+        <a href="#" data-lang="et"><span>Eesti</span><span class="code">ET</span></a>
+        <a href="#" data-lang="en"><span>English</span><span class="code">EN</span></a>
+        <a href="#" data-lang="es"><span>Español</span><span class="code">ES</span></a>
+        <a href="#" data-lang="fr"><span>Français</span><span class="code">FR</span></a>
+        <a href="#" data-lang="ga"><span>Gaeilge</span><span class="code">GA</span></a>
+        <a href="#" data-lang="hr"><span>Hrvatski</span><span class="code">HR</span></a>
+        <a href="#" data-lang="it"><span>Italiano</span><span class="code">IT</span></a>
+        <a href="#" data-lang="lv"><span>Latviešu</span><span class="code">LV</span></a>
+        <a href="#" data-lang="lt"><span>Lietuvių</span><span class="code">LT</span></a>
+        <a href="#" data-lang="hu"><span>Magyar</span><span class="code">HU</span></a>
+        <a href="#" data-lang="mt"><span>Malti</span><span class="code">MT</span></a>
+        <a href="#" data-lang="nl"><span>Nederlands</span><span class="code">NL</span></a>
+        <a href="#" data-lang="pl"><span>Polski</span><span class="code">PL</span></a>
+        <a href="#" data-lang="pt"><span>Português</span><span class="code">PT</span></a>
+        <a href="#" data-lang="ro"><span>Română</span><span class="code">RO</span></a>
+        <a href="#" data-lang="sk"><span>Slovenčina</span><span class="code">SK</span></a>
+        <a href="#" data-lang="sl"><span>Slovenščina</span><span class="code">SL</span></a>
+        <a href="#" data-lang="fi"><span>Suomi</span><span class="code">FI</span></a>
+        <a href="#" data-lang="sv"><span>Svenska</span><span class="code">SV</span></a>
+        <a href="#" data-lang="bg"><span>Български</span><span class="code">BG</span></a>
+        <a href="#" data-lang="el"><span>Ελληνικά</span><span class="code">EL</span></a>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" id="nav-download-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
+      <span id="nav-download-label">Stiahnuť</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ========= HERO ========= -->
+<section class="hero">
+  <h1 class="hero-title display" data-i18n="hero.title">
+    Všetky tvoje obľúbené<br>
+    profily na jednom <span class="accent">mieste</span>
+  </h1>
+  <p class="hero-sub" data-i18n="hero.sub">
+    MeshyNet ti vyčistí feed z Facebooku, Instagramu a YouTubu bez núteného obsahu a bez algoritmov, ktoré rozhodujú za teba.
+  </p>
+  <div class="hero-cta">
+    <button class="btn btn-primary btn-lg" id="download-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="download-icon">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
+      <span id="download-label">Stiahnuť</span>
+    </button>
+  </div>
+  <p class="hero-note" data-i18n="hero.note">Zadarmo · 3 profily v základnej verzii · <span class="ios-note">iOS verzia čoskoro</span></p>
+</section>
+
+<!-- ========= FEED TILES ========= -->
+<section class="tiles" id="tiles">
+  <div class="tiles-inner">
+
+    <!-- Tile 1 — Instagram small -->
+    <div class="tile tile-1">
+      <div class="photo photo-ig">
+        <div class="platform-badge" title="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.26.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.26.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23-.06-1.26-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.26-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.13 1.39C1.34 2.69.93 3.36.62 4.14.32 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.39 2.13.67.67 1.34 1.08 2.13 1.39.76.3 1.64.49 2.91.56 1.28.06 1.69.07 4.95.07s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.39.67-.67 1.08-1.34 1.39-2.13.3-.76.49-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.31-.79-.72-1.46-1.39-2.13C21.31 1.34 20.64.93 19.86.62 19.1.32 18.22.13 16.95.07 15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 0 0 5.84 12 6.16 6.16 0 0 0 12 18.16 6.16 6.16 0 0 0 18.16 12 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg>
+        </div>
+        <div class="tile-caption"><span class="author">@nasa</span>Earthrise from Apollo 8…</div>
+      </div>
+    </div>
+
+    <!-- Tile 2 — YouTube -->
+    <div class="tile tile-2">
+      <div class="photo photo-yt">
+        <div class="platform-badge" title="YouTube">
+          <svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.6 3.6 12 3.6 12 3.6s-7.6 0-9.4.5A3 3 0 0 0 .5 6.2C0 8 0 12 0 12s0 4 .5 5.8a3 3 0 0 0 2.1 2.1c1.8.5 9.4.5 9.4.5s7.6 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.8.5-5.8.5-5.8s0-4-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+        </div>
+        <div class="play-icon"></div>
+        <div class="yt-duration">12:34</div>
+        <div class="tile-caption"><span class="author">Veritasium</span>The biggest myth in physics</div>
+      </div>
+    </div>
+
+    <!-- Tile 3 — Hero feature post (Instagram big) -->
+    <div class="tile tile-3">
+      <div class="photo photo-ig2">
+        <div class="platform-badge" title="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.26.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.26.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23-.06-1.26-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.26-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.13 1.39C1.34 2.69.93 3.36.62 4.14.32 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.39 2.13.67.67 1.34 1.08 2.13 1.39.76.3 1.64.49 2.91.56 1.28.06 1.69.07 4.95.07s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.39.67-.67 1.08-1.34 1.39-2.13.3-.76.49-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.31-.79-.72-1.46-1.39-2.13C21.31 1.34 20.64.93 19.86.62 19.1.32 18.22.13 16.95.07 15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 0 0 5.84 12 6.16 6.16 0 0 0 12 18.16 6.16 6.16 0 0 0 18.16 12 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg>
+        </div>
+        <div class="tile-caption"><span class="author">@studio.ghibli</span>Behind the scenes: hand-painted backgrounds for the new film 🎨</div>
+      </div>
+    </div>
+
+    <!-- Tile 4 — Facebook -->
+    <div class="tile tile-4">
+      <div class="photo photo-fb">
+        <div class="platform-badge" title="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M24 12a12 12 0 1 0-13.875 11.85V15.47H7.078V12h3.047V9.356c0-3.007 1.79-4.668 4.532-4.668 1.312 0 2.686.235 2.686.235V7.875h-1.515c-1.49 0-1.956.925-1.956 1.875V12h3.328l-.532 3.47h-2.796v8.38A12 12 0 0 0 24 12z"/></svg>
+        </div>
+        <div class="tile-caption"><span class="author">National Geographic</span>New deep-sea expedition discovers…</div>
+      </div>
+    </div>
+
+    <!-- Tile 5 — Facebook small -->
+    <div class="tile tile-5">
+      <div class="photo photo-fb2">
+        <div class="platform-badge" title="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M24 12a12 12 0 1 0-13.875 11.85V15.47H7.078V12h3.047V9.356c0-3.007 1.79-4.668 4.532-4.668 1.312 0 2.686.235 2.686.235V7.875h-1.515c-1.49 0-1.956.925-1.956 1.875V12h3.328l-.532 3.47h-2.796v8.38A12 12 0 0 0 24 12z"/></svg>
+        </div>
+        <div class="tile-caption"><span class="author">SHMU</span>Predpoveď na víkend</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ========= FEATURES ========= -->
+<section class="features" id="features">
+  <div class="features-grid">
+    <div class="feature">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>
+      </div>
+      <h3 data-i18n="feature.1.title">Čistý feed pre všetko</h3>
+      <p data-i18n="feature.1.desc">Facebook, Instagram a YouTube v jednej aplikácii. Žiadne navrhované príspevky, žiadne algoritmy.</p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+      </div>
+      <h3 data-i18n="feature.2.title">Filter podľa profilov</h3>
+      <p data-i18n="feature.2.desc">Vyber si len tie verejné profily, ktoré ťa naozaj zaujímajú. Žiadny šum, len obsah, ktorý chceš sledovať.</p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+      </div>
+      <h3 data-i18n="feature.3.title">Bez algoritmov</h3>
+      <p data-i18n="feature.3.desc">Vidíš len to, čo ťa naozaj zaujíma, žiadne odporúčania, žiadne manipulácie pozornosti.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========= FOOTER ========= -->
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 232.19 189.69" style="height:32px">
+          <defs>
+            <linearGradient id="flg" x1="61.23" y1="63.44" x2="170.96" y2="63.44" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#4061ad"/><stop offset=".4" stop-color="#6059a7"/><stop offset="1" stop-color="#2fbebe"/>
+            </linearGradient>
+            <linearGradient id="flg1" x1="151.65" y1="134.8" x2="215.52" y2="134.8" href="#flg"/>
+          </defs>
+          <path fill="url(#flg)" d="M141.97,68.97c-1.49.13-2.54-.2-3.8-.66l-9.67,11-6.27,7.04c.89,2.05,1.25,4.43,0,6.6-.96,1.68-2.65,3.28-4.9,3.62-2.71.4-5.15-.7-6.67-2.54-1.85-2.25-1.73-5.14-.65-7.63l-7.84-8.84-8.1-9.27c-1.32.54-2.44.74-3.8.73l-11.02,26.94c2.8,3,2.33,7.32-.7,9.93-1.98,1.71-4.65,2.13-7.19,1.09-2.22-.91-3.95-3.01-4.28-5.62s.94-4.69,2.84-6.37l-3.84-16.28c-3.03-.54-4.94-2.87-4.84-5.68s2.26-5.23,5.38-5.43l10.93-35.81c-2.24-1.96-3.23-4.61-2.39-7.46.71-2.4,2.86-4.47,5.64-4.88,2.57-.38,5.12.61,6.61,2.48,1.66,2.1,2.06,4.74.96,7.25l2.83,2.33,21.93,19.02c1.94-1.24,4.11-1.13,6.06-.08l24.61-21.36c-1.73-3.86.47-8.27,4.43-9.45s8.37,1.39,9.03,5.73c.37,2.41-.63,4.7-2.54,6.35l2.03,7.06,8.83,28.78c3.07.19,5.15,2.48,5.36,5.24.23,2.93-1.8,5.34-4.78,5.9l-3.92,16.23c2.1,1.47,3.07,3.66,2.88,6.16-.28,3.68-3.41,6.41-6.93,6.39s-6.71-2.65-7.06-6.38c-.19-2,.56-3.74,1.84-5.17l-6.03-14.63-4.97-12.35Z"/>
+          <g class="st3"><path d="M43.86,149.08l-.06-23.33-10.86,16.05c-.27.4-1.25.35-1.5,0l-10.97-16.08-.05,23.36-3.75.04v-29.18s4.37,0,4.37,0l11.15,16.7,11.05-16.71,4.39.04.06,29.14-3.84-.02Z"/><path d="M60.39,145.49c3.6,1.88,7.93,1.15,10.74-1.79.9.56,1.67,1.21,2.48,2.06-4.25,4.89-12.75,5.19-17.31.94-4.91-4.59-4.31-14.21,2.09-17.67,3.42-1.85,7.55-1.93,11.06-.3,4.12,1.91,5.82,6.7,5.32,11.13l-9.29.02-8.75.05c.28,2.44,1.46,4.43,3.65,5.57ZM71.31,136.99c-.22-3.85-3.18-6.1-6.73-6.23-3.9-.15-7.34,2.3-7.79,6.26l14.53-.02Z"/><path d="M118.47,149.12l-.06-12.53c0-1.57-.59-3.19-1.79-4.17-2.65-2.16-6.45-2.01-9,.26-1.29,1.15-2.05,2.82-2.05,4.59l-.04,11.85h-3.65s0-29.24,0-29.24l3.63-.05.07,11.58c3.04-4.4,9.59-4.99,13.54-1.71,1.93,1.6,2.93,4.13,2.95,6.65l.08,12.73-3.67.04Z"/><polygon points="147.04 128.14 137.92 148.97 133.83 158.17 129.89 158.13 134.07 148.87 125.3 128.1 129.28 128.05 136.06 144.84 143.12 128.11 147.04 128.14"/><path d="M96.38,145.5c-1.96,5.45-13.64,5.55-18.03.39l2.21-2.46c2.16,2.18,4.83,3.25,7.85,3.08,1.41-.08,2.87-.2,3.93-1.17.72-.66,1.06-1.65.9-2.64-.13-.79-.87-1.78-1.86-1.98l-4.58-.92c-1.82-.37-3.68-.64-5.25-1.61-1.8-1.11-2.54-3.03-2.31-5.1.2-1.83,1.35-3.44,3.18-4.35,4.03-2.03,10.5-1.47,13.77,1.76l-2.25,2.26-1.57-1.07c-4.36-2.07-10.14-.9-9.58,2.37.18,1.08,1.03,1.87,2.2,2.09l6.53,1.23c1.77.33,3.43,1.11,4.48,2.64s1.07,3.58.39,5.49Z"/></g>
+          <path fill="url(#flg1)" d="M175.38,120.1l-.03,29.01-3.22-.06-17.22-23.79-.07,23.81h-3.18s-.02-28.98-.02-28.98l3.42-.05,4.17,5.95,12.86,17.66.08-23.56h3.2ZM183.54,139.67l15.23-.04c.56,0,1.04.18,1.54-.09.49-5.62-1.93-10.64-7.51-11.65-3.37-.61-6.86.12-9.39,2.5-3.69,3.47-4.11,10.54-1.21,14.97,2.01,3.07,5.45,4.27,9.01,4.18,3.25-.09,6.26-1.17,8.33-3.85l-2.08-1.87c-1.7,2.13-4.16,3.01-7.05,2.91-4.07-.15-6.89-3.14-6.87-7.06ZM183.55,137.13c.09-3.94,3.07-6.64,6.98-6.64s6.86,2.57,6.81,6.71l-13.79-.07Z"/>
+        </svg>
+      </div>
+      <p class="copy" data-i18n="footer.tagline">Vyčistený feed zo sociálnych sietí. Bez algoritmov, bez núteného obsahu, bez rušivých elementov.</p>
+    </div>
+
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4 data-i18n="footer.product">Produkt</h4>
+        <ul>
+          <li><a href="#features" data-i18n="footer.functions">Funkcie</a></li>
+          <li><a href="#" data-i18n="footer.price">Cena</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.legal">Právne</h4>
+        <ul>
+          <li><a href="#" data-i18n="footer.terms">Podmienky používania</a></li>
+          <li><a href="#" data-i18n="footer.privacy">Ochrana súkromia</a></li>
+          <li><a href="#" id="cookie-settings-footer" data-i18n="footer.cookies">Nastavenia cookies</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.contact">Kontakt</h4>
+        <ul>
+          <li><a href="mailto:info@meshynet.sk">info@meshynet.sk</a></li>
+          <li><a href="#" data-i18n="footer.impressum">Impresum</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 MeshyNet · [Firma, IČO, adresa]</span>
+    <span data-i18n="footer.madein">Made in Slovakia</span>
+  </div>
+</footer>
+
+<!-- ========= COOKIE BANNER ========= -->
+<div class="cookie" id="cookie">
+  <h5 data-i18n="cookie.title">Používame cookies</h5>
+  <p data-i18n="cookie.body">Analytické a marketingové cookies nám pomáhajú vedieť, koľko ľudí si aplikáciu stiahlo. Technicky nevyhnutné cookies sú aktívne vždy. <a href="ochrana-sukromia.html">Viac informácií</a></p>
+  <div class="cookie-buttons">
+    <button class="btn btn-ghost" id="cookie-reject" data-i18n="cookie.reject">Odmietnuť</button>
+    <button class="btn btn-ghost" id="cookie-settings" data-i18n="cookie.settings">Nastavenia</button>
+    <button class="btn btn-primary" id="cookie-accept" data-i18n="cookie.accept">Prijať všetko</button>
+  </div>
+</div>
+
+<!-- ========= COOKIE MODAL ========= -->
+<div class="cookie-modal-backdrop" id="cookie-modal" role="dialog" aria-modal="true" aria-labelledby="cookie-modal-title">
+  <div class="cookie-modal">
+    <div class="cookie-modal-header">
+      <h3 id="cookie-modal-title" data-i18n="cookie.settings">Nastavenia cookies</h3>
+      <button class="cookie-modal-close" id="cookie-modal-close" aria-label="Zavrieť">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="cookie-modal-body">
+      <!-- Necessary -->
+      <div class="cookie-cat">
+        <div class="cookie-cat-header">
+          <span class="cookie-cat-name" data-i18n="cookie.cat.necessary">Nevyhnutné</span>
+          <span class="cookie-cat-always-on" data-i18n="cookie.always_on">Vždy aktívne</span>
+        </div>
+        <p class="cookie-cat-desc" data-i18n="cookie.cat.necessary.desc">Zabezpečujú základné fungovanie webu — napríklad zapamätanie tvojho rozhodnutia v cookie baneri.</p>
+      </div>
+
+      <!-- Analytics -->
+      <div class="cookie-cat">
+        <div class="cookie-cat-header">
+          <span class="cookie-cat-name" data-i18n="cookie.cat.analytics">Analytické</span>
+          <label class="toggle">
+            <input type="checkbox" id="cookie-toggle-analytics">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <p class="cookie-cat-desc" data-i18n="cookie.cat.analytics.desc">Google Analytics — anonymizované štatistiky o návštevnosti webu.</p>
+      </div>
+
+      <!-- Marketing -->
+      <div class="cookie-cat">
+        <div class="cookie-cat-header">
+          <span class="cookie-cat-name" data-i18n="cookie.cat.marketing">Marketingové</span>
+          <label class="toggle">
+            <input type="checkbox" id="cookie-toggle-marketing">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <p class="cookie-cat-desc" data-i18n="cookie.cat.marketing.desc">Meta Pixel a Google Ads — meranie účinnosti reklamy.</p>
+      </div>
+    </div>
+
+    <div class="cookie-modal-footer">
+      <button class="btn btn-ghost" id="cookie-modal-save" data-i18n="cookie.save">Uložiť výber</button>
+      <button class="btn btn-primary" id="cookie-modal-accept" data-i18n="cookie.accept">Prijať všetko</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ============================================================
+  // GOOGLE CONSENT MODE V2 — DEFAULTS (DENIED)
+  // Must run before any analytics scripts load. Required for EU.
+  // ============================================================
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+
+  // ============================================================
+  // ANALYTICS / TRACKING IDs
+  // 🚨 REPLACE THESE WITH REAL IDs BEFORE GOING LIVE 🚨
+  // ============================================================
+  const GA_MEASUREMENT_ID = 'G-XXXXXXXXXX';   // Google Analytics 4 (format: G-XXXXXXXXXX)
+  const META_PIXEL_ID     = 'XXXXXXXXXXXXXXX'; // Meta (Facebook) Pixel (numeric)
+  const GOOGLE_ADS_ID     = 'AW-XXXXXXXXXX';   // Google Ads (format: AW-XXXXXXXXXX)
+
+  // Placeholder check — load functions no-op if IDs not replaced yet
+  function isPlaceholder(id) {
+    return !id || /^G-X+$/.test(id) || /^X+$/.test(id) || /^AW-X+$/.test(id);
+  }
+
+  // ============================================================
+  // COOKIE CONSENT
+  // ============================================================
+  const CONSENT_KEY = 'mn_cookie_consent';
+  const CONSENT_VERSION = 1;
+  const CONSENT_EXPIRY_DAYS = 180;
+
+  function loadConsent() {
+    try {
+      const raw = localStorage.getItem(CONSENT_KEY);
+      if (!raw) return null;
+      const c = JSON.parse(raw);
+      if (c.version !== CONSENT_VERSION) return null;
+      return c;
+    } catch (e) { return null; }
+  }
+
+  function isConsentExpired(c) {
+    if (!c || !c.timestamp) return true;
+    const expiryMs = CONSENT_EXPIRY_DAYS * 24 * 60 * 60 * 1000;
+    return (Date.now() - new Date(c.timestamp).getTime()) > expiryMs;
+  }
+
+  function saveConsent(analytics, marketing) {
+    const consent = {
+      version: CONSENT_VERSION,
+      necessary: true,
+      analytics: !!analytics,
+      marketing: !!marketing,
+      timestamp: new Date().toISOString()
+    };
+    try { localStorage.setItem(CONSENT_KEY, JSON.stringify(consent)); } catch (e) {}
+    applyConsent(consent);
+    return consent;
+  }
+
+  function applyConsent(consent) {
+    // Update Google Consent Mode signals
+    gtag('consent', 'update', {
+      'analytics_storage': consent.analytics ? 'granted' : 'denied',
+      'ad_storage':         consent.marketing ? 'granted' : 'denied',
+      'ad_user_data':       consent.marketing ? 'granted' : 'denied',
+      'ad_personalization': consent.marketing ? 'granted' : 'denied'
+    });
+    // Load tracking scripts conditionally
+    if (consent.analytics) loadGoogleAnalytics();
+    if (consent.marketing) { loadMetaPixel(); loadGoogleAds(); }
+  }
+
+  // ===== SCRIPT LOADERS (only fire after consent) =====
+  let _gaLoaded = false;
+  function loadGoogleAnalytics() {
+    if (_gaLoaded || isPlaceholder(GA_MEASUREMENT_ID)) return;
+    _gaLoaded = true;
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID;
+    document.head.appendChild(s);
+    gtag('js', new Date());
+    gtag('config', GA_MEASUREMENT_ID, { anonymize_ip: true });
+  }
+
+  let _fbqLoaded = false;
+  function loadMetaPixel() {
+    if (_fbqLoaded || isPlaceholder(META_PIXEL_ID)) return;
+    _fbqLoaded = true;
+    !function(f,b,e,v,n,t,s){
+      if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];
+      t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s);
+    }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+    window.fbq('init', META_PIXEL_ID);
+    window.fbq('track', 'PageView');
+  }
+
+  let _gadsLoaded = false;
+  function loadGoogleAds() {
+    if (_gadsLoaded || isPlaceholder(GOOGLE_ADS_ID)) return;
+    _gadsLoaded = true;
+    if (!_gaLoaded) {
+      const s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GOOGLE_ADS_ID;
+      document.head.appendChild(s);
+      gtag('js', new Date());
+    }
+    gtag('config', GOOGLE_ADS_ID);
+  }
+
+  // ===== BANNER + MODAL UI =====
+  function showBanner() {
+    document.getElementById('cookie').classList.add('visible');
+  }
+  function hideBanner() {
+    document.getElementById('cookie').classList.remove('visible');
+  }
+  function showModal() {
+    const c = loadConsent();
+    document.getElementById('cookie-toggle-analytics').checked = c ? !!c.analytics : false;
+    document.getElementById('cookie-toggle-marketing').checked = c ? !!c.marketing : false;
+    document.getElementById('cookie-modal').classList.add('visible');
+    document.body.style.overflow = 'hidden';
+  }
+  function hideModal() {
+    document.getElementById('cookie-modal').classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+
+  function bindCookieUI() {
+    // Banner buttons
+    document.getElementById('cookie-reject').addEventListener('click', () => {
+      saveConsent(false, false);
+      hideBanner();
+    });
+    document.getElementById('cookie-accept').addEventListener('click', () => {
+      saveConsent(true, true);
+      hideBanner();
+    });
+    document.getElementById('cookie-settings').addEventListener('click', () => {
+      hideBanner();
+      showModal();
+    });
+    // Modal buttons
+    document.getElementById('cookie-modal-close').addEventListener('click', hideModal);
+    document.getElementById('cookie-modal-save').addEventListener('click', () => {
+      const analytics = document.getElementById('cookie-toggle-analytics').checked;
+      const marketing = document.getElementById('cookie-toggle-marketing').checked;
+      saveConsent(analytics, marketing);
+      hideModal();
+    });
+    document.getElementById('cookie-modal-accept').addEventListener('click', () => {
+      saveConsent(true, true);
+      hideModal();
+    });
+    // Click on backdrop closes modal
+    document.getElementById('cookie-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'cookie-modal') hideModal();
+    });
+    // ESC closes modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.getElementById('cookie-modal').classList.contains('visible')) {
+        hideModal();
+      }
+    });
+    // Footer "Nastavenia cookies" reopens modal
+    const footerLink = document.getElementById('cookie-settings-footer');
+    if (footerLink) {
+      footerLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        showModal();
+      });
+    }
+  }
+
+  function initConsent() {
+    const c = loadConsent();
+    if (c && !isConsentExpired(c)) {
+      applyConsent(c);
+    } else {
+      // Slight delay lets the page paint first — banner slides in calmly
+      setTimeout(showBanner, 800);
+    }
+    bindCookieUI();
+  }
+
+  // ========= TRANSLATIONS =========
+  // Note: translations are AI-generated drafts. Have native speakers review
+  // critical-market languages before going live.
+  const I18N = {
+    sk: {
+      'nav.features': 'Funkcie',
+      'nav.about': 'O aplikácii',
+      'nav.contact': 'Kontakt',
+      'hero.title': 'Všetky tvoje obľúbené<br>profily na jednom <span class="accent">mieste</span>',
+      'hero.sub': 'MeshyNet ti vyčistí feed z Facebooku, Instagramu a YouTubu bez núteného obsahu a bez algoritmov, ktoré rozhodujú za teba.',
+      'hero.note': 'Zadarmo · 3 profily v základnej verzii · <span class="ios-note">iOS verzia čoskoro</span>',
+      'download.prefix': 'Stiahnuť pre',
+      'download.ios': 'iOS verzia čoskoro',
+      'nav.download': 'Stiahnuť',
+      'nav.download.disabled': 'Čoskoro',
+      'feature.1.title': 'Čistý feed pre všetko',
+      'feature.1.desc': 'Facebook, Instagram a YouTube v jednej aplikácii. Žiadne navrhované príspevky, žiadne algoritmy.',
+      'feature.2.title': 'Filter podľa profilov',
+      'feature.2.desc': 'Vyber si len tie verejné profily, ktoré ťa naozaj zaujímajú. Žiadny šum, len obsah, ktorý chceš sledovať.',
+      'feature.3.title': 'Bez algoritmov',
+      'feature.3.desc': 'Vidíš len to, čo ťa naozaj zaujíma, žiadne odporúčania, žiadne manipulácie pozornosti.',
+      'footer.tagline': 'Vyčistený feed zo sociálnych sietí. Bez algoritmov, bez núteného obsahu, bez rušivých elementov.',
+      'footer.product': 'Produkt', 'footer.legal': 'Právne', 'footer.contact': 'Kontakt',
+      'footer.functions': 'Funkcie', 'footer.price': 'Cena',
+      'footer.terms': 'Podmienky používania', 'footer.privacy': 'Ochrana súkromia',
+      'footer.cookies': 'Nastavenia cookies', 'footer.impressum': 'Impresum',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Používame cookies',
+      'cookie.body': 'Analytické a marketingové cookies nám pomáhajú vedieť, koľko ľudí si aplikáciu stiahlo. Technicky nevyhnutné cookies sú aktívne vždy. <a href="#">Viac informácií</a>',
+      'cookie.reject': 'Odmietnuť', 'cookie.settings': 'Nastavenia', 'cookie.accept': 'Prijať všetko',
+      'cookie.cat.necessary': 'Nevyhnutné',
+      'cookie.cat.necessary.desc': 'Zabezpečujú základné fungovanie webu — napríklad zapamätanie tvojho rozhodnutia v cookie baneri.',
+      'cookie.cat.analytics': 'Analytické',
+      'cookie.cat.analytics.desc': 'Google Analytics — anonymizované štatistiky o návštevnosti webu.',
+      'cookie.cat.marketing': 'Marketingové',
+      'cookie.cat.marketing.desc': 'Meta Pixel a Google Ads — meranie účinnosti reklamy.',
+      'cookie.always_on': 'Vždy aktívne',
+      'cookie.save': 'Uložiť výber'
+    },
+    cs: {
+      'nav.features': 'Funkce', 'nav.about': 'O aplikaci', 'nav.contact': 'Kontakt',
+      'hero.title': 'Všechny tvé oblíbené<br>profily na jednom <span class="accent">místě</span>',
+      'hero.sub': 'MeshyNet ti vyčistí feed z Facebooku, Instagramu a YouTubu bez nuceného obsahu a bez algoritmů, které rozhodují za tebe.',
+      'hero.note': 'Zdarma · 3 profily v základní verzi · <span class="ios-note">iOS verze brzy</span>',
+      'download.prefix': 'Stáhnout pro', 'download.ios': 'iOS verze brzy',
+      'nav.download': 'Stáhnout', 'nav.download.disabled': 'Brzy',
+      'feature.1.title': 'Čistý feed pro všechno',
+      'feature.1.desc': 'Facebook, Instagram a YouTube v jedné aplikaci. Žádné navrhované příspěvky, žádné algoritmy.',
+      'feature.2.title': 'Filtr podle profilů',
+      'feature.2.desc': 'Vyber si jen ty veřejné profily, které tě opravdu zajímají. Žádný šum, jen obsah, který chceš sledovat.',
+      'feature.3.title': 'Bez algoritmů',
+      'feature.3.desc': 'Vidíš jen to, co tě opravdu zajímá, žádná doporučení, žádné manipulace pozornosti.',
+      'footer.tagline': 'Vyčištěný feed ze sociálních sítí. Bez algoritmů, bez nuceného obsahu, bez rušivých elementů.',
+      'footer.product': 'Produkt', 'footer.legal': 'Právní', 'footer.contact': 'Kontakt',
+      'footer.functions': 'Funkce', 'footer.price': 'Cena',
+      'footer.terms': 'Podmínky používání', 'footer.privacy': 'Ochrana soukromí',
+      'footer.cookies': 'Nastavení cookies', 'footer.impressum': 'Impressum',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Používáme cookies',
+      'cookie.body': 'Analytické a marketingové cookies nám pomáhají vědět, kolik lidí si aplikaci stáhlo. Technicky nezbytné cookies jsou aktivní vždy. <a href="#">Více informací</a>',
+      'cookie.reject': 'Odmítnout', 'cookie.settings': 'Nastavení', 'cookie.accept': 'Přijmout vše',
+      'cookie.cat.necessary': 'Nezbytné',
+      'cookie.cat.necessary.desc': 'Zajišťují základní fungování webu — například zapamatování tvého rozhodnutí v cookie baneru.',
+      'cookie.cat.analytics': 'Analytické',
+      'cookie.cat.analytics.desc': 'Google Analytics — anonymizované statistiky o návštěvnosti webu.',
+      'cookie.cat.marketing': 'Marketingové',
+      'cookie.cat.marketing.desc': 'Meta Pixel a Google Ads — měření účinnosti reklamy.',
+      'cookie.always_on': 'Vždy aktivní',
+      'cookie.save': 'Uložit výběr'
+    },
+    en: {
+      'nav.features': 'Features', 'nav.about': 'About', 'nav.contact': 'Contact',
+      'hero.title': 'All your favorite profiles<br>in <span class="accent">one place</span>',
+      'hero.sub': 'MeshyNet gives you a clean feed from Facebook, Instagram, and YouTube — without forced content and without algorithms deciding for you.',
+      'hero.note': 'Free · 3 profiles in the basic version · <span class="ios-note">iOS version coming soon</span>',
+      'download.prefix': 'Download for', 'download.ios': 'iOS version coming soon',
+      'nav.download': 'Download', 'nav.download.disabled': 'Coming soon',
+      'feature.1.title': 'One clean feed',
+      'feature.1.desc': 'Facebook, Instagram, and YouTube in one app. No suggested posts, no algorithms.',
+      'feature.2.title': 'Filter by profiles',
+      'feature.2.desc': 'Pick only the public profiles you really care about. No noise — just the content you want to follow.',
+      'feature.3.title': 'No algorithms',
+      'feature.3.desc': 'You see only what actually matters to you. No recommendations, no attention manipulation.',
+      'footer.tagline': 'A clean feed from social networks. No algorithms, no forced content, no distractions.',
+      'footer.product': 'Product', 'footer.legal': 'Legal', 'footer.contact': 'Contact',
+      'footer.functions': 'Features', 'footer.price': 'Pricing',
+      'footer.terms': 'Terms of Service', 'footer.privacy': 'Privacy Policy',
+      'footer.cookies': 'Cookie settings', 'footer.impressum': 'Impressum',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'We use cookies',
+      'cookie.body': 'Analytics and marketing cookies help us understand how many people download the app. Technically necessary cookies are always active. <a href="#">Learn more</a>',
+      'cookie.reject': 'Reject', 'cookie.settings': 'Settings', 'cookie.accept': 'Accept all',
+      'cookie.cat.necessary': 'Necessary',
+      'cookie.cat.necessary.desc': 'Ensure the basic functioning of the website — for example, remembering your choice in the cookie banner.',
+      'cookie.cat.analytics': 'Analytics',
+      'cookie.cat.analytics.desc': 'Google Analytics — anonymized statistics about site visits.',
+      'cookie.cat.marketing': 'Marketing',
+      'cookie.cat.marketing.desc': 'Meta Pixel and Google Ads — measuring the effectiveness of advertising.',
+      'cookie.always_on': 'Always active',
+      'cookie.save': 'Save selection'
+    },
+    de: {
+      'nav.features': 'Funktionen', 'nav.about': 'Über die App', 'nav.contact': 'Kontakt',
+      'hero.title': 'Alle deine Lieblingsprofile<br>an <span class="accent">einem Ort</span>',
+      'hero.sub': 'MeshyNet räumt deinen Feed von Facebook, Instagram und YouTube auf — ohne aufgezwungene Inhalte und ohne Algorithmen, die für dich entscheiden.',
+      'hero.note': 'Kostenlos · 3 Profile in der Basisversion · <span class="ios-note">iOS-Version bald verfügbar</span>',
+      'download.prefix': 'Herunterladen für', 'download.ios': 'iOS-Version bald verfügbar',
+      'nav.download': 'Herunterladen', 'nav.download.disabled': 'Bald',
+      'feature.1.title': 'Ein klarer Feed für alles',
+      'feature.1.desc': 'Facebook, Instagram und YouTube in einer App. Keine vorgeschlagenen Beiträge, keine Algorithmen.',
+      'feature.2.title': 'Filter nach Profilen',
+      'feature.2.desc': 'Wähle nur die öffentlichen Profile aus, die dich wirklich interessieren. Kein Rauschen, nur Inhalte, denen du folgen willst.',
+      'feature.3.title': 'Ohne Algorithmen',
+      'feature.3.desc': 'Du siehst nur das, was dich wirklich interessiert. Keine Empfehlungen, keine Manipulation deiner Aufmerksamkeit.',
+      'footer.tagline': 'Ein bereinigter Feed aus sozialen Netzwerken. Ohne Algorithmen, ohne aufgezwungene Inhalte, ohne Ablenkungen.',
+      'footer.product': 'Produkt', 'footer.legal': 'Rechtliches', 'footer.contact': 'Kontakt',
+      'footer.functions': 'Funktionen', 'footer.price': 'Preis',
+      'footer.terms': 'Nutzungsbedingungen', 'footer.privacy': 'Datenschutz',
+      'footer.cookies': 'Cookie-Einstellungen', 'footer.impressum': 'Impressum',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Wir verwenden Cookies',
+      'cookie.body': 'Analyse- und Marketing-Cookies helfen uns zu verstehen, wie viele Menschen die App herunterladen. Technisch notwendige Cookies sind immer aktiv. <a href="#">Mehr erfahren</a>',
+      'cookie.reject': 'Ablehnen', 'cookie.settings': 'Einstellungen', 'cookie.accept': 'Alle akzeptieren',
+      'cookie.cat.necessary': 'Notwendig',
+      'cookie.cat.necessary.desc': 'Sorgen für das grundlegende Funktionieren der Website — zum Beispiel das Speichern deiner Entscheidung im Cookie-Banner.',
+      'cookie.cat.analytics': 'Analytik',
+      'cookie.cat.analytics.desc': 'Google Analytics — anonymisierte Statistiken zu Website-Besuchen.',
+      'cookie.cat.marketing': 'Marketing',
+      'cookie.cat.marketing.desc': 'Meta Pixel und Google Ads — Messung der Werbewirksamkeit.',
+      'cookie.always_on': 'Immer aktiv',
+      'cookie.save': 'Auswahl speichern'
+    },
+    fr: {
+      'nav.features': 'Fonctionnalités', 'nav.about': 'À propos', 'nav.contact': 'Contact',
+      'hero.title': 'Tous tes profils préférés<br>au <span class="accent">même endroit</span>',
+      'hero.sub': 'MeshyNet nettoie ton fil Facebook, Instagram et YouTube — sans contenu imposé et sans algorithmes qui décident à ta place.',
+      'hero.note': 'Gratuit · 3 profils dans la version de base · <span class="ios-note">Version iOS bientôt disponible</span>',
+      'download.prefix': 'Télécharger pour', 'download.ios': 'Version iOS bientôt disponible',
+      'nav.download': 'Télécharger', 'nav.download.disabled': 'Bientôt',
+      'feature.1.title': 'Un fil unique et clair',
+      'feature.1.desc': 'Facebook, Instagram et YouTube dans une seule app. Aucune publication suggérée, aucun algorithme.',
+      'feature.2.title': 'Filtre par profil',
+      'feature.2.desc': "Choisis uniquement les profils publics qui t'intéressent vraiment. Pas de bruit — juste le contenu que tu veux suivre.",
+      'feature.3.title': 'Sans algorithmes',
+      'feature.3.desc': "Tu vois seulement ce qui t'intéresse vraiment. Pas de recommandations, pas de manipulation de ton attention.",
+      'footer.tagline': 'Un fil épuré des réseaux sociaux. Sans algorithmes, sans contenu imposé, sans distractions.',
+      'footer.product': 'Produit', 'footer.legal': 'Mentions légales', 'footer.contact': 'Contact',
+      'footer.functions': 'Fonctionnalités', 'footer.price': 'Tarif',
+      'footer.terms': "Conditions d'utilisation", 'footer.privacy': 'Confidentialité',
+      'footer.cookies': 'Paramètres des cookies', 'footer.impressum': 'Mentions légales',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Nous utilisons des cookies',
+      'cookie.body': "Les cookies d'analyse et marketing nous aident à savoir combien de personnes téléchargent l'app. Les cookies techniquement nécessaires sont toujours actifs. <a href=\"#\">En savoir plus</a>",
+      'cookie.reject': 'Refuser', 'cookie.settings': 'Paramètres', 'cookie.accept': 'Tout accepter',
+      'cookie.cat.necessary': 'Nécessaires',
+      'cookie.cat.necessary.desc': 'Assurent le fonctionnement de base du site — par exemple la mémorisation de ta décision dans la bannière cookies.',
+      'cookie.cat.analytics': 'Analytiques',
+      'cookie.cat.analytics.desc': 'Google Analytics — statistiques anonymisées sur la fréquentation du site.',
+      'cookie.cat.marketing': 'Marketing',
+      'cookie.cat.marketing.desc': "Meta Pixel et Google Ads — mesure de l'efficacité des publicités.",
+      'cookie.always_on': 'Toujours actifs',
+      'cookie.save': 'Enregistrer la sélection'
+    },
+    es: {
+      'nav.features': 'Funciones', 'nav.about': 'Sobre la app', 'nav.contact': 'Contacto',
+      'hero.title': 'Todos tus perfiles favoritos<br>en <span class="accent">un solo lugar</span>',
+      'hero.sub': 'MeshyNet limpia tu feed de Facebook, Instagram y YouTube — sin contenido impuesto y sin algoritmos que decidan por ti.',
+      'hero.note': 'Gratis · 3 perfiles en la versión básica · <span class="ios-note">Versión iOS próximamente</span>',
+      'download.prefix': 'Descargar para', 'download.ios': 'Versión iOS próximamente',
+      'nav.download': 'Descargar', 'nav.download.disabled': 'Próximamente',
+      'feature.1.title': 'Un feed limpio para todo',
+      'feature.1.desc': 'Facebook, Instagram y YouTube en una sola app. Sin publicaciones sugeridas, sin algoritmos.',
+      'feature.2.title': 'Filtro por perfiles',
+      'feature.2.desc': 'Elige solo los perfiles públicos que realmente te interesan. Sin ruido — solo el contenido que quieres seguir.',
+      'feature.3.title': 'Sin algoritmos',
+      'feature.3.desc': 'Ves solo lo que realmente te interesa. Sin recomendaciones, sin manipulación de tu atención.',
+      'footer.tagline': 'Un feed limpio de redes sociales. Sin algoritmos, sin contenido impuesto, sin distracciones.',
+      'footer.product': 'Producto', 'footer.legal': 'Legal', 'footer.contact': 'Contacto',
+      'footer.functions': 'Funciones', 'footer.price': 'Precio',
+      'footer.terms': 'Términos de uso', 'footer.privacy': 'Privacidad',
+      'footer.cookies': 'Configuración de cookies', 'footer.impressum': 'Aviso legal',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Usamos cookies',
+      'cookie.body': 'Las cookies analíticas y de marketing nos ayudan a saber cuántas personas descargan la app. Las cookies técnicamente necesarias están siempre activas. <a href="#">Más información</a>',
+      'cookie.reject': 'Rechazar', 'cookie.settings': 'Configuración', 'cookie.accept': 'Aceptar todo',
+      'cookie.cat.necessary': 'Necesarias',
+      'cookie.cat.necessary.desc': 'Garantizan el funcionamiento básico del sitio web — por ejemplo, recordar tu decisión en el banner de cookies.',
+      'cookie.cat.analytics': 'Analíticas',
+      'cookie.cat.analytics.desc': 'Google Analytics — estadísticas anonimizadas sobre las visitas al sitio.',
+      'cookie.cat.marketing': 'Marketing',
+      'cookie.cat.marketing.desc': 'Meta Pixel y Google Ads — medición de la eficacia de la publicidad.',
+      'cookie.always_on': 'Siempre activas',
+      'cookie.save': 'Guardar selección'
+    },
+    it: {
+      'nav.features': 'Funzionalità', 'nav.about': 'Informazioni', 'nav.contact': 'Contatti',
+      'hero.title': 'Tutti i tuoi profili preferiti<br>in <span class="accent">un unico posto</span>',
+      'hero.sub': 'MeshyNet ti ripulisce il feed di Facebook, Instagram e YouTube — senza contenuti imposti e senza algoritmi che decidono per te.',
+      'hero.note': 'Gratis · 3 profili nella versione base · <span class="ios-note">Versione iOS in arrivo</span>',
+      'download.prefix': 'Scarica per', 'download.ios': 'Versione iOS in arrivo',
+      'nav.download': 'Scarica', 'nav.download.disabled': 'In arrivo',
+      'feature.1.title': 'Un feed pulito per tutto',
+      'feature.1.desc': "Facebook, Instagram e YouTube in un'unica app. Nessun post suggerito, nessun algoritmo.",
+      'feature.2.title': 'Filtro per profili',
+      'feature.2.desc': 'Scegli solo i profili pubblici che ti interessano davvero. Nessun rumore — solo i contenuti che vuoi seguire.',
+      'feature.3.title': 'Senza algoritmi',
+      'feature.3.desc': "Vedi solo quello che ti interessa davvero. Nessuna raccomandazione, nessuna manipolazione dell'attenzione.",
+      'footer.tagline': 'Un feed ripulito dai social. Senza algoritmi, senza contenuti imposti, senza distrazioni.',
+      'footer.product': 'Prodotto', 'footer.legal': 'Legale', 'footer.contact': 'Contatti',
+      'footer.functions': 'Funzionalità', 'footer.price': 'Prezzo',
+      'footer.terms': 'Termini di servizio', 'footer.privacy': 'Privacy',
+      'footer.cookies': 'Impostazioni cookie', 'footer.impressum': 'Note legali',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Usiamo i cookie',
+      'cookie.body': "I cookie analitici e di marketing ci aiutano a sapere quante persone scaricano l'app. I cookie tecnicamente necessari sono sempre attivi. <a href=\"#\">Maggiori informazioni</a>",
+      'cookie.reject': 'Rifiuta', 'cookie.settings': 'Impostazioni', 'cookie.accept': 'Accetta tutto',
+      'cookie.cat.necessary': 'Necessari',
+      'cookie.cat.necessary.desc': 'Garantiscono il funzionamento di base del sito — ad esempio ricordare la tua scelta nel banner cookie.',
+      'cookie.cat.analytics': 'Analitici',
+      'cookie.cat.analytics.desc': 'Google Analytics — statistiche anonimizzate sulle visite al sito.',
+      'cookie.cat.marketing': 'Marketing',
+      'cookie.cat.marketing.desc': "Meta Pixel e Google Ads — misurazione dell'efficacia delle pubblicità.",
+      'cookie.always_on': 'Sempre attivi',
+      'cookie.save': 'Salva selezione'
+    },
+    pt: {
+      'nav.features': 'Funcionalidades', 'nav.about': 'Sobre', 'nav.contact': 'Contacto',
+      'hero.title': 'Todos os teus perfis favoritos<br>num <span class="accent">só lugar</span>',
+      'hero.sub': 'O MeshyNet limpa o teu feed do Facebook, Instagram e YouTube — sem conteúdo forçado e sem algoritmos que decidem por ti.',
+      'hero.note': 'Grátis · 3 perfis na versão básica · <span class="ios-note">Versão iOS em breve</span>',
+      'download.prefix': 'Transferir para', 'download.ios': 'Versão iOS em breve',
+      'nav.download': 'Transferir', 'nav.download.disabled': 'Em breve',
+      'feature.1.title': 'Um feed limpo para tudo',
+      'feature.1.desc': 'Facebook, Instagram e YouTube numa só app. Sem publicações sugeridas, sem algoritmos.',
+      'feature.2.title': 'Filtro por perfis',
+      'feature.2.desc': 'Escolhe só os perfis públicos que realmente te interessam. Sem ruído — só o conteúdo que queres seguir.',
+      'feature.3.title': 'Sem algoritmos',
+      'feature.3.desc': 'Vês apenas o que realmente te interessa. Sem recomendações, sem manipulação da tua atenção.',
+      'footer.tagline': 'Um feed limpo das redes sociais. Sem algoritmos, sem conteúdo forçado, sem distrações.',
+      'footer.product': 'Produto', 'footer.legal': 'Legal', 'footer.contact': 'Contacto',
+      'footer.functions': 'Funcionalidades', 'footer.price': 'Preço',
+      'footer.terms': 'Termos de utilização', 'footer.privacy': 'Privacidade',
+      'footer.cookies': 'Definições de cookies', 'footer.impressum': 'Aviso legal',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Usamos cookies',
+      'cookie.body': 'Os cookies analíticos e de marketing ajudam-nos a saber quantas pessoas transferem a app. Os cookies tecnicamente necessários estão sempre ativos. <a href="#">Mais informações</a>',
+      'cookie.reject': 'Rejeitar', 'cookie.settings': 'Definições', 'cookie.accept': 'Aceitar tudo',
+      'cookie.cat.necessary': 'Necessários',
+      'cookie.cat.necessary.desc': 'Garantem o funcionamento básico do site — por exemplo, lembrar a tua decisão no banner de cookies.',
+      'cookie.cat.analytics': 'Analíticos',
+      'cookie.cat.analytics.desc': 'Google Analytics — estatísticas anonimizadas sobre visitas ao site.',
+      'cookie.cat.marketing': 'Marketing',
+      'cookie.cat.marketing.desc': 'Meta Pixel e Google Ads — medição da eficácia da publicidade.',
+      'cookie.always_on': 'Sempre ativos',
+      'cookie.save': 'Guardar seleção'
+    },
+    nl: {
+      'nav.features': 'Functies', 'nav.about': 'Over', 'nav.contact': 'Contact',
+      'hero.title': 'Al je favoriete profielen<br>op één <span class="accent">plek</span>',
+      'hero.sub': 'MeshyNet ruimt je feed van Facebook, Instagram en YouTube op — zonder opgedrongen content en zonder algoritmes die voor jou beslissen.',
+      'hero.note': 'Gratis · 3 profielen in de basisversie · <span class="ios-note">iOS-versie binnenkort</span>',
+      'download.prefix': 'Downloaden voor', 'download.ios': 'iOS-versie binnenkort',
+      'nav.download': 'Downloaden', 'nav.download.disabled': 'Binnenkort',
+      'feature.1.title': 'Eén schone feed voor alles',
+      'feature.1.desc': 'Facebook, Instagram en YouTube in één app. Geen voorgestelde berichten, geen algoritmes.',
+      'feature.2.title': 'Filteren op profielen',
+      'feature.2.desc': 'Kies alleen de openbare profielen die je echt interesseren. Geen ruis — alleen de content die je wilt volgen.',
+      'feature.3.title': 'Zonder algoritmes',
+      'feature.3.desc': 'Je ziet alleen wat je echt interesseert. Geen aanbevelingen, geen manipulatie van je aandacht.',
+      'footer.tagline': 'Een opgeruimde feed van sociale netwerken. Zonder algoritmes, zonder opgedrongen content, zonder afleidingen.',
+      'footer.product': 'Product', 'footer.legal': 'Juridisch', 'footer.contact': 'Contact',
+      'footer.functions': 'Functies', 'footer.price': 'Prijs',
+      'footer.terms': 'Gebruiksvoorwaarden', 'footer.privacy': 'Privacy',
+      'footer.cookies': 'Cookie-instellingen', 'footer.impressum': 'Colofon',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'We gebruiken cookies',
+      'cookie.body': 'Analytische en marketingcookies helpen ons te begrijpen hoeveel mensen de app downloaden. Technisch noodzakelijke cookies zijn altijd actief. <a href="#">Meer informatie</a>',
+      'cookie.reject': 'Weigeren', 'cookie.settings': 'Instellingen', 'cookie.accept': 'Alles accepteren',
+      'cookie.cat.necessary': 'Noodzakelijk',
+      'cookie.cat.necessary.desc': 'Zorgen voor het basisfunctioneren van de website — bijvoorbeeld het onthouden van je keuze in de cookie-banner.',
+      'cookie.cat.analytics': 'Analytisch',
+      'cookie.cat.analytics.desc': 'Google Analytics — geanonimiseerde statistieken over websitebezoeken.',
+      'cookie.cat.marketing': 'Marketing',
+      'cookie.cat.marketing.desc': 'Meta Pixel en Google Ads — meten van de effectiviteit van advertenties.',
+      'cookie.always_on': 'Altijd actief',
+      'cookie.save': 'Selectie opslaan'
+    },
+    pl: {
+      'nav.features': 'Funkcje', 'nav.about': 'O aplikacji', 'nav.contact': 'Kontakt',
+      'hero.title': 'Wszystkie ulubione profile<br>w <span class="accent">jednym miejscu</span>',
+      'hero.sub': 'MeshyNet wyczyści Twój feed z Facebooka, Instagrama i YouTube — bez wymuszonych treści i algorytmów, które decydują za Ciebie.',
+      'hero.note': 'Za darmo · 3 profile w wersji podstawowej · <span class="ios-note">Wersja iOS wkrótce</span>',
+      'download.prefix': 'Pobierz na', 'download.ios': 'Wersja iOS wkrótce',
+      'nav.download': 'Pobierz', 'nav.download.disabled': 'Wkrótce',
+      'feature.1.title': 'Czysty feed dla wszystkiego',
+      'feature.1.desc': 'Facebook, Instagram i YouTube w jednej aplikacji. Bez sugerowanych postów, bez algorytmów.',
+      'feature.2.title': 'Filtruj po profilach',
+      'feature.2.desc': 'Wybierz tylko te publiczne profile, które naprawdę Cię interesują. Bez szumu — tylko treści, które chcesz śledzić.',
+      'feature.3.title': 'Bez algorytmów',
+      'feature.3.desc': 'Widzisz tylko to, co naprawdę Cię interesuje. Bez rekomendacji, bez manipulacji uwagą.',
+      'footer.tagline': 'Czysty feed z sieci społecznościowych. Bez algorytmów, bez wymuszonych treści, bez rozpraszaczy.',
+      'footer.product': 'Produkt', 'footer.legal': 'Prawne', 'footer.contact': 'Kontakt',
+      'footer.functions': 'Funkcje', 'footer.price': 'Cena',
+      'footer.terms': 'Warunki korzystania', 'footer.privacy': 'Polityka prywatności',
+      'footer.cookies': 'Ustawienia cookies', 'footer.impressum': 'Stopka redakcyjna',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Używamy plików cookie',
+      'cookie.body': 'Analityczne i marketingowe pliki cookie pomagają nam zrozumieć, ile osób pobiera aplikację. Technicznie niezbędne pliki cookie są zawsze aktywne. <a href="#">Dowiedz się więcej</a>',
+      'cookie.reject': 'Odrzuć', 'cookie.settings': 'Ustawienia', 'cookie.accept': 'Akceptuj wszystko',
+      'cookie.cat.necessary': 'Niezbędne',
+      'cookie.cat.necessary.desc': 'Zapewniają podstawowe funkcjonowanie strony — na przykład zapamiętanie Twojej decyzji w banerze cookies.',
+      'cookie.cat.analytics': 'Analityczne',
+      'cookie.cat.analytics.desc': 'Google Analytics — zanonimizowane statystyki dotyczące odwiedzin strony.',
+      'cookie.cat.marketing': 'Marketingowe',
+      'cookie.cat.marketing.desc': 'Meta Pixel i Google Ads — pomiar skuteczności reklam.',
+      'cookie.always_on': 'Zawsze aktywne',
+      'cookie.save': 'Zapisz wybór'
+    },
+    hu: {
+      'nav.features': 'Funkciók', 'nav.about': 'Az alkalmazásról', 'nav.contact': 'Kapcsolat',
+      'hero.title': 'Minden kedvenc profilod<br>egy <span class="accent">helyen</span>',
+      'hero.sub': 'A MeshyNet kitisztítja a Facebook, Instagram és YouTube feededet — kényszerített tartalom és algoritmusok nélkül, amelyek helyetted döntenek.',
+      'hero.note': 'Ingyenes · 3 profil az alapváltozatban · <span class="ios-note">iOS verzió hamarosan</span>',
+      'download.prefix': 'Letöltés:', 'download.ios': 'iOS verzió hamarosan',
+      'nav.download': 'Letöltés', 'nav.download.disabled': 'Hamarosan',
+      'feature.1.title': 'Egy tiszta feed mindenhez',
+      'feature.1.desc': 'Facebook, Instagram és YouTube egyetlen appban. Semmilyen javasolt bejegyzés, semmilyen algoritmus.',
+      'feature.2.title': 'Szűrés profilok szerint',
+      'feature.2.desc': 'Csak azokat a nyilvános profilokat válaszd, amelyek valóban érdekelnek. Nincs zaj — csak a tartalom, amit követni szeretnél.',
+      'feature.3.title': 'Algoritmusok nélkül',
+      'feature.3.desc': 'Csak azt látod, ami valóban érdekel. Nincs ajánlás, nincs figyelemmanipuláció.',
+      'footer.tagline': 'Megtisztított feed a közösségi hálózatokról. Algoritmusok, kényszerített tartalom és zavaró elemek nélkül.',
+      'footer.product': 'Termék', 'footer.legal': 'Jogi', 'footer.contact': 'Kapcsolat',
+      'footer.functions': 'Funkciók', 'footer.price': 'Ár',
+      'footer.terms': 'Felhasználási feltételek', 'footer.privacy': 'Adatvédelem',
+      'footer.cookies': 'Süti beállítások', 'footer.impressum': 'Impresszum',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Sütiket használunk',
+      'cookie.body': 'Az analitikai és marketing sütik segítenek megérteni, hányan töltik le az alkalmazást. A technikailag szükséges sütik mindig aktívak. <a href="#">További információ</a>',
+      'cookie.reject': 'Elutasítás', 'cookie.settings': 'Beállítások', 'cookie.accept': 'Mindet elfogadom',
+      'cookie.cat.necessary': 'Szükséges',
+      'cookie.cat.necessary.desc': 'Biztosítják a weboldal alapvető működését — például a cookie banneren hozott döntésed megjegyzését.',
+      'cookie.cat.analytics': 'Analitikai',
+      'cookie.cat.analytics.desc': 'Google Analytics — anonimizált statisztikák a weboldal látogatottságáról.',
+      'cookie.cat.marketing': 'Marketing',
+      'cookie.cat.marketing.desc': 'Meta Pixel és Google Ads — a reklámok hatékonyságának mérése.',
+      'cookie.always_on': 'Mindig aktív',
+      'cookie.save': 'Választás mentése'
+    },
+    ro: {
+      'nav.features': 'Funcții', 'nav.about': 'Despre aplicație', 'nav.contact': 'Contact',
+      'hero.title': 'Toate profilurile tale preferate<br>într-un singur <span class="accent">loc</span>',
+      'hero.sub': 'MeshyNet îți curăță feed-ul de pe Facebook, Instagram și YouTube — fără conținut impus și fără algoritmi care decid în locul tău.',
+      'hero.note': 'Gratuit · 3 profiluri în versiunea de bază · <span class="ios-note">Versiunea iOS în curând</span>',
+      'download.prefix': 'Descarcă pentru', 'download.ios': 'Versiunea iOS în curând',
+      'nav.download': 'Descarcă', 'nav.download.disabled': 'În curând',
+      'feature.1.title': 'Un feed curat pentru tot',
+      'feature.1.desc': 'Facebook, Instagram și YouTube într-o singură aplicație. Fără postări sugerate, fără algoritmi.',
+      'feature.2.title': 'Filtru după profiluri',
+      'feature.2.desc': 'Alege doar profilurile publice care chiar te interesează. Fără zgomot — doar conținutul pe care vrei să-l urmărești.',
+      'feature.3.title': 'Fără algoritmi',
+      'feature.3.desc': 'Vezi doar ce te interesează cu adevărat. Fără recomandări, fără manipularea atenției.',
+      'footer.tagline': 'Un feed curat de pe rețelele sociale. Fără algoritmi, fără conținut impus, fără distrageri.',
+      'footer.product': 'Produs', 'footer.legal': 'Legal', 'footer.contact': 'Contact',
+      'footer.functions': 'Funcții', 'footer.price': 'Preț',
+      'footer.terms': 'Termeni de utilizare', 'footer.privacy': 'Confidențialitate',
+      'footer.cookies': 'Setări cookie', 'footer.impressum': 'Date juridice',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Folosim cookie-uri',
+      'cookie.body': 'Cookie-urile analitice și de marketing ne ajută să înțelegem câți oameni descarcă aplicația. Cookie-urile tehnic necesare sunt întotdeauna active. <a href="#">Mai multe informații</a>',
+      'cookie.reject': 'Refuză', 'cookie.settings': 'Setări', 'cookie.accept': 'Acceptă tot',
+      'cookie.cat.necessary': 'Necesare',
+      'cookie.cat.necessary.desc': 'Asigură funcționarea de bază a site-ului — de exemplu, memorarea deciziei tale din bannerul cookie.',
+      'cookie.cat.analytics': 'Analitice',
+      'cookie.cat.analytics.desc': 'Google Analytics — statistici anonimizate despre vizitele site-ului.',
+      'cookie.cat.marketing': 'Marketing',
+      'cookie.cat.marketing.desc': 'Meta Pixel și Google Ads — măsurarea eficacității publicității.',
+      'cookie.always_on': 'Întotdeauna active',
+      'cookie.save': 'Salvează selecția'
+    },
+    hr: {
+      'nav.features': 'Značajke', 'nav.about': 'O aplikaciji', 'nav.contact': 'Kontakt',
+      'hero.title': 'Svi tvoji omiljeni profili<br>na jednom <span class="accent">mjestu</span>',
+      'hero.sub': 'MeshyNet ti čisti feed s Facebooka, Instagrama i YouTubea — bez nametnutog sadržaja i bez algoritama koji odlučuju umjesto tebe.',
+      'hero.note': 'Besplatno · 3 profila u osnovnoj verziji · <span class="ios-note">iOS verzija uskoro</span>',
+      'download.prefix': 'Preuzmi za', 'download.ios': 'iOS verzija uskoro',
+      'nav.download': 'Preuzmi', 'nav.download.disabled': 'Uskoro',
+      'feature.1.title': 'Čisti feed za sve',
+      'feature.1.desc': 'Facebook, Instagram i YouTube u jednoj aplikaciji. Bez predloženih objava, bez algoritama.',
+      'feature.2.title': 'Filtar po profilima',
+      'feature.2.desc': 'Odaberi samo one javne profile koji te stvarno zanimaju. Bez šuma — samo sadržaj koji želiš pratiti.',
+      'feature.3.title': 'Bez algoritama',
+      'feature.3.desc': 'Vidiš samo ono što te stvarno zanima. Bez preporuka, bez manipulacije pažnjom.',
+      'footer.tagline': 'Pročišćen feed s društvenih mreža. Bez algoritama, bez nametnutog sadržaja, bez ometanja.',
+      'footer.product': 'Proizvod', 'footer.legal': 'Pravno', 'footer.contact': 'Kontakt',
+      'footer.functions': 'Značajke', 'footer.price': 'Cijena',
+      'footer.terms': 'Uvjeti korištenja', 'footer.privacy': 'Privatnost',
+      'footer.cookies': 'Postavke kolačića', 'footer.impressum': 'Impresum',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Koristimo kolačiće',
+      'cookie.body': 'Analitički i marketinški kolačići pomažu nam razumjeti koliko ljudi preuzima aplikaciju. Tehnički nužni kolačići uvijek su aktivni. <a href="#">Više informacija</a>',
+      'cookie.reject': 'Odbij', 'cookie.settings': 'Postavke', 'cookie.accept': 'Prihvati sve',
+      'cookie.cat.necessary': 'Nužni',
+      'cookie.cat.necessary.desc': 'Osiguravaju osnovno funkcioniranje web stranice — primjerice pamćenje tvoje odluke u cookie baneru.',
+      'cookie.cat.analytics': 'Analitički',
+      'cookie.cat.analytics.desc': 'Google Analytics — anonimizirana statistika o posjetima stranice.',
+      'cookie.cat.marketing': 'Marketinški',
+      'cookie.cat.marketing.desc': 'Meta Pixel i Google Ads — mjerenje učinkovitosti oglašavanja.',
+      'cookie.always_on': 'Uvijek aktivni',
+      'cookie.save': 'Spremi odabir'
+    },
+    sl: {
+      'nav.features': 'Funkcije', 'nav.about': 'O aplikaciji', 'nav.contact': 'Kontakt',
+      'hero.title': 'Vsi tvoji najljubši profili<br>na enem <span class="accent">mestu</span>',
+      'hero.sub': 'MeshyNet ti počisti feed s Facebooka, Instagrama in YouTuba — brez vsiljene vsebine in brez algoritmov, ki odločajo namesto tebe.',
+      'hero.note': 'Brezplačno · 3 profili v osnovni različici · <span class="ios-note">Različica iOS kmalu</span>',
+      'download.prefix': 'Prenesi za', 'download.ios': 'Različica iOS kmalu',
+      'nav.download': 'Prenesi', 'nav.download.disabled': 'Kmalu',
+      'feature.1.title': 'Čist feed za vse',
+      'feature.1.desc': 'Facebook, Instagram in YouTube v eni aplikaciji. Brez predlaganih objav, brez algoritmov.',
+      'feature.2.title': 'Filter po profilih',
+      'feature.2.desc': 'Izberi samo tiste javne profile, ki te resnično zanimajo. Brez šuma — samo vsebina, ki ji želiš slediti.',
+      'feature.3.title': 'Brez algoritmov',
+      'feature.3.desc': 'Vidiš samo to, kar te resnično zanima. Brez priporočil, brez manipulacije pozornosti.',
+      'footer.tagline': 'Očiščen feed iz socialnih omrežij. Brez algoritmov, brez vsiljene vsebine, brez motenj.',
+      'footer.product': 'Izdelek', 'footer.legal': 'Pravno', 'footer.contact': 'Kontakt',
+      'footer.functions': 'Funkcije', 'footer.price': 'Cena',
+      'footer.terms': 'Pogoji uporabe', 'footer.privacy': 'Zasebnost',
+      'footer.cookies': 'Nastavitve piškotkov', 'footer.impressum': 'Impressum',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Uporabljamo piškotke',
+      'cookie.body': 'Analitični in marketinški piškotki nam pomagajo razumeti, koliko ljudi prenese aplikacijo. Tehnično potrebni piškotki so vedno aktivni. <a href="#">Več informacij</a>',
+      'cookie.reject': 'Zavrni', 'cookie.settings': 'Nastavitve', 'cookie.accept': 'Sprejmi vse',
+      'cookie.cat.necessary': 'Nujni',
+      'cookie.cat.necessary.desc': 'Zagotavljajo osnovno delovanje spletne strani — na primer pomnjenje tvoje odločitve v cookie pasici.',
+      'cookie.cat.analytics': 'Analitični',
+      'cookie.cat.analytics.desc': 'Google Analytics — anonimizirana statistika o obiskih strani.',
+      'cookie.cat.marketing': 'Marketinški',
+      'cookie.cat.marketing.desc': 'Meta Pixel in Google Ads — merjenje učinkovitosti oglaševanja.',
+      'cookie.always_on': 'Vedno aktivni',
+      'cookie.save': 'Shrani izbiro'
+    },
+    bg: {
+      'nav.features': 'Функции', 'nav.about': 'За приложението', 'nav.contact': 'Контакт',
+      'hero.title': 'Всички твои любими<br>профили на <span class="accent">едно място</span>',
+      'hero.sub': 'MeshyNet ти изчиства фийда от Facebook, Instagram и YouTube — без наложено съдържание и без алгоритми, които решават вместо теб.',
+      'hero.note': 'Безплатно · 3 профила в базовата версия · <span class="ios-note">iOS версията скоро</span>',
+      'download.prefix': 'Изтегли за', 'download.ios': 'iOS версията скоро',
+      'nav.download': 'Изтегли', 'nav.download.disabled': 'Скоро',
+      'feature.1.title': 'Чист фийд за всичко',
+      'feature.1.desc': 'Facebook, Instagram и YouTube в едно приложение. Без предложени публикации, без алгоритми.',
+      'feature.2.title': 'Филтър по профили',
+      'feature.2.desc': 'Избери само публичните профили, които наистина те интересуват. Без шум — само съдържанието, което искаш да следиш.',
+      'feature.3.title': 'Без алгоритми',
+      'feature.3.desc': 'Виждаш само това, което наистина те интересува. Без препоръки, без манипулиране на вниманието.',
+      'footer.tagline': 'Изчистен фийд от социалните мрежи. Без алгоритми, без наложено съдържание, без разсейвания.',
+      'footer.product': 'Продукт', 'footer.legal': 'Правни', 'footer.contact': 'Контакт',
+      'footer.functions': 'Функции', 'footer.price': 'Цена',
+      'footer.terms': 'Условия за ползване', 'footer.privacy': 'Поверителност',
+      'footer.cookies': 'Настройки на бисквитки', 'footer.impressum': 'Импресум',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Използваме бисквитки',
+      'cookie.body': 'Аналитичните и маркетинговите бисквитки ни помагат да разберем колко хора са изтеглили приложението. Технически необходимите бисквитки са винаги активни. <a href="#">Повече информация</a>',
+      'cookie.reject': 'Отказване', 'cookie.settings': 'Настройки', 'cookie.accept': 'Приемам всички',
+      'cookie.cat.necessary': 'Необходими',
+      'cookie.cat.necessary.desc': 'Осигуряват основното функциониране на сайта — например запомняне на твоето решение в банера за бисквитки.',
+      'cookie.cat.analytics': 'Аналитични',
+      'cookie.cat.analytics.desc': 'Google Analytics — анонимизирани статистики за посещенията на сайта.',
+      'cookie.cat.marketing': 'Маркетингови',
+      'cookie.cat.marketing.desc': 'Meta Pixel и Google Ads — измерване на ефективността на рекламите.',
+      'cookie.always_on': 'Винаги активни',
+      'cookie.save': 'Запази избора'
+    },
+    el: {
+      'nav.features': 'Λειτουργίες', 'nav.about': 'Σχετικά', 'nav.contact': 'Επικοινωνία',
+      'hero.title': 'Όλα τα αγαπημένα σου προφίλ<br>σε ένα <span class="accent">μέρος</span>',
+      'hero.sub': 'Το MeshyNet καθαρίζει το feed σου από Facebook, Instagram και YouTube — χωρίς επιβεβλημένο περιεχόμενο και χωρίς αλγορίθμους που αποφασίζουν για σένα.',
+      'hero.note': 'Δωρεάν · 3 προφίλ στη βασική έκδοση · <span class="ios-note">Έκδοση iOS σύντομα</span>',
+      'download.prefix': 'Λήψη για', 'download.ios': 'Έκδοση iOS σύντομα',
+      'nav.download': 'Λήψη', 'nav.download.disabled': 'Σύντομα',
+      'feature.1.title': 'Ένα καθαρό feed για όλα',
+      'feature.1.desc': 'Facebook, Instagram και YouTube σε μία εφαρμογή. Καμία προτεινόμενη δημοσίευση, κανένας αλγόριθμος.',
+      'feature.2.title': 'Φίλτρο ανά προφίλ',
+      'feature.2.desc': 'Επίλεξε μόνο τα δημόσια προφίλ που πραγματικά σε ενδιαφέρουν. Χωρίς θόρυβο — μόνο το περιεχόμενο που θέλεις να παρακολουθείς.',
+      'feature.3.title': 'Χωρίς αλγορίθμους',
+      'feature.3.desc': 'Βλέπεις μόνο αυτό που πραγματικά σε ενδιαφέρει. Χωρίς προτάσεις, χωρίς χειραγώγηση της προσοχής σου.',
+      'footer.tagline': 'Ένα καθαρό feed από τα κοινωνικά δίκτυα. Χωρίς αλγορίθμους, χωρίς επιβεβλημένο περιεχόμενο, χωρίς αποσπάσεις.',
+      'footer.product': 'Προϊόν', 'footer.legal': 'Νομικά', 'footer.contact': 'Επικοινωνία',
+      'footer.functions': 'Λειτουργίες', 'footer.price': 'Τιμή',
+      'footer.terms': 'Όροι χρήσης', 'footer.privacy': 'Απόρρητο',
+      'footer.cookies': 'Ρυθμίσεις cookie', 'footer.impressum': 'Νομικά στοιχεία',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Χρησιμοποιούμε cookies',
+      'cookie.body': 'Τα αναλυτικά cookies και cookies μάρκετινγκ μας βοηθούν να καταλάβουμε πόσοι κατεβάζουν την εφαρμογή. Τα τεχνικά απαραίτητα cookies είναι πάντα ενεργά. <a href="#">Μάθε περισσότερα</a>',
+      'cookie.reject': 'Απόρριψη', 'cookie.settings': 'Ρυθμίσεις', 'cookie.accept': 'Αποδοχή όλων',
+      'cookie.cat.necessary': 'Απαραίτητα',
+      'cookie.cat.necessary.desc': 'Διασφαλίζουν τη βασική λειτουργία του ιστότοπου — για παράδειγμα την απομνημόνευση της απόφασής σου στο cookie banner.',
+      'cookie.cat.analytics': 'Αναλυτικά',
+      'cookie.cat.analytics.desc': 'Google Analytics — ανωνυμοποιημένα στατιστικά για τις επισκέψεις στον ιστότοπο.',
+      'cookie.cat.marketing': 'Μάρκετινγκ',
+      'cookie.cat.marketing.desc': 'Meta Pixel και Google Ads — μέτρηση αποτελεσματικότητας διαφημίσεων.',
+      'cookie.always_on': 'Πάντα ενεργά',
+      'cookie.save': 'Αποθήκευση επιλογής'
+    },
+    da: {
+      'nav.features': 'Funktioner', 'nav.about': 'Om appen', 'nav.contact': 'Kontakt',
+      'hero.title': 'Alle dine yndlingsprofiler<br>ét <span class="accent">sted</span>',
+      'hero.sub': 'MeshyNet rydder op i dit feed fra Facebook, Instagram og YouTube — uden påtvunget indhold og uden algoritmer, der bestemmer for dig.',
+      'hero.note': 'Gratis · 3 profiler i basisversionen · <span class="ios-note">iOS-version kommer snart</span>',
+      'download.prefix': 'Download til', 'download.ios': 'iOS-version kommer snart',
+      'nav.download': 'Download', 'nav.download.disabled': 'Kommer snart',
+      'feature.1.title': 'Ét rent feed til det hele',
+      'feature.1.desc': 'Facebook, Instagram og YouTube i én app. Ingen foreslåede opslag, ingen algoritmer.',
+      'feature.2.title': 'Filtrér efter profiler',
+      'feature.2.desc': 'Vælg kun de offentlige profiler, som virkelig interesserer dig. Ingen støj — kun det indhold, du vil følge.',
+      'feature.3.title': 'Uden algoritmer',
+      'feature.3.desc': 'Du ser kun det, der virkelig interesserer dig. Ingen anbefalinger, ingen manipulation af din opmærksomhed.',
+      'footer.tagline': 'Et oprydnet feed fra sociale medier. Uden algoritmer, uden påtvunget indhold, uden distraktioner.',
+      'footer.product': 'Produkt', 'footer.legal': 'Juridisk', 'footer.contact': 'Kontakt',
+      'footer.functions': 'Funktioner', 'footer.price': 'Pris',
+      'footer.terms': 'Brugsbetingelser', 'footer.privacy': 'Privatliv',
+      'footer.cookies': 'Cookie-indstillinger', 'footer.impressum': 'Kolofon',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Vi bruger cookies',
+      'cookie.body': 'Analytiske og marketingcookies hjælper os med at forstå, hvor mange der downloader appen. Teknisk nødvendige cookies er altid aktive. <a href="#">Læs mere</a>',
+      'cookie.reject': 'Afvis', 'cookie.settings': 'Indstillinger', 'cookie.accept': 'Accepter alle',
+      'cookie.cat.necessary': 'Nødvendige',
+      'cookie.cat.necessary.desc': 'Sikrer webstedets grundlæggende funktion — for eksempel at huske dit valg i cookie-banneret.',
+      'cookie.cat.analytics': 'Analyse',
+      'cookie.cat.analytics.desc': 'Google Analytics — anonymiseret statistik om besøg på webstedet.',
+      'cookie.cat.marketing': 'Marketing',
+      'cookie.cat.marketing.desc': 'Meta Pixel og Google Ads — måling af reklamernes effektivitet.',
+      'cookie.always_on': 'Altid aktive',
+      'cookie.save': 'Gem valg'
+    },
+    sv: {
+      'nav.features': 'Funktioner', 'nav.about': 'Om appen', 'nav.contact': 'Kontakt',
+      'hero.title': 'Alla dina favoritprofiler<br>på en <span class="accent">plats</span>',
+      'hero.sub': 'MeshyNet städar ditt flöde från Facebook, Instagram och YouTube — utan påtvingat innehåll och utan algoritmer som bestämmer åt dig.',
+      'hero.note': 'Gratis · 3 profiler i grundversionen · <span class="ios-note">iOS-version kommer snart</span>',
+      'download.prefix': 'Ladda ner för', 'download.ios': 'iOS-version kommer snart',
+      'nav.download': 'Ladda ner', 'nav.download.disabled': 'Kommer snart',
+      'feature.1.title': 'Ett rent flöde för allt',
+      'feature.1.desc': 'Facebook, Instagram och YouTube i en app. Inga föreslagna inlägg, inga algoritmer.',
+      'feature.2.title': 'Filtrera efter profiler',
+      'feature.2.desc': 'Välj bara de offentliga profiler som verkligen intresserar dig. Inget brus — bara innehållet du vill följa.',
+      'feature.3.title': 'Utan algoritmer',
+      'feature.3.desc': 'Du ser bara det som verkligen intresserar dig. Inga rekommendationer, ingen manipulation av din uppmärksamhet.',
+      'footer.tagline': 'Ett städat flöde från sociala nätverk. Utan algoritmer, utan påtvingat innehåll, utan distraktioner.',
+      'footer.product': 'Produkt', 'footer.legal': 'Juridiskt', 'footer.contact': 'Kontakt',
+      'footer.functions': 'Funktioner', 'footer.price': 'Pris',
+      'footer.terms': 'Användarvillkor', 'footer.privacy': 'Integritet',
+      'footer.cookies': 'Cookie-inställningar', 'footer.impressum': 'Impressum',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Vi använder cookies',
+      'cookie.body': 'Analys- och marknadsföringscookies hjälper oss att förstå hur många som laddar ner appen. Tekniskt nödvändiga cookies är alltid aktiva. <a href="#">Läs mer</a>',
+      'cookie.reject': 'Avvisa', 'cookie.settings': 'Inställningar', 'cookie.accept': 'Acceptera alla',
+      'cookie.cat.necessary': 'Nödvändiga',
+      'cookie.cat.necessary.desc': 'Säkerställer webbplatsens grundläggande funktion — till exempel att komma ihåg ditt val i cookie-bannern.',
+      'cookie.cat.analytics': 'Analys',
+      'cookie.cat.analytics.desc': 'Google Analytics — anonymiserad statistik om besök på webbplatsen.',
+      'cookie.cat.marketing': 'Marknadsföring',
+      'cookie.cat.marketing.desc': 'Meta Pixel och Google Ads — mätning av annonsernas effektivitet.',
+      'cookie.always_on': 'Alltid aktiva',
+      'cookie.save': 'Spara val'
+    },
+    fi: {
+      'nav.features': 'Ominaisuudet', 'nav.about': 'Tietoa', 'nav.contact': 'Yhteystiedot',
+      'hero.title': 'Kaikki suosikkiprofiilisi<br>yhdessä <span class="accent">paikassa</span>',
+      'hero.sub': 'MeshyNet siivoaa syötteesi Facebookista, Instagramista ja YouTubesta — ilman pakotettua sisältöä ja ilman algoritmeja, jotka päättävät puolestasi.',
+      'hero.note': 'Ilmainen · 3 profiilia perusversiossa · <span class="ios-note">iOS-versio tulossa pian</span>',
+      'download.prefix': 'Lataa:', 'download.ios': 'iOS-versio tulossa pian',
+      'nav.download': 'Lataa', 'nav.download.disabled': 'Tulossa pian',
+      'feature.1.title': 'Yksi siisti syöte kaikelle',
+      'feature.1.desc': 'Facebook, Instagram ja YouTube yhdessä sovelluksessa. Ei ehdotettuja julkaisuja, ei algoritmeja.',
+      'feature.2.title': 'Suodatus profiileittain',
+      'feature.2.desc': 'Valitse vain ne julkiset profiilit, jotka oikeasti kiinnostavat sinua. Ei melua — vain sisältö, jota haluat seurata.',
+      'feature.3.title': 'Ilman algoritmeja',
+      'feature.3.desc': 'Näet vain sen, mikä sinua oikeasti kiinnostaa. Ei suosituksia, ei huomion manipulointia.',
+      'footer.tagline': 'Siivottu syöte sosiaalisesta mediasta. Ilman algoritmeja, ilman pakotettua sisältöä, ilman häiriötekijöitä.',
+      'footer.product': 'Tuote', 'footer.legal': 'Lakitiedot', 'footer.contact': 'Yhteystiedot',
+      'footer.functions': 'Ominaisuudet', 'footer.price': 'Hinta',
+      'footer.terms': 'Käyttöehdot', 'footer.privacy': 'Tietosuoja',
+      'footer.cookies': 'Eväste-asetukset', 'footer.impressum': 'Lakitiedot',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Käytämme evästeitä',
+      'cookie.body': 'Analytiikka- ja markkinointievästeet auttavat meitä ymmärtämään, kuinka moni lataa sovelluksen. Teknisesti välttämättömät evästeet ovat aina aktiivisia. <a href="#">Lue lisää</a>',
+      'cookie.reject': 'Hylkää', 'cookie.settings': 'Asetukset', 'cookie.accept': 'Hyväksy kaikki',
+      'cookie.cat.necessary': 'Välttämättömät',
+      'cookie.cat.necessary.desc': 'Varmistavat sivuston perustoiminnan — esimerkiksi muistavat valintasi evästebannerissa.',
+      'cookie.cat.analytics': 'Analytiikka',
+      'cookie.cat.analytics.desc': 'Google Analytics — anonymisoidut tilastot sivuston vierailuista.',
+      'cookie.cat.marketing': 'Markkinointi',
+      'cookie.cat.marketing.desc': 'Meta Pixel ja Google Ads — mainosten tehokkuuden mittaaminen.',
+      'cookie.always_on': 'Aina aktiivisia',
+      'cookie.save': 'Tallenna valinta'
+    },
+    et: {
+      'nav.features': 'Funktsioonid', 'nav.about': 'Rakenduse kohta', 'nav.contact': 'Kontakt',
+      'hero.title': 'Kõik su lemmikprofiilid<br>ühes <span class="accent">kohas</span>',
+      'hero.sub': "MeshyNet puhastab su Facebook'i, Instagrami ja YouTube'i voogu — ilma pealesurutud sisuta ja ilma algoritmiteta, mis sinu eest otsustavad.",
+      'hero.note': 'Tasuta · 3 profiili põhiversioonis · <span class="ios-note">iOS-i versioon peagi</span>',
+      'download.prefix': 'Laadi alla:', 'download.ios': 'iOS-i versioon peagi',
+      'nav.download': 'Laadi alla', 'nav.download.disabled': 'Peagi',
+      'feature.1.title': 'Üks puhas voog kõigele',
+      'feature.1.desc': 'Facebook, Instagram ja YouTube ühes rakenduses. Pole soovitatud postitusi, pole algoritme.',
+      'feature.2.title': 'Filter profiilide järgi',
+      'feature.2.desc': 'Vali ainult need avalikud profiilid, mis sind tõeliselt huvitavad. Pole müra — ainult sisu, mida soovid jälgida.',
+      'feature.3.title': 'Ilma algoritmiteta',
+      'feature.3.desc': 'Näed ainult seda, mis sind tõeliselt huvitab. Pole soovitusi, pole tähelepanu manipuleerimist.',
+      'footer.tagline': 'Puhastatud voog sotsiaalvõrgustikest. Ilma algoritmiteta, ilma pealesurutud sisuta, ilma häirivate elementideta.',
+      'footer.product': 'Toode', 'footer.legal': 'Õiguslik', 'footer.contact': 'Kontakt',
+      'footer.functions': 'Funktsioonid', 'footer.price': 'Hind',
+      'footer.terms': 'Kasutustingimused', 'footer.privacy': 'Privaatsus',
+      'footer.cookies': 'Küpsiste sätted', 'footer.impressum': 'Õigusteave',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Kasutame küpsiseid',
+      'cookie.body': 'Analüütika- ja turundusküpsised aitavad meil mõista, kui paljud inimesed rakenduse alla laadivad. Tehniliselt vajalikud küpsised on alati aktiivsed. <a href="#">Loe rohkem</a>',
+      'cookie.reject': 'Lükka tagasi', 'cookie.settings': 'Sätted', 'cookie.accept': 'Nõustu kõigiga',
+      'cookie.cat.necessary': 'Vajalikud',
+      'cookie.cat.necessary.desc': 'Tagavad veebisaidi põhitoimingu — näiteks sinu otsuse meelespidamise küpsiste bänneril.',
+      'cookie.cat.analytics': 'Analüütika',
+      'cookie.cat.analytics.desc': 'Google Analytics — anonüümseks muudetud statistika veebisaidi külastuste kohta.',
+      'cookie.cat.marketing': 'Turundus',
+      'cookie.cat.marketing.desc': 'Meta Pixel ja Google Ads — reklaamide tõhususe mõõtmine.',
+      'cookie.always_on': 'Alati aktiivsed',
+      'cookie.save': 'Salvesta valik'
+    },
+    lv: {
+      'nav.features': 'Funkcijas', 'nav.about': 'Par lietotni', 'nav.contact': 'Kontakti',
+      'hero.title': 'Visi tavi mīļākie profili<br>vienā <span class="accent">vietā</span>',
+      'hero.sub': 'MeshyNet attīrīs tavu Facebook, Instagram un YouTube plūsmu — bez piespiestā satura un bez algoritmiem, kas izlemj tavā vietā.',
+      'hero.note': 'Bez maksas · 3 profili pamatversijā · <span class="ios-note">iOS versija drīzumā</span>',
+      'download.prefix': 'Lejupielādēt:', 'download.ios': 'iOS versija drīzumā',
+      'nav.download': 'Lejupielādēt', 'nav.download.disabled': 'Drīzumā',
+      'feature.1.title': 'Viena tīra plūsma visam',
+      'feature.1.desc': 'Facebook, Instagram un YouTube vienā lietotnē. Nav ieteikto ierakstu, nav algoritmu.',
+      'feature.2.title': 'Filtrs pēc profiliem',
+      'feature.2.desc': 'Izvēlies tikai tos publiskos profilus, kas tevi patiešām interesē. Bez trokšņa — tikai saturs, ko vēlies sekot.',
+      'feature.3.title': 'Bez algoritmiem',
+      'feature.3.desc': 'Redzi tikai to, kas tevi patiesi interesē. Nav ieteikumu, nav uzmanības manipulācijas.',
+      'footer.tagline': 'Tīra plūsma no sociālajiem tīkliem. Bez algoritmiem, bez piespiestā satura, bez traucēkļiem.',
+      'footer.product': 'Produkts', 'footer.legal': 'Juridiskā informācija', 'footer.contact': 'Kontakti',
+      'footer.functions': 'Funkcijas', 'footer.price': 'Cena',
+      'footer.terms': 'Lietošanas noteikumi', 'footer.privacy': 'Privātums',
+      'footer.cookies': 'Sīkfailu iestatījumi', 'footer.impressum': 'Impressum',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Mēs izmantojam sīkfailus',
+      'cookie.body': 'Analītiskie un mārketinga sīkfaili palīdz mums saprast, cik daudz cilvēku lejupielādē lietotni. Tehniski nepieciešamie sīkfaili vienmēr ir aktīvi. <a href="#">Uzzināt vairāk</a>',
+      'cookie.reject': 'Noraidīt', 'cookie.settings': 'Iestatījumi', 'cookie.accept': 'Pieņemt visus',
+      'cookie.cat.necessary': 'Nepieciešamie',
+      'cookie.cat.necessary.desc': 'Nodrošina vietnes pamatfunkciju — piemēram, atceras tavu izvēli sīkfailu logā.',
+      'cookie.cat.analytics': 'Analītiskie',
+      'cookie.cat.analytics.desc': 'Google Analytics — anonimizēta statistika par vietnes apmeklējumiem.',
+      'cookie.cat.marketing': 'Mārketinga',
+      'cookie.cat.marketing.desc': 'Meta Pixel un Google Ads — reklāmu efektivitātes mērīšana.',
+      'cookie.always_on': 'Vienmēr aktīvi',
+      'cookie.save': 'Saglabāt izvēli'
+    },
+    lt: {
+      'nav.features': 'Funkcijos', 'nav.about': 'Apie programėlę', 'nav.contact': 'Kontaktai',
+      'hero.title': 'Visi mėgstami profiliai<br>vienoje <span class="accent">vietoje</span>',
+      'hero.sub': 'MeshyNet išvalys tavo Facebook, Instagram ir YouTube srautą — be primesto turinio ir be algoritmų, kurie sprendžia už tave.',
+      'hero.note': 'Nemokamai · 3 profiliai pagrindinėje versijoje · <span class="ios-note">iOS versija netrukus</span>',
+      'download.prefix': 'Atsisiųsti:', 'download.ios': 'iOS versija netrukus',
+      'nav.download': 'Atsisiųsti', 'nav.download.disabled': 'Netrukus',
+      'feature.1.title': 'Vienas švarus srautas viskam',
+      'feature.1.desc': 'Facebook, Instagram ir YouTube vienoje programėlėje. Jokių siūlomų įrašų, jokių algoritmų.',
+      'feature.2.title': 'Filtras pagal profilius',
+      'feature.2.desc': 'Pasirink tik tuos viešus profilius, kurie tave iš tiesų domina. Be triukšmo — tik turinys, kurį nori sekti.',
+      'feature.3.title': 'Be algoritmų',
+      'feature.3.desc': 'Matai tik tai, kas tau iš tiesų svarbu. Jokių rekomendacijų, jokio dėmesio manipuliavimo.',
+      'footer.tagline': 'Išvalytas srautas iš socialinių tinklų. Be algoritmų, be primesto turinio, be blaškančių elementų.',
+      'footer.product': 'Produktas', 'footer.legal': 'Teisinė', 'footer.contact': 'Kontaktai',
+      'footer.functions': 'Funkcijos', 'footer.price': 'Kaina',
+      'footer.terms': 'Naudojimo sąlygos', 'footer.privacy': 'Privatumas',
+      'footer.cookies': 'Slapukų nustatymai', 'footer.impressum': 'Impressum',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Naudojame slapukus',
+      'cookie.body': 'Analitiniai ir rinkodaros slapukai padeda suprasti, kiek žmonių atsisiunčia programėlę. Techniškai būtini slapukai visada aktyvūs. <a href="#">Sužinoti daugiau</a>',
+      'cookie.reject': 'Atmesti', 'cookie.settings': 'Nustatymai', 'cookie.accept': 'Priimti visus',
+      'cookie.cat.necessary': 'Būtini',
+      'cookie.cat.necessary.desc': 'Užtikrina pagrindinį svetainės veikimą — pavyzdžiui, įsimena tavo pasirinkimą slapukų banneryje.',
+      'cookie.cat.analytics': 'Analitiniai',
+      'cookie.cat.analytics.desc': 'Google Analytics — anonimizuota svetainės lankymo statistika.',
+      'cookie.cat.marketing': 'Rinkodaros',
+      'cookie.cat.marketing.desc': 'Meta Pixel ir Google Ads — reklamų efektyvumo matavimas.',
+      'cookie.always_on': 'Visada aktyvūs',
+      'cookie.save': 'Išsaugoti pasirinkimą'
+    },
+    mt: {
+      'nav.features': 'Funzjonijiet', 'nav.about': 'Dwar', 'nav.contact': 'Kuntatt',
+      'hero.title': "Il-profili favoriti tiegħek<br>f'<span class=\"accent\">post wieħed</span>",
+      'hero.sub': 'MeshyNet inaddaflek il-feed tal-Facebook, Instagram u YouTube — mingħajr kontenut imposat u mingħajr algoritmi li jiddeċiedu għalik.',
+      'hero.note': "B'xejn · 3 profili fil-verżjoni bażika · <span class=\"ios-note\">Verżjoni iOS dalwaqt</span>",
+      'download.prefix': 'Niżżel għal', 'download.ios': 'Verżjoni iOS dalwaqt',
+      'nav.download': 'Niżżel', 'nav.download.disabled': 'Dalwaqt',
+      'feature.1.title': 'Feed wieħed nadif għal kollox',
+      'feature.1.desc': "Facebook, Instagram u YouTube f'app waħda. L-ebda posts suġġeriti, l-ebda algoritmi.",
+      'feature.2.title': 'Filtru skont il-profili',
+      'feature.2.desc': 'Agħżel biss il-profili pubbliċi li verament jinteressawk. Mingħajr storbju — biss il-kontenut li trid issegwi.',
+      'feature.3.title': 'Mingħajr algoritmi',
+      'feature.3.desc': 'Tara biss dak li verament jinteressak. Mingħajr rakkomandazzjonijiet, mingħajr manipulazzjoni tal-attenzjoni.',
+      'footer.tagline': 'Feed nadif mill-midja soċjali. Mingħajr algoritmi, mingħajr kontenut imposat, mingħajr distrazzjonijiet.',
+      'footer.product': 'Prodott', 'footer.legal': 'Legali', 'footer.contact': 'Kuntatt',
+      'footer.functions': 'Funzjonijiet', 'footer.price': 'Prezz',
+      'footer.terms': 'Termini tal-użu', 'footer.privacy': 'Privatezza',
+      'footer.cookies': 'Settings tal-cookies', 'footer.impressum': 'Impressum',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Nużaw cookies',
+      'cookie.body': "Il-cookies analitiċi u tal-marketing jgħinuna nifhmu kemm nies iniżżlu l-app. Il-cookies teknikament neċessarji huma dejjem attivi. <a href=\"#\">Aqra aktar</a>",
+      'cookie.reject': 'Irrifjuta', 'cookie.settings': 'Settings', 'cookie.accept': 'Aċċetta kollox',
+      'cookie.cat.necessary': 'Meħtieġa',
+      'cookie.cat.necessary.desc': 'Jiżguraw il-funzjonament bażiku tas-sit — pereżempju jiftakru d-deċiżjoni tiegħek fil-banner tal-cookies.',
+      'cookie.cat.analytics': 'Analitiċi',
+      'cookie.cat.analytics.desc': 'Google Analytics — statistika anonimizzata dwar iż-żjarat tas-sit.',
+      'cookie.cat.marketing': 'Marketing',
+      'cookie.cat.marketing.desc': 'Meta Pixel u Google Ads — kejl tal-effettività tar-reklami.',
+      'cookie.always_on': 'Dejjem attivi',
+      'cookie.save': 'Issejvja l-għażla'
+    },
+    ga: {
+      'nav.features': 'Gnéithe', 'nav.about': 'Maidir Linn', 'nav.contact': 'Teagmháil',
+      'hero.title': 'Do phróifílí is fearr leat<br>in <span class="accent">aon áit amháin</span>',
+      'hero.sub': 'Glanann MeshyNet do bheathaitheoir ó Facebook, Instagram agus YouTube — gan ábhar éigeantach agus gan algartaim a chinneann ar do shon.',
+      'hero.note': 'Saor in aisce · 3 phróifíl sa bhunleagan · <span class="ios-note">Leagan iOS ag teacht go luath</span>',
+      'download.prefix': 'Íoslódáil le haghaidh', 'download.ios': 'Leagan iOS ag teacht go luath',
+      'nav.download': 'Íoslódáil', 'nav.download.disabled': 'Go luath',
+      'feature.1.title': 'Beathaitheoir glan amháin do gach rud',
+      'feature.1.desc': 'Facebook, Instagram agus YouTube in aon aip amháin. Gan postálacha molta, gan algartaim.',
+      'feature.2.title': 'Scagaire de réir próifílí',
+      'feature.2.desc': 'Roghnaigh na próifílí poiblí amháin a bhfuil suim agat iontu i ndáiríre. Gan torann — díreach an t-ábhar is mian leat a leanúint.',
+      'feature.3.title': 'Gan algartaim',
+      'feature.3.desc': 'Ní fheiceann tú ach an méid a bhfuil suim agat ann i ndáiríre. Gan moltaí, gan ionramháil aire.',
+      'footer.tagline': 'Beathaitheoir glanta ó líonraí sóisialta. Gan algartaim, gan ábhar éigeantach, gan seachráin.',
+      'footer.product': 'Táirge', 'footer.legal': 'Dlíthiúil', 'footer.contact': 'Teagmháil',
+      'footer.functions': 'Gnéithe', 'footer.price': 'Praghas',
+      'footer.terms': 'Téarmaí Úsáide', 'footer.privacy': 'Príobháideacht',
+      'footer.cookies': 'Socruithe fianán', 'footer.impressum': 'Impressum',
+      'footer.madein': 'Made in Slovakia',
+      'cookie.title': 'Úsáidimid fianáin',
+      'cookie.body': 'Cuidíonn fianáin anailíse agus margaíochta linn a thuiscint cé mhéad duine a íoslódálann an aip. Bíonn fianáin riachtanacha go teicniúil gníomhach i gcónaí. <a href="#">Tuilleadh eolais</a>',
+      'cookie.reject': 'Diúltaigh', 'cookie.settings': 'Socruithe', 'cookie.accept': 'Glac le gach rud',
+      'cookie.cat.necessary': 'Riachtanach',
+      'cookie.cat.necessary.desc': 'Cinntíonn siad feidhmiú bunúsach an tsuímh — mar shampla cuimhniú do rogha sa bhratach fianán.',
+      'cookie.cat.analytics': 'Anailís',
+      'cookie.cat.analytics.desc': 'Google Analytics — staitisticí gan ainm faoi chuairteanna ar an suíomh.',
+      'cookie.cat.marketing': 'Margaíocht',
+      'cookie.cat.marketing.desc': 'Meta Pixel agus Google Ads — tomhas éifeachtacht na bhfógraí.',
+      'cookie.always_on': 'I gcónaí gníomhach',
+      'cookie.save': 'Sábháil rogha'
+    }
+  };
+
+  // ========= DETECT BROWSER LANGUAGE =========
+  function detectLang() {
+    // 1. User override saved in localStorage
+    try {
+      const saved = localStorage.getItem('mn_lang');
+      if (saved && I18N[saved]) return saved;
+    } catch (e) {}
+    // 2. Browser language (first 2 chars)
+    const browserLang = (navigator.language || 'sk').slice(0, 2).toLowerCase();
+    if (I18N[browserLang]) return browserLang;
+    // 3. Default to Slovak (target market)
+    return 'sk';
+  }
+
+  // ========= DETECT OS =========
+  function detectOS() {
+    const ua = navigator.userAgent;
+    const platform = navigator.userAgentData?.platform || navigator.platform || '';
+    if (/iPhone|iPad|iPod/.test(ua)) return { name: 'iOS', downloadable: false };
+    if (/Android/i.test(ua)) return { name: 'Android', downloadable: true };
+    if (/Win/i.test(ua) || /Windows/i.test(platform)) return { name: 'Windows', downloadable: true };
+    if (/Mac/i.test(ua) || /Mac/i.test(platform)) return { name: 'macOS', downloadable: true };
+    if (/Linux/i.test(ua)) return { name: 'Linux', downloadable: true };
+    return { name: 'macOS', downloadable: true };
+  }
+
+  // ========= APPLY LANGUAGE =========
+  function applyLang(lang) {
+    const dict = I18N[lang];
+    if (!dict) return;
+
+    document.documentElement.lang = lang;
+
+    // Replace all [data-i18n] elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (dict[key] !== undefined) {
+        el.innerHTML = dict[key];
+      }
+    });
+
+    // Update download buttons (depend on language + OS)
+    updateDownloadButtons(dict);
+
+    // Update language switcher UI
+    const cur = document.getElementById('lang-current');
+    if (cur) cur.textContent = lang.toUpperCase();
+    document.querySelectorAll('[data-lang]').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('data-lang') === lang);
+    });
+
+    // Persist choice
+    try { localStorage.setItem('mn_lang', lang); } catch (e) {}
+  }
+
+  function updateDownloadButtons(dict) {
+    const os = detectOS();
+    const heroLabel = document.getElementById('download-label');
+    const navLabel = document.getElementById('nav-download-label');
+    const heroBtn = document.getElementById('download-btn');
+    const navBtn = document.getElementById('nav-download-btn');
+    const iosNote = document.querySelector('.ios-note');
+
+    if (os.downloadable) {
+      if (heroLabel) heroLabel.textContent = dict['download.prefix'] + ' ' + os.name;
+      if (navLabel) navLabel.textContent = dict['nav.download'];
+      [heroBtn, navBtn].forEach(b => {
+        if (!b) return;
+        b.style.opacity = '';
+        b.style.cursor = '';
+        b.disabled = false;
+      });
+      if (iosNote) iosNote.style.display = '';
+    } else {
+      // iOS — disabled state
+      if (heroLabel) heroLabel.textContent = dict['download.ios'];
+      if (navLabel) navLabel.textContent = dict['nav.download.disabled'];
+      [heroBtn, navBtn].forEach(b => {
+        if (!b) return;
+        b.style.opacity = '0.6';
+        b.style.cursor = 'not-allowed';
+        b.disabled = true;
+      });
+      if (iosNote) iosNote.style.display = 'none';
+    }
+  }
+
+  // ========= LANGUAGE DROPDOWN =========
+  const langToggle = document.getElementById('lang-toggle');
+  const langMenu = document.getElementById('lang-menu');
+
+  if (langToggle && langMenu) {
+    langToggle.addEventListener('click', e => {
+      e.stopPropagation();
+      langMenu.classList.toggle('open');
+      langToggle.classList.toggle('open');
+    });
+
+    // Click outside to close
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.lang-switcher')) {
+        langMenu.classList.remove('open');
+        langToggle.classList.remove('open');
+      }
+    });
+
+    // Language link handlers
+    document.querySelectorAll('[data-lang]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const lang = a.getAttribute('data-lang');
+        applyLang(lang);
+        langMenu.classList.remove('open');
+        langToggle.classList.remove('open');
+      });
+    });
+  }
+
+  // ========= INITIAL LOAD =========
+  applyLang(detectLang());
+  initConsent();
+</script>
+
+</body>
+</html>

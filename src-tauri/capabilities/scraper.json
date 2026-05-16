@@ -1,0 +1,29 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "scraper-remote-ipc",
+  "description": "Povoluje hidden scraper webview-om volať Tauri commands z externých domén (FB/IG/YT) — potrebné pre auto-add scraping vo filter mode",
+  "remote": {
+    "urls": [
+      "https://www.facebook.com/*",
+      "https://facebook.com/*",
+      "https://m.facebook.com/*",
+      "https://www.instagram.com/*",
+      "https://instagram.com/*",
+      "https://www.youtube.com/*",
+      "https://youtube.com/*",
+      "https://m.youtube.com/*"
+    ]
+  },
+  "windows": [
+    "scrape_facebook_*",
+    "scrape_instagram_*",
+    "scrape_youtube_*"
+  ],
+  "permissions": [
+    "core:default",
+    "core:event:default",
+    "core:event:allow-emit",
+    "core:event:allow-emit-to"
+  ],
+  "platforms": ["macOS", "windows", "linux"]
+}

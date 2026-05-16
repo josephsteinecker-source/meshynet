@@ -1,0 +1,24 @@
+{
+  "identifier": "default",
+  "description": "Povolenia pre Master Feed",
+  "windows": [
+    "main",
+    "login_window"
+  ],
+  "permissions": [
+    "core:default",
+    "core:window:default",
+    "core:window:allow-create",
+    "core:window:allow-set-title",
+    "core:webview:default",
+    "core:webview:allow-create-webview-window",
+    "core:webview:allow-set-webview-size",
+    "core:app:default",
+    "core:image:default",
+    "core:menu:default",
+    "core:tray:default",
+    "core:path:default",
+    "core:resources:default",
+    "opener:default"
+  ]
+}

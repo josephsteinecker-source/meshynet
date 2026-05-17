@@ -15,11 +15,11 @@ const PRE_NAVIGATE_CURTAIN: &str = r#"
     if (document.getElementById('mf-curtain')) return;
     const d = document.createElement('div');
     d.id = 'mf-curtain';
-    d.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:#f5f5f7;z-index:2147483647;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;transition:opacity 0.8s ease;';
+    d.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:#000000;z-index:2147483647;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:\'Manrope\',-apple-system,BlinkMacSystemFont,sans-serif;transition:opacity 0.8s ease;';
     const html = '<style>@keyframes mf-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}</style>' +
-        '<div style="width:40px;height:40px;border:4px solid #e5e5ea;border-top:4px solid #4061ad;border-radius:50%;animation:mf-spin 1s linear infinite;margin-bottom:20px;"></div>' +
-        '<h2 style="margin:0;letter-spacing:4px;font-size:24px;color:#1d1d1f;font-weight:700;">MASTER FEED</h2>' +
-        '<p style="color:#86868b;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:8px;font-weight:600;">Pripravujeme zen feed...</p>';
+        '<div style="width:40px;height:40px;border:4px solid rgba(255,255,255,0.15);border-top:4px solid #4061ad;border-radius:50%;animation:mf-spin 1s linear infinite;margin-bottom:20px;"></div>' +
+        '<h2 style="margin:0;letter-spacing:-0.02em;font-size:24px;color:#ffffff;font-weight:700;font-family:\'Manrope\',sans-serif;">Master <span style="font-family:\'Fraunces\',Georgia,serif;font-style:italic;font-weight:600;background:linear-gradient(110deg,#4061ad 0%,#6059a7 45%,#2fbebe 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">feed</span></h2>' +
+        '<p style="color:rgba(255,255,255,0.55);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:8px;font-weight:600;">Pripravujeme zen feed...</p>';
     if (window.__mfSafeSetHTML) {
         window.__mfSafeSetHTML(d, html);
     } else {
@@ -138,11 +138,11 @@ function hideEl(el, why) {
         overlay.id = 'mf-overlay';
         overlay.setAttribute('style',
             'position:fixed !important;top:0 !important;left:0 !important;right:0 !important;' +
-            'background:#f5f5f7 !important;z-index:2147483647 !important;' +
+            'background:#000000 !important;z-index:2147483647 !important;' +
             'padding:24px 16px 14px !important;' +
             "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif !important;" +
-            'color:#1d1d1f !important;box-sizing:border-box !important;' +
-            'border-bottom:0.5px solid rgba(0,0,0,0.06) !important;' +
+            'color:#ffffff !important;box-sizing:border-box !important;' +
+            'border-bottom:0.5px solid rgba(255,255,255,0.10) !important;' +
             'pointer-events:auto !important;display:block !important;' +
             'transform:none !important;filter:none !important;'
         );
@@ -160,28 +160,32 @@ function hideEl(el, why) {
         overlay.appendChild(wrap);
 
         const h1 = document.createElement('h1');
-        h1.textContent = 'Master feed';
-        h1.style.cssText = 'margin:0 0 4px;font-size:22px;font-weight:500;letter-spacing:-0.3px;color:#1d1d1f;line-height:1.2;';
+        h1.style.cssText = 'margin:0 0 4px;font-size:22px;font-weight:700;letter-spacing:-0.02em;color:#ffffff;line-height:1.2;';
+        h1.appendChild(document.createTextNode('Master '));
+        const feedEl = document.createElement('span');
+        feedEl.textContent = 'feed';
+        feedEl.style.cssText = 'font-family:Georgia,serif;font-style:italic;font-weight:600;background:linear-gradient(110deg,#4061ad 0%,#6059a7 45%,#2fbebe 100%);-webkit-background-clip:text;background-clip:text;color:transparent;';
+        h1.appendChild(feedEl);
         wrap.appendChild(h1);
 
         const subEl = document.createElement('p');
         subEl.textContent = 'Zen free mode';
-        subEl.style.cssText = 'margin:0 0 14px;font-size:13px;color:#86868b;font-weight:400;';
+        subEl.style.cssText = 'margin:0 0 14px;font-size:13px;color:rgba(255,255,255,0.55);font-weight:400;';
         wrap.appendChild(subEl);
 
         const statusBar = document.createElement('div');
-        statusBar.style.cssText = 'display:flex;align-items:center;gap:14px;padding:11px 16px;background:#ffffff;border:0.5px solid rgba(0,0,0,0.08);border-radius:10px;font-size:13px;color:#86868b;flex-wrap:wrap;';
+        statusBar.style.cssText = 'display:flex;align-items:center;gap:14px;padding:11px 16px;background:#0a0a0a;border:0.5px solid rgba(255,255,255,0.10);border-radius:10px;font-size:13px;color:rgba(255,255,255,0.55);flex-wrap:wrap;';
         wrap.appendChild(statusBar);
 
         const zdroje = document.createElement('span');
         zdroje.textContent = 'Zdroje';
-        zdroje.style.cssText = 'color:#1d1d1f;font-weight:500;';
+        zdroje.style.cssText = 'color:#ffffff;font-weight:500;';
         statusBar.appendChild(zdroje);
 
         PLATFORMS.forEach((p) => {
             const isActive = activePlatform.id === p.id;
-            const dotColor = isActive ? '#34c759' : '#d2d2d7';
-            const labelColor = isActive ? '#1d1d1f' : '#c7c7cc';
+            const dotColor = isActive ? '#30d158' : 'rgba(255,255,255,0.15)';
+            const labelColor = isActive ? '#ffffff' : 'rgba(255,255,255,0.40)';
             const fontWeight = isActive ? '500' : '400';
 
             const btn = document.createElement('button');
@@ -202,13 +206,13 @@ function hideEl(el, why) {
         const filterBtn = document.createElement('button');
         filterBtn.setAttribute('data-mf-back', '1');
         filterBtn.textContent = 'Filter';
-        filterBtn.style.cssText = 'background:transparent;border:0.5px solid rgba(0,0,0,0.12);color:#86868b;cursor:pointer;font-size:12px;font-weight:600;padding:5px 12px;border-radius:7px;letter-spacing:0.3px;font-family:inherit;';
+        filterBtn.style.cssText = 'background:transparent;border:0.5px solid rgba(255,255,255,0.10);color:rgba(255,255,255,0.55);cursor:pointer;font-size:12px;font-weight:600;padding:5px 12px;border-radius:7px;letter-spacing:0.3px;font-family:inherit;';
         statusBar.appendChild(filterBtn);
 
         const reloadBtn = document.createElement('button');
         reloadBtn.setAttribute('data-mf-reload', '1');
         reloadBtn.textContent = 'Obnoviť';
-        reloadBtn.style.cssText = 'background:transparent;border:none;color:#0071e3;cursor:pointer;font-size:13px;font-weight:500;padding:0;font-family:inherit;';
+        reloadBtn.style.cssText = 'background:transparent;border:none;color:#2fbebe;cursor:pointer;font-size:13px;font-weight:500;padding:0;font-family:inherit;';
         statusBar.appendChild(reloadBtn);
 
         overlay.dataset.mfActive = sig;
@@ -225,11 +229,11 @@ function hideEl(el, why) {
                 if (document.getElementById('mf-curtain')) return;
                 const d = document.createElement('div');
                 d.id = 'mf-curtain';
-                d.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:#f5f5f7;z-index:2147483647;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;transition:opacity 0.8s ease;';
+                d.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:#000000;z-index:2147483647;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;transition:opacity 0.8s ease;';
                 const html = '<style>@keyframes mf-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}</style>' +
-                    '<div style="width:40px;height:40px;border:4px solid #e5e5ea;border-top:4px solid #4061ad;border-radius:50%;animation:mf-spin 1s linear infinite;margin-bottom:20px;"></div>' +
-                    '<h2 style="margin:0;letter-spacing:4px;font-size:24px;color:#1d1d1f;font-weight:700;">MASTER FEED</h2>' +
-                    '<p style="color:#86868b;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:8px;font-weight:600;">Pripravujeme zen feed...</p>';
+                    '<div style="width:40px;height:40px;border:4px solid rgba(255,255,255,0.15);border-top:4px solid #4061ad;border-radius:50%;animation:mf-spin 1s linear infinite;margin-bottom:20px;"></div>' +
+                    '<h2 style="margin:0;letter-spacing:-0.02em;font-size:24px;color:#ffffff;font-weight:700;">Master <span style="font-family:Georgia,serif;font-style:italic;font-weight:600;background:linear-gradient(110deg,#4061ad 0%,#6059a7 45%,#2fbebe 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">feed</span></h2>' +
+                    '<p style="color:rgba(255,255,255,0.55);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:8px;font-weight:600;">Pripravujeme zen feed...</p>';
                 if (window.__mfSafeSetHTML) {
                     window.__mfSafeSetHTML(d, html);
                 } else {
@@ -937,8 +941,8 @@ async fn otvor_prihlasenie(app: AppHandle, network: String) -> Result<(), String
                 if(document.documentElement && !document.getElementById('mf-curtain')) {
                     let d = document.createElement('div');
                     d.id = 'mf-curtain';
-                    d.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:#f5f5f7;z-index:2147483647;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.8s ease;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;';
-                    window.__mfSafeSetHTML(d, '<style>@keyframes mf-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}</style><div style="width:40px;height:40px;border:4px solid #e5e5ea;border-top:4px solid #4061ad;border-radius:50%;animation:mf-spin 1s linear infinite;margin-bottom:20px;"></div><h2 style="margin:0;letter-spacing:4px;font-size:24px;color:#1d1d1f;font-weight:700;">MASTER FEED</h2><p style="color:#86868b;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:8px;font-weight:600;">Pripravujeme zen feed...</p>');
+                    d.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:#000000;z-index:2147483647;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.8s ease;font-family:\'Manrope\',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;';
+                    window.__mfSafeSetHTML(d, '<style>@keyframes mf-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}</style><div style="width:40px;height:40px;border:4px solid rgba(255,255,255,0.15);border-top:4px solid #4061ad;border-radius:50%;animation:mf-spin 1s linear infinite;margin-bottom:20px;"></div><h2 style="margin:0;letter-spacing:-0.02em;font-size:24px;color:#ffffff;font-weight:700;font-family:\'Manrope\',sans-serif;">Master <span style="font-family:\'Fraunces\',Georgia,serif;font-style:italic;font-weight:600;background:linear-gradient(110deg,#4061ad 0%,#6059a7 45%,#2fbebe 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">feed</span></h2><p style="color:rgba(255,255,255,0.55);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:8px;font-weight:600;">Pripravujeme zen feed...</p>');
                     document.documentElement.appendChild(d);
                     document.documentElement.style.overflow = 'hidden';
                 }

@@ -9,6 +9,7 @@
 // ============================================================
 
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { supabase } from "../lib/supabase";
 import { useTheme } from "../lib/theme-context";
 
@@ -21,6 +22,7 @@ export function LoginModal({
   reason?: string;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const { colors: c } = useTheme();
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
@@ -54,7 +56,7 @@ export function LoginModal({
       });
       if (error) {
         console.error("[MF] OTP send failed:", error);
-        setErrorMsg(error.message || "Nepodarilo sa odoslať kód. Skús znova.");
+        setErrorMsg(error.message || t("login.errorSendFailed"));
         setStage("error");
         return;
       }
@@ -62,7 +64,7 @@ export function LoginModal({
       setStage("code");
     } catch (err: any) {
       console.error("[MF] OTP send unexpected error:", err);
-      setErrorMsg(err?.message || "Nečakaná chyba. Skús znova.");
+      setErrorMsg(err?.message || t("login.errorUnexpected"));
       setStage("error");
     }
   };
@@ -82,8 +84,8 @@ export function LoginModal({
         console.error("[MF] OTP verify failed:", error);
         setErrorMsg(
           /invalid|expired/i.test(error.message)
-            ? "Kód je nesprávny alebo už expiroval. Skontroluj e-mail."
-            : error.message || "Overenie zlyhalo. Skús znova."
+            ? t("login.errorInvalidCode")
+            : error.message || t("login.errorVerifyFailed")
         );
         setStage("error");
         return;
@@ -94,7 +96,7 @@ export function LoginModal({
       onClose();
     } catch (err: any) {
       console.error("[MF] OTP verify unexpected error:", err);
-      setErrorMsg(err?.message || "Nečakaná chyba. Skús znova.");
+      setErrorMsg(err?.message || t("login.errorUnexpected"));
       setStage("error");
     }
   };
@@ -148,7 +150,7 @@ export function LoginModal({
                 textAlign: "center",
               }}
             >
-              Prihlásenie
+              {t("login.title")}
             </h2>
             <p
               style={{
@@ -159,7 +161,7 @@ export function LoginModal({
                 lineHeight: 1.5,
               }}
             >
-              {reason || "Pošleme ti 6-miestny kód na e-mail. Žiadne heslá."}
+              {reason || t("login.defaultReason")}
             </p>
 
             <input
@@ -172,7 +174,7 @@ export function LoginModal({
               onKeyDown={(e) => {
                 if (e.key === "Enter" && isValidEmail) handleSendCode();
               }}
-              placeholder="tvoj@email.sk"
+              placeholder={t("login.emailPlaceholder")}
               autoFocus
               disabled={stage === "sending_email"}
               style={{
@@ -223,7 +225,7 @@ export function LoginModal({
                 transition: "background 160ms ease",
               }}
             >
-              {stage === "sending_email" ? "Odosielam kód…" : "Poslať kód"}
+              {stage === "sending_email" ? t("login.sendingCode") : t("login.sendCode")}
             </button>
 
             <button
@@ -240,7 +242,7 @@ export function LoginModal({
                 fontFamily: "inherit",
               }}
             >
-              Možno neskôr
+              {t("login.maybeLater")}
             </button>
           </>
         )}
@@ -258,7 +260,7 @@ export function LoginModal({
                 textAlign: "center",
               }}
             >
-              Zadaj kód
+              {t("login.step2Title")}
             </h2>
             <p
               style={{
@@ -269,7 +271,7 @@ export function LoginModal({
                 lineHeight: 1.5,
               }}
             >
-              Poslali sme 6-miestny kód na <strong>{email}</strong>.
+              {t("login.codeSentTo", { email })}
             </p>
 
             <input
@@ -341,7 +343,7 @@ export function LoginModal({
                 transition: "background 160ms ease",
               }}
             >
-              {stage === "verifying" ? "Overujem…" : "Prihlásiť"}
+              {stage === "verifying" ? t("login.verifying") : t("login.verify")}
             </button>
 
             <button
@@ -362,7 +364,7 @@ export function LoginModal({
                 fontFamily: "inherit",
               }}
             >
-              Použiť iný e-mail
+              {t("login.useOtherEmail")}
             </button>
           </>
         )}

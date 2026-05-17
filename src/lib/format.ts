@@ -1,29 +1,29 @@
 import type { Network } from "../types";
+import i18n from "./i18n";
 
 export function formatRelativeTime(date: Date): string {
+  const t = i18n.t.bind(i18n);
   const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
-  if (seconds < 60) return "pred chvíľou";
+  if (seconds < 60) return t("common.time.justNow");
   const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) return `pred ${minutes} min`;
+  if (minutes < 60) return t("common.time.minutesAgo", { count: minutes });
   const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `pred ${hours} h`;
+  if (hours < 24) return t("common.time.hoursAgo", { count: hours });
   const days = Math.floor(hours / 24);
-  if (days < 7) return `pred ${days} d`;
-  return date.toLocaleDateString("sk-SK");
+  if (days < 7) return t("common.time.daysAgo", { count: days });
+  return date.toLocaleDateString(i18n.language);
 }
 
-// Formátovanie konca billing periody pre cancel banner.
-// Príklad: "2026-06-15T..." → "15. júna 2026"
 export function formatPlanEndDate(iso: string | null): string | null {
   if (!iso) return null;
   try {
     const date = new Date(iso);
     if (isNaN(date.getTime())) return null;
-    return date.toLocaleDateString("sk-SK", {
+    return new Intl.DateTimeFormat(i18n.language, {
       day: "numeric",
       month: "long",
       year: "numeric",
-    });
+    }).format(date);
   } catch {
     return null;
   }

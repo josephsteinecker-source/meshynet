@@ -1,0 +1,138 @@
+{
+  "common": {
+    "time": {
+      "justNow": "bħalissa",
+      "minutesAgo_one": "{{count}} min ilu",
+      "minutesAgo_two": "{{count}} min ilu",
+      "minutesAgo_few": "{{count}} min ilu",
+      "minutesAgo_many": "{{count}} min ilu",
+      "minutesAgo_other": "{{count}} min ilu",
+      "hoursAgo_one": "{{count}} siegħa ilu",
+      "hoursAgo_two": "{{count}} siegħat ilu",
+      "hoursAgo_few": "{{count}} siegħat ilu",
+      "hoursAgo_many": "{{count}} siegħat ilu",
+      "hoursAgo_other": "{{count}} siegħat ilu",
+      "daysAgo_one": "{{count}} jum ilu",
+      "daysAgo_two": "{{count}} jum ilu",
+      "daysAgo_few": "{{count}} jiem ilu",
+      "daysAgo_many": "{{count}} jiem ilu",
+      "daysAgo_other": "{{count}} jiem ilu"
+    }
+  },
+  "index": {
+    "subtitle1": "Spazju kwiet għall-kontenut li tagħżel.",
+    "subtitle2": "Idħol u ibda.",
+    "enter": "Idħol"
+  },
+  "feed": {
+    "loadingPosts": "Qed jitgħabba l-aħħar postijiet…",
+    "updatedAgo": "Aġġornat {{time}}",
+    "ready": "Lest",
+    "noSources": "L-ebda sors fil-filtru. Żid l-ewwel wieħed permezz tal-panel ta' fuq.",
+    "noPostsLoaded": "Ma setgħux jitgħabu l-postijiet.",
+    "noPostsHint": "Iċċekkja l-ismijiet tal-profili jew ipprova Aġġorna.",
+    "endOfFeed": "tmiem tal-feed · aktar wara l-aġġornament",
+    "loginButton": "Idħol",
+    "settingsTitle": "Settings",
+    "backTitle": "Lura għall-bidu"
+  },
+  "statusBar": {
+    "sources": "Sorsi",
+    "sourcesWithCount_one": "{{count}} sors — ikklikkja biex tiffiltru",
+    "sourcesWithCount_two": "{{count}} sorsi — ikklikkja biex tiffiltru",
+    "sourcesWithCount_few": "{{count}} sorsi — ikklikkja biex tiffiltru",
+    "sourcesWithCount_many": "{{count}} sorsi — ikklikkja biex tiffiltru",
+    "sourcesWithCount_other": "{{count}} sorsi — ikklikkja biex tiffiltru",
+    "addNetwork": "Żid sorsi {{network}}",
+    "refreshing": "Qed jaġġorna…",
+    "refresh": "Aġġorna"
+  },
+  "filterPanel": {
+    "panelLabel": "Sorsi",
+    "noneAdded": "L-ebda miżjud",
+    "noNetworkSources": "l-ebda sors",
+    "collapsePanel": "Aħbi l-lista tas-sorsi",
+    "expandPanel": "Uri l-lista tas-sorsi",
+    "collapseNetwork": "Aħbi {{network}}",
+    "expandNetwork": "Uri {{network}}",
+    "addProfileTitle": "Żid profil {{network}}",
+    "enterProfileName": "Daħħal l-isem tal-profil",
+    "loadingSpinnerTitle": "Qed jitgħabba l-aħħar postijiet…",
+    "profileBadgeTitle": "Profil tan-netwerk soċjali",
+    "hideSource": "Aħbi",
+    "showSource": "Uri",
+    "removeSource": "Neħħi",
+    "errorUrlNotAllowed": "Daħħal biss l-isem tal-profil, mhux URL jew spazji.",
+    "errorAddFailed": "Falliment biex tiżdied. Erġa' pprova.",
+    "placeholderFacebook": "Isem il-paġna ta' Facebook (eż. fender)",
+    "placeholderInstagram": "Username tal-Instagram (eż. fender)",
+    "placeholderYouTube": "YouTube @handle (eż. fendermusic)",
+    "hintFacebook": "Daħħal eżattament kif tidher fl-URL tal-paġna (mingħajr https://facebook.com/).",
+    "hintInstagram": "Daħħal l-username tal-Instagram (mingħajr @, mingħajr URL).",
+    "hintYouTube": "Daħħal il-YouTube @handle (mingħajr @, mingħajr URL)."
+  },
+  "upgrade": {
+    "title": "Il-limitu tal-profili ntlaħaq",
+    "subtitle": "{{network}} · agħżel pjan għal aktar profili",
+    "noTiers": "L-ebda livell ogħla disponibbli.",
+    "maybeLater": "Forsi aktar tard",
+    "unlimited": "Mingħajr limitu",
+    "limitLabel_one": "{{count}} profil / pjattaforma",
+    "limitLabel_two": "{{count}} profili / pjattaforma",
+    "limitLabel_few": "{{count}} profili / pjattaforma",
+    "limitLabel_many": "{{count}} profili / pjattaforma",
+    "limitLabel_other": "{{count}} profili / pjattaforma",
+    "bestValue": "BEST VALUE",
+    "free": "B'xejn",
+    "perMonth": "{{price}} € / xahar",
+    "upgradeCta": "Aġġorna"
+  },
+  "cancelBanner": {
+    "planEnds": "Il-pjan {{tier}} jispiċċa",
+    "renew": "Ġedded",
+    "renewLoading": "Qed jiftaħ…",
+    "portalTitle": "Iftaħ Stripe Customer Portal biex ġedded l-abbonament"
+  },
+  "userMenu": {
+    "tierLabel": "Pjan {{tier}}",
+    "manageSubscription": "Immaniġġja l-abbonament",
+    "settings": "Settings",
+    "logout": "Oħroġ",
+    "opening": "Qed jiftaħ…"
+  },
+  "login": {
+    "title": "Dħul",
+    "defaultReason": "Nibgħatlek kodiċi ta' 6 ċifri bl-email. Mingħajr passwords.",
+    "emailPlaceholder": "tiegħek@email.mt",
+    "sendCode": "Ibgħat il-kodiċi",
+    "sendingCode": "Qed jibgħat il-kodiċi…",
+    "step2Title": "Daħħal il-kodiċi",
+    "codeSentTo": "Bgħatna kodiċi ta' 6 ċifri lil {{email}}.",
+    "verify": "Idħol",
+    "verifying": "Qed jivverifika…",
+    "useOtherEmail": "Uża email ieħor",
+    "maybeLater": "Forsi aktar tard",
+    "errorSendFailed": "Falliment biex jintbagħat il-kodiċi. Erġa' pprova.",
+    "errorUnexpected": "Żball mhux mistenni. Erġa' pprova.",
+    "errorInvalidCode": "Il-kodiċi mhux korrett jew skada. Iċċekkja l-email tiegħek.",
+    "errorVerifyFailed": "Il-verifika falliet. Erġa' pprova."
+  },
+  "settings": {
+    "title": "Settings",
+    "appearance": "Dehra",
+    "themeLight": "☀️ Ċar",
+    "themeDark": "🌙 Skur",
+    "themeSystem": "⚙️ Sistema",
+    "language": "Lingwa",
+    "close": "Agħlaq"
+  },
+  "postCard": {
+    "openOnYouTube": "Iftaħ fuq YouTube",
+    "openYouTubeTitle": "Iftaħ il-vidjo fl-app jew fil-browser YouTube"
+  },
+  "errors": {
+    "unknown": "żball mhux magħruf",
+    "paymentFailed": "Ma setax jinfetaħ il-ħlas.\n\nŻball: {{error}}\n\nJekk jogħġbok erġa' pprova jew ikkuntattjana.",
+    "portalFailed": "Ma setax jinfetaħ il-ġestjoni tal-abbonament.\n\nŻball: {{error}}\n\nJekk jogħġbok erġa' pprova jew ikkuntattjana."
+  }
+}

@@ -1,16 +1,16 @@
 export type Network = "Facebook" | "Instagram" | "YouTube";
 export type View = "index" | "feed";
-export type Mode = "free" | "filter";
+export type Tier = "free" | "plus" | "unlimited";
 
 // Mirror of Rust structs in src-tauri/src/backend.rs
 export type UserStatus = {
   user_id: string | null;
   email: string | null;
-  tier: string;
+  tier: Tier;
   subscription_status: string;
   current_period_end: string | null;
   cancel_at_period_end: boolean;
-  max_profiles_per_network: number;
+  max_profiles_per_platform: number;
 };
 
 export type PricingTier = {
@@ -18,7 +18,7 @@ export type PricingTier = {
   display_name: string;
   description: string | null;
   price_eur: number;
-  max_profiles_per_network: number;
+  max_profiles_per_platform: number;
   display_order: number;
   features: any | null;
 };

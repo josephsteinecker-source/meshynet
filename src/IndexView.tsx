@@ -1,13 +1,10 @@
 import { useState } from "react";
-import type { Network } from "./types";
+import { useTranslation } from "react-i18next";
 import { BRAND_GRADIENT } from "./lib/theme";
 import { useTheme } from "./lib/theme-context";
 
-function BigNetworkButton({
-  network, onClick,
-}: {
-  network: Network; onClick: () => void;
-}) {
+function EnterButton({ onClick }: { onClick: () => void }) {
+  const { t } = useTranslation();
   const [hovered, setHovered] = useState(false);
   return (
     <button
@@ -34,13 +31,14 @@ function BigNetworkButton({
         filter: hovered ? "brightness(1.08)" : "none",
       }}
     >
-      {network}
+      {t("index.enter")}
     </button>
   );
 }
 
-export function IndexView({ onPickNetwork }: { onPickNetwork: (n: Network) => void }) {
-  const { colors: c } = useTheme();
+export function IndexView({ onEnter }: { onEnter: () => void }) {
+  const { t } = useTranslation();
+  const { colors: c, isDark } = useTheme();
   return (
     <div style={{
       backgroundColor: c.bg,
@@ -55,7 +53,7 @@ export function IndexView({ onPickNetwork }: { onPickNetwork: (n: Network) => vo
       position: "relative",
     }}>
       <img
-        src="/MeshyNet_logo.svg"
+        src={isDark ? "/MeshyNet_logo_darkk_mode.svg" : "/MeshyNet_logo.svg"}
         alt="MeshyNet"
         style={{ width: 120, height: "auto", marginBottom: 32 }}
         onError={(e) => {
@@ -74,7 +72,7 @@ export function IndexView({ onPickNetwork }: { onPickNetwork: (n: Network) => vo
       }}>
         Master{" "}
         <span style={{
-          fontFamily: "'Fraunces', serif",
+          fontFamily: "'Fraunces', Georgia, serif",
           fontStyle: "italic",
           fontWeight: 600,
           background: BRAND_GRADIENT.cssString,
@@ -96,15 +94,11 @@ export function IndexView({ onPickNetwork }: { onPickNetwork: (n: Network) => vo
         lineHeight: 1.5,
         fontFamily: "'Manrope', sans-serif",
       }}>
-        Tichý priestor pre obsah, ktorý si vyberáš.
-        <br />Vyber sieť a začni.
+        {t("index.subtitle1")}
+        <br />{t("index.subtitle2")}
       </p>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-        {(["Facebook", "Instagram", "YouTube"] as Network[]).map((n) => (
-          <BigNetworkButton key={n} network={n} onClick={() => onPickNetwork(n)} />
-        ))}
-      </div>
+      <EnterButton onClick={onEnter} />
     </div>
   );
 }

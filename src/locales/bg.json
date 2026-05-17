@@ -1,0 +1,123 @@
+{
+  "common": {
+    "time": {
+      "justNow": "току-що",
+      "minutesAgo_one": "преди {{count}} мин",
+      "minutesAgo_other": "преди {{count}} мин",
+      "hoursAgo_one": "преди {{count}} ч",
+      "hoursAgo_other": "преди {{count}} ч",
+      "daysAgo_one": "преди {{count}} д",
+      "daysAgo_other": "преди {{count}} д"
+    }
+  },
+  "index": {
+    "subtitle1": "Тихо пространство за съдържанието, което избираш.",
+    "subtitle2": "Влез и започни.",
+    "enter": "Влез"
+  },
+  "feed": {
+    "loadingPosts": "Зареждане на последните публикации…",
+    "updatedAgo": "Актуализирано {{time}}",
+    "ready": "Готово",
+    "noSources": "Няма източници в филтъра. Добави първия чрез панела по-горе.",
+    "noPostsLoaded": "Не можаха да се заредят публикации.",
+    "noPostsHint": "Провери имената на профилите или опитай Обновяване.",
+    "endOfFeed": "край на фийда · повече след обновяване",
+    "loginButton": "Вход",
+    "settingsTitle": "Настройки",
+    "backTitle": "Обратно към началото"
+  },
+  "statusBar": {
+    "sources": "Източници",
+    "sourcesWithCount_one": "{{count}} източник — кликни за филтриране",
+    "sourcesWithCount_other": "{{count}} източника — кликни за филтриране",
+    "addNetwork": "Добави {{network}} източници",
+    "refreshing": "Обновяване…",
+    "refresh": "Обнови"
+  },
+  "filterPanel": {
+    "panelLabel": "Източници",
+    "noneAdded": "Няма добавени",
+    "noNetworkSources": "няма източници",
+    "collapsePanel": "Свий списъка с източници",
+    "expandPanel": "Разгъни списъка с източници",
+    "collapseNetwork": "Свий {{network}}",
+    "expandNetwork": "Разгъни {{network}}",
+    "addProfileTitle": "Добави {{network}} профил",
+    "enterProfileName": "Въведи името на профила",
+    "loadingSpinnerTitle": "Зареждане на последните публикации…",
+    "profileBadgeTitle": "Профил в социална мрежа",
+    "hideSource": "Скрий",
+    "showSource": "Покажи",
+    "removeSource": "Премахни",
+    "errorUrlNotAllowed": "Въведи само името на профила, не URL или интервали.",
+    "errorAddFailed": "Добавянето не успя. Опитай отново.",
+    "placeholderFacebook": "Име на Facebook страница (напр. fender)",
+    "placeholderInstagram": "Instagram потребителско име (напр. fender)",
+    "placeholderYouTube": "YouTube @handle (напр. fendermusic)",
+    "hintFacebook": "Въведи точно така, както се показва в URL на страницата (без https://facebook.com/).",
+    "hintInstagram": "Въведи Instagram потребителското име (без @, без URL).",
+    "hintYouTube": "Въведи YouTube @handle (без @, без URL)."
+  },
+  "upgrade": {
+    "title": "Достигнат е лимитът на профили",
+    "subtitle": "{{network}} · избери план за повече профили",
+    "noTiers": "Няма налични по-високи тарифи.",
+    "maybeLater": "Може би по-късно",
+    "unlimited": "Без ограничение",
+    "limitLabel_one": "{{count}} профил / платформа",
+    "limitLabel_other": "{{count}} профила / платформа",
+    "bestValue": "BEST VALUE",
+    "free": "Безплатно",
+    "perMonth": "{{price}} € / мес.",
+    "upgradeCta": "Надгради"
+  },
+  "cancelBanner": {
+    "planEnds": "Планът {{tier}} приключва",
+    "renew": "Поднови",
+    "renewLoading": "Отваряне…",
+    "portalTitle": "Отвори Stripe Customer Portal за подновяване на абонамента"
+  },
+  "userMenu": {
+    "tierLabel": "План {{tier}}",
+    "manageSubscription": "Управление на абонамент",
+    "settings": "Настройки",
+    "logout": "Изход",
+    "opening": "Отваряне…"
+  },
+  "login": {
+    "title": "Вход",
+    "defaultReason": "Ще ти изпратим 6-цифрен код по имейл. Без пароли.",
+    "emailPlaceholder": "твоя@имейл.bg",
+    "sendCode": "Изпрати код",
+    "sendingCode": "Изпращане на код…",
+    "step2Title": "Въведи кода",
+    "codeSentTo": "Изпратихме 6-цифрен код на {{email}}.",
+    "verify": "Вход",
+    "verifying": "Проверка…",
+    "useOtherEmail": "Използвай друг имейл",
+    "maybeLater": "Може би по-късно",
+    "errorSendFailed": "Изпращането на кода не успя. Опитай отново.",
+    "errorUnexpected": "Неочаквана грешка. Опитай отново.",
+    "errorInvalidCode": "Кодът е грешен или е изтекъл. Провери имейла си.",
+    "errorVerifyFailed": "Проверката не успя. Опитай отново."
+  },
+  "settings": {
+    "title": "Настройки",
+    "appearance": "Вид",
+    "themeLight": "☀️ Светла",
+    "themeDark": "🌙 Тъмна",
+    "themeSystem": "⚙️ Системна",
+    "language": "Език",
+    "close": "Затвори"
+  },
+  "postCard": {
+    "openOnYouTube": "Отвори в YouTube",
+    "openYouTubeTitle": "Отвори видеото в приложението или браузъра на YouTube"
+  },
+  "errors": {
+    "unknown": "неизвестна грешка",
+    "paymentFailed": "Плащането не можа да бъде отворено.\n\nГрешка: {{error}}\n\nМоля, опитай отново или се свържи с нас.",
+    "portalFailed": "Управлението на абонамента не можа да бъде отворено.\n\nГрешка: {{error}}\n\nМоля, опитай отново или се свържи с нас."
+  }
+}

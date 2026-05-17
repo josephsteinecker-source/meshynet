@@ -1,0 +1,123 @@
+{
+  "common": {
+    "time": {
+      "justNow": "juuri nyt",
+      "minutesAgo_one": "{{count}} min sitten",
+      "minutesAgo_other": "{{count}} min sitten",
+      "hoursAgo_one": "{{count}} t sitten",
+      "hoursAgo_other": "{{count}} t sitten",
+      "daysAgo_one": "{{count}} pv sitten",
+      "daysAgo_other": "{{count}} pv sitten"
+    }
+  },
+  "index": {
+    "subtitle1": "Rauhallinen tila valitsemallesi sisällölle.",
+    "subtitle2": "Astu sisään ja aloita.",
+    "enter": "Siirry"
+  },
+  "feed": {
+    "loadingPosts": "Ladataan uusimpia julkaisuja…",
+    "updatedAgo": "Päivitetty {{time}}",
+    "ready": "Valmis",
+    "noSources": "Ei lähteitä suodattimessa. Lisää ensimmäinen yläpanelin kautta.",
+    "noPostsLoaded": "Julkaisuja ei voitu ladata.",
+    "noPostsHint": "Tarkista profiilinnimet tai kokeile Päivitä.",
+    "endOfFeed": "syötteen loppu · lisää päivityksen jälkeen",
+    "loginButton": "Kirjaudu sisään",
+    "settingsTitle": "Asetukset",
+    "backTitle": "Takaisin etusivulle"
+  },
+  "statusBar": {
+    "sources": "Lähteet",
+    "sourcesWithCount_one": "{{count}} lähde — klikkaa suodattaaksesi",
+    "sourcesWithCount_other": "{{count}} lähdettä — klikkaa suodattaaksesi",
+    "addNetwork": "Lisää {{network}}-lähteitä",
+    "refreshing": "Päivitetään…",
+    "refresh": "Päivitä"
+  },
+  "filterPanel": {
+    "panelLabel": "Lähteet",
+    "noneAdded": "Ei lisättyjä",
+    "noNetworkSources": "ei lähteitä",
+    "collapsePanel": "Piilota lähdelista",
+    "expandPanel": "Näytä lähdelista",
+    "collapseNetwork": "Piilota {{network}}",
+    "expandNetwork": "Näytä {{network}}",
+    "addProfileTitle": "Lisää {{network}}-profiili",
+    "enterProfileName": "Syötä profiilin nimi",
+    "loadingSpinnerTitle": "Ladataan uusimpia julkaisuja…",
+    "profileBadgeTitle": "Sosiaalisen verkoston profiili",
+    "hideSource": "Piilota",
+    "showSource": "Näytä",
+    "removeSource": "Poista",
+    "errorUrlNotAllowed": "Syötä vain profiilin nimi, ei URL-osoitetta tai välilyöntejä.",
+    "errorAddFailed": "Lisääminen epäonnistui. Yritä uudelleen.",
+    "placeholderFacebook": "Facebook-sivun nimi (esim. fender)",
+    "placeholderInstagram": "Instagram-käyttäjänimi (esim. fender)",
+    "placeholderYouTube": "YouTube @handle (esim. fendermusic)",
+    "hintFacebook": "Syötä täsmälleen kuten sivun URL-osoitteessa näkyy (ilman https://facebook.com/).",
+    "hintInstagram": "Syötä Instagram-käyttäjänimi (ilman @, ilman URL-osoitetta).",
+    "hintYouTube": "Syötä YouTube @handle (ilman @, ilman URL-osoitetta)."
+  },
+  "upgrade": {
+    "title": "Profiiliraja saavutettu",
+    "subtitle": "{{network}} · valitse paketti lisää profiileille",
+    "noTiers": "Korkeampia tasoja ei ole saatavilla.",
+    "maybeLater": "Ehkä myöhemmin",
+    "unlimited": "Rajaton",
+    "limitLabel_one": "{{count}} profiili / alusta",
+    "limitLabel_other": "{{count}} profiilia / alusta",
+    "bestValue": "BEST VALUE",
+    "free": "Ilmainen",
+    "perMonth": "{{price}} € / kk",
+    "upgradeCta": "Päivitä paketti"
+  },
+  "cancelBanner": {
+    "planEnds": "{{tier}}-paketti päättyy",
+    "renew": "Uusi",
+    "renewLoading": "Avataan…",
+    "portalTitle": "Avaa Stripe Customer Portal tilauksen uusimiseen"
+  },
+  "userMenu": {
+    "tierLabel": "{{tier}}-paketti",
+    "manageSubscription": "Hallinnoi tilausta",
+    "settings": "Asetukset",
+    "logout": "Kirjaudu ulos",
+    "opening": "Avataan…"
+  },
+  "login": {
+    "title": "Kirjaudu sisään",
+    "defaultReason": "Lähetämme sinulle 6-numeroisen koodin sähköpostiin. Ei salasanoja.",
+    "emailPlaceholder": "sinun@email.fi",
+    "sendCode": "Lähetä koodi",
+    "sendingCode": "Lähetetään koodia…",
+    "step2Title": "Syötä koodi",
+    "codeSentTo": "Lähetimme 6-numeroisen koodin osoitteeseen {{email}}.",
+    "verify": "Kirjaudu sisään",
+    "verifying": "Vahvistetaan…",
+    "useOtherEmail": "Käytä toista sähköpostia",
+    "maybeLater": "Ehkä myöhemmin",
+    "errorSendFailed": "Koodin lähetys epäonnistui. Yritä uudelleen.",
+    "errorUnexpected": "Odottamaton virhe. Yritä uudelleen.",
+    "errorInvalidCode": "Koodi on virheellinen tai vanhentunut. Tarkista sähköpostisi.",
+    "errorVerifyFailed": "Vahvistus epäonnistui. Yritä uudelleen."
+  },
+  "settings": {
+    "title": "Asetukset",
+    "appearance": "Ulkoasu",
+    "themeLight": "☀️ Vaalea",
+    "themeDark": "🌙 Tumma",
+    "themeSystem": "⚙️ Järjestelmä",
+    "language": "Kieli",
+    "close": "Sulje"
+  },
+  "postCard": {
+    "openOnYouTube": "Avaa YouTubessa",
+    "openYouTubeTitle": "Avaa video YouTube-sovelluksessa tai selaimessa"
+  },
+  "errors": {
+    "unknown": "tuntematon virhe",
+    "paymentFailed": "Maksua ei voitu avata.\n\nVirhe: {{error}}\n\nYritä uudelleen tai ota meihin yhteyttä.",
+    "portalFailed": "Tilauksen hallintaa ei voitu avata.\n\nVirhe: {{error}}\n\nYritä uudelleen tai ota meihin yhteyttä."
+  }
+}

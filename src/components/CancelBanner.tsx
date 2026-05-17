@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { formatPlanEndDate } from "../lib/format";
 import { useTheme } from "../lib/theme-context";
 
@@ -11,6 +12,7 @@ export function CancelBanner({
   tier: string;
   onManage: () => Promise<void>;
 }) {
+  const { t } = useTranslation();
   const { colors: c, isDark } = useTheme();
   const [loading, setLoading] = useState(false);
   const formatted = formatPlanEndDate(endDate);
@@ -51,7 +53,7 @@ export function CancelBanner({
         flexShrink: 0,
       }}/>
       <span style={{ color: c.fg, fontWeight: 500 }}>
-        {tierLabel} plán končí
+        {t("cancelBanner.planEnds", { tier: tierLabel })}
       </span>
       <span style={{ color: c.muted }}>
         {formatted}
@@ -70,9 +72,9 @@ export function CancelBanner({
           padding: 0,
           fontFamily: "inherit",
         }}
-        title="Otvoriť Stripe Customer Portal pre obnovenie predplatného"
+        title={t("cancelBanner.portalTitle")}
       >
-        {loading ? "Otváram…" : "Obnoviť"}
+        {loading ? t("cancelBanner.renewLoading") : t("cancelBanner.renew")}
       </button>
     </div>
   );

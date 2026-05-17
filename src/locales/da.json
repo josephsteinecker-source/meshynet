@@ -1,0 +1,123 @@
+{
+  "common": {
+    "time": {
+      "justNow": "lige nu",
+      "minutesAgo_one": "for {{count}} min siden",
+      "minutesAgo_other": "for {{count}} min siden",
+      "hoursAgo_one": "for {{count}} t siden",
+      "hoursAgo_other": "for {{count}} t siden",
+      "daysAgo_one": "for {{count}} d siden",
+      "daysAgo_other": "for {{count}} d siden"
+    }
+  },
+  "index": {
+    "subtitle1": "Et roligt sted til det indhold, du vælger.",
+    "subtitle2": "Gå ind og kom i gang.",
+    "enter": "Gå ind"
+  },
+  "feed": {
+    "loadingPosts": "Indlæser de seneste opslag…",
+    "updatedAgo": "Opdateret {{time}}",
+    "ready": "Klar",
+    "noSources": "Ingen kilder i filteret. Tilføj den første via panelet ovenfor.",
+    "noPostsLoaded": "Der kunne ikke indlæses opslag.",
+    "noPostsHint": "Tjek profilnavnene, eller prøv Opdater.",
+    "endOfFeed": "slutning af feed · mere efter opdatering",
+    "loginButton": "Log ind",
+    "settingsTitle": "Indstillinger",
+    "backTitle": "Tilbage til start"
+  },
+  "statusBar": {
+    "sources": "Kilder",
+    "sourcesWithCount_one": "{{count}} kilde — klik for at filtrere",
+    "sourcesWithCount_other": "{{count}} kilder — klik for at filtrere",
+    "addNetwork": "Tilføj {{network}}-kilder",
+    "refreshing": "Opdaterer…",
+    "refresh": "Opdater"
+  },
+  "filterPanel": {
+    "panelLabel": "Kilder",
+    "noneAdded": "Ingen tilføjet",
+    "noNetworkSources": "ingen kilder",
+    "collapsePanel": "Skjul kildeliste",
+    "expandPanel": "Vis kildeliste",
+    "collapseNetwork": "Skjul {{network}}",
+    "expandNetwork": "Vis {{network}}",
+    "addProfileTitle": "Tilføj {{network}}-profil",
+    "enterProfileName": "Indtast profilnavn",
+    "loadingSpinnerTitle": "Indlæser de seneste opslag…",
+    "profileBadgeTitle": "Profil på socialt netværk",
+    "hideSource": "Skjul",
+    "showSource": "Vis",
+    "removeSource": "Fjern",
+    "errorUrlNotAllowed": "Indtast kun profilnavnet, ikke en URL eller mellemrum.",
+    "errorAddFailed": "Tilføjelse mislykkedes. Prøv igen.",
+    "placeholderFacebook": "Navn på Facebook-side (f.eks. fender)",
+    "placeholderInstagram": "Instagram-brugernavn (f.eks. fender)",
+    "placeholderYouTube": "YouTube @handle (f.eks. fendermusic)",
+    "hintFacebook": "Indtast præcis som vist i sidens URL (uden https://facebook.com/).",
+    "hintInstagram": "Indtast Instagram-brugernavnet (uden @, uden URL).",
+    "hintYouTube": "Indtast YouTube @handle (uden @, uden URL)."
+  },
+  "upgrade": {
+    "title": "Profilgrænse nået",
+    "subtitle": "{{network}} · vælg en plan for flere profiler",
+    "noTiers": "Ingen højere niveauer tilgængelige.",
+    "maybeLater": "Måske senere",
+    "unlimited": "Ubegrænset",
+    "limitLabel_one": "{{count}} profil / platform",
+    "limitLabel_other": "{{count}} profiler / platform",
+    "bestValue": "BEST VALUE",
+    "free": "Gratis",
+    "perMonth": "{{price}} € / md.",
+    "upgradeCta": "Opgrader"
+  },
+  "cancelBanner": {
+    "planEnds": "{{tier}}-plan slutter",
+    "renew": "Forny",
+    "renewLoading": "Åbner…",
+    "portalTitle": "Åbn Stripe Customer Portal for at forny abonnement"
+  },
+  "userMenu": {
+    "tierLabel": "{{tier}}-plan",
+    "manageSubscription": "Administrer abonnement",
+    "settings": "Indstillinger",
+    "logout": "Log ud",
+    "opening": "Åbner…"
+  },
+  "login": {
+    "title": "Log ind",
+    "defaultReason": "Vi sender dig en 6-cifret kode på e-mail. Ingen adgangskoder.",
+    "emailPlaceholder": "din@email.dk",
+    "sendCode": "Send kode",
+    "sendingCode": "Sender kode…",
+    "step2Title": "Indtast kode",
+    "codeSentTo": "Vi sendte en 6-cifret kode til {{email}}.",
+    "verify": "Log ind",
+    "verifying": "Bekræfter…",
+    "useOtherEmail": "Brug en anden e-mail",
+    "maybeLater": "Måske senere",
+    "errorSendFailed": "Afsendelse af kode mislykkedes. Prøv igen.",
+    "errorUnexpected": "Uventet fejl. Prøv igen.",
+    "errorInvalidCode": "Koden er forkert eller udløbet. Tjek din e-mail.",
+    "errorVerifyFailed": "Bekræftelse mislykkedes. Prøv igen."
+  },
+  "settings": {
+    "title": "Indstillinger",
+    "appearance": "Udseende",
+    "themeLight": "☀️ Lyst",
+    "themeDark": "🌙 Mørkt",
+    "themeSystem": "⚙️ System",
+    "language": "Sprog",
+    "close": "Luk"
+  },
+  "postCard": {
+    "openOnYouTube": "Åbn på YouTube",
+    "openYouTubeTitle": "Åbn video i YouTube-app eller browser"
+  },
+  "errors": {
+    "unknown": "ukendt fejl",
+    "paymentFailed": "Betaling kunne ikke åbnes.\n\nFejl: {{error}}\n\nPrøv igen eller kontakt os.",
+    "portalFailed": "Abonnementsadministration kunne ikke åbnes.\n\nFejl: {{error}}\n\nPrøv igen eller kontakt os."
+  }
+}

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { BRAND_GRADIENT } from "../lib/theme";
 import { useTheme } from "../lib/theme-context";
 
@@ -15,6 +16,7 @@ export function UserMenu({
   onOpenPortal: () => Promise<void> | void;
   onOpenSettings: () => void;
 }) {
+  const { t } = useTranslation();
   const { colors: c } = useTheme();
   const [open, setOpen] = useState(false);
   const [portalLoading, setPortalLoading] = useState(false);
@@ -113,7 +115,7 @@ export function UserMenu({
               letterSpacing: "0.3px",
               textTransform: "uppercase",
             }}>
-              {tierLabel} plán
+              {t("userMenu.tierLabel", { tier: tierLabel })}
             </div>
           </div>
 
@@ -139,7 +141,7 @@ export function UserMenu({
               }}
               onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
             >
-              {portalLoading ? "Otváram…" : "Spravovať predplatné"}
+              {portalLoading ? t("userMenu.opening") : t("userMenu.manageSubscription")}
             </button>
           )}
 
@@ -160,7 +162,7 @@ export function UserMenu({
             onMouseEnter={(e) => (e.currentTarget.style.background = "var(--bg-hover)")}
             onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
           >
-            Nastavenia
+            {t("userMenu.settings")}
           </button>
 
           <button
@@ -180,7 +182,7 @@ export function UserMenu({
             onMouseEnter={(e) => (e.currentTarget.style.background = "var(--bg-hover)")}
             onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
           >
-            Odhlásiť sa
+            {t("userMenu.logout")}
           </button>
         </div>
       )}

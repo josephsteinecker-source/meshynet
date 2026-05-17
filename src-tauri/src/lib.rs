@@ -18,8 +18,8 @@ const PRE_NAVIGATE_CURTAIN: &str = r#"
     d.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:#000000;z-index:2147483647;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:\'Manrope\',-apple-system,BlinkMacSystemFont,sans-serif;transition:opacity 0.8s ease;';
     const html = '<style>@keyframes mf-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}</style>' +
         '<div style="width:40px;height:40px;border:4px solid rgba(255,255,255,0.15);border-top:4px solid #4061ad;border-radius:50%;animation:mf-spin 1s linear infinite;margin-bottom:20px;"></div>' +
-        '<h2 style="margin:0;letter-spacing:-0.02em;font-size:24px;color:#ffffff;font-weight:700;font-family:\'Manrope\',sans-serif;">Master <span style="font-family:\'Fraunces\',Georgia,serif;font-style:italic;font-weight:600;background:linear-gradient(110deg,#4061ad 0%,#6059a7 45%,#2fbebe 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">feed</span></h2>' +
-        '<p style="color:rgba(255,255,255,0.55);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:8px;font-weight:600;">Pripravujeme zen feed...</p>';
+        '<h2 style="margin:0;letter-spacing:-0.02em;font-size:24px;color:#ffffff;font-weight:700;font-family:\'Manrope\',sans-serif;">Meshy<span style="font-family:\'Fraunces\',Georgia,serif;font-style:italic;font-weight:600;background:linear-gradient(110deg,#4061ad 0%,#6059a7 45%,#2fbebe 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">Net</span></h2>' +
+        '<p style="color:rgba(255,255,255,0.55);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:8px;font-weight:600;">Načítavanie...</p>';
     if (window.__mfSafeSetHTML) {
         window.__mfSafeSetHTML(d, html);
     } else {
@@ -36,6 +36,16 @@ const PRE_NAVIGATE_CURTAIN: &str = r#"
 // Tento fallback sa použije ak fetch zo Supabase pri štarte zlyhá.
 // Pri úspešnom fetchi ho prepíše čerstvá verzia z `app_scripts` tabuľky.
 const ZEN_SCRIPT_FALLBACK: &str = r#"
+(function() {
+    if (window.__mfConsoleOverrideDone) return;
+    window.__mfConsoleOverrideDone = true;
+    var oL = console.log, oW = console.warn, oE = console.error;
+    var bl = [/self.?xss/i, /selfxss/i, /Stop!/, /funkcia prehliadača určená pre vývojárov/i, /This is a browser feature intended for developers/i];
+    var ok = function(a) { var s = [].slice.call(a).map(function(x) { return typeof x === 'string' ? x : ''; }).join(' '); return !bl.some(function(p) { return p.test(s); }); };
+    console.log = function() { if (ok(arguments)) oL.apply(console, arguments); };
+    console.warn = function() { if (ok(arguments)) oW.apply(console, arguments); };
+    console.error = function() { if (ok(arguments)) oE.apply(console, arguments); };
+})();
 try {
     if (!window.__mfHeartbeatLogged) {
         console.log('[MF] zen_script v3 running on:', window.location.hostname);
@@ -161,15 +171,15 @@ function hideEl(el, why) {
 
         const h1 = document.createElement('h1');
         h1.style.cssText = 'margin:0 0 4px;font-size:22px;font-weight:700;letter-spacing:-0.02em;color:#ffffff;line-height:1.2;';
-        h1.appendChild(document.createTextNode('Master '));
+        h1.appendChild(document.createTextNode('Meshy'));
         const feedEl = document.createElement('span');
-        feedEl.textContent = 'feed';
-        feedEl.style.cssText = 'font-family:Georgia,serif;font-style:italic;font-weight:600;background:linear-gradient(110deg,#4061ad 0%,#6059a7 45%,#2fbebe 100%);-webkit-background-clip:text;background-clip:text;color:transparent;';
+        feedEl.textContent = 'Net';
+        feedEl.style.cssText = 'font-family:\'Fraunces\',Georgia,serif;font-style:italic;font-weight:600;background:linear-gradient(110deg,#4061ad 0%,#6059a7 45%,#2fbebe 100%);-webkit-background-clip:text;background-clip:text;color:transparent;';
         h1.appendChild(feedEl);
         wrap.appendChild(h1);
 
         const subEl = document.createElement('p');
-        subEl.textContent = 'Zen free mode';
+        subEl.textContent = 'Načítavanie...';
         subEl.style.cssText = 'margin:0 0 14px;font-size:13px;color:rgba(255,255,255,0.55);font-weight:400;';
         wrap.appendChild(subEl);
 
@@ -232,8 +242,8 @@ function hideEl(el, why) {
                 d.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:#000000;z-index:2147483647;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;transition:opacity 0.8s ease;';
                 const html = '<style>@keyframes mf-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}</style>' +
                     '<div style="width:40px;height:40px;border:4px solid rgba(255,255,255,0.15);border-top:4px solid #4061ad;border-radius:50%;animation:mf-spin 1s linear infinite;margin-bottom:20px;"></div>' +
-                    '<h2 style="margin:0;letter-spacing:-0.02em;font-size:24px;color:#ffffff;font-weight:700;">Master <span style="font-family:Georgia,serif;font-style:italic;font-weight:600;background:linear-gradient(110deg,#4061ad 0%,#6059a7 45%,#2fbebe 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">feed</span></h2>' +
-                    '<p style="color:rgba(255,255,255,0.55);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:8px;font-weight:600;">Pripravujeme zen feed...</p>';
+                    '<h2 style="margin:0;letter-spacing:-0.02em;font-size:24px;color:#ffffff;font-weight:700;">Meshy<span style="font-family:\'Fraunces\',Georgia,serif;font-style:italic;font-weight:600;background:linear-gradient(110deg,#4061ad 0%,#6059a7 45%,#2fbebe 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">Net</span></h2>' +
+                    '<p style="color:rgba(255,255,255,0.55);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:8px;font-weight:600;">Načítavanie...</p>';
                 if (window.__mfSafeSetHTML) {
                     window.__mfSafeSetHTML(d, html);
                 } else {
@@ -921,6 +931,16 @@ async fn otvor_prihlasenie(app: AppHandle, network: String) -> Result<(), String
         let w_init = window.clone();
         thread::spawn(move || {
             let init_script = r#"
+                (function() {
+                    if (window.__mfConsoleOverrideDone) return;
+                    window.__mfConsoleOverrideDone = true;
+                    var oL = console.log, oW = console.warn, oE = console.error;
+                    var bl = [/self.?xss/i, /selfxss/i, /Stop!/, /funkcia prehliadača určená pre vývojárov/i, /This is a browser feature intended for developers/i];
+                    var ok = function(a) { var s = [].slice.call(a).map(function(x) { return typeof x === 'string' ? x : ''; }).join(' '); return !bl.some(function(p) { return p.test(s); }); };
+                    console.log = function() { if (ok(arguments)) oL.apply(console, arguments); };
+                    console.warn = function() { if (ok(arguments)) oW.apply(console, arguments); };
+                    console.error = function() { if (ok(arguments)) oE.apply(console, arguments); };
+                })();
                 if (!window.__mfTrustedPolicy && window.trustedTypes && window.trustedTypes.createPolicy) {
                     try {
                         window.__mfTrustedPolicy = window.trustedTypes.createPolicy('mf-policy', {
@@ -942,7 +962,7 @@ async fn otvor_prihlasenie(app: AppHandle, network: String) -> Result<(), String
                     let d = document.createElement('div');
                     d.id = 'mf-curtain';
                     d.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:#000000;z-index:2147483647;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.8s ease;font-family:\'Manrope\',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;';
-                    window.__mfSafeSetHTML(d, '<style>@keyframes mf-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}</style><div style="width:40px;height:40px;border:4px solid rgba(255,255,255,0.15);border-top:4px solid #4061ad;border-radius:50%;animation:mf-spin 1s linear infinite;margin-bottom:20px;"></div><h2 style="margin:0;letter-spacing:-0.02em;font-size:24px;color:#ffffff;font-weight:700;font-family:\'Manrope\',sans-serif;">Master <span style="font-family:\'Fraunces\',Georgia,serif;font-style:italic;font-weight:600;background:linear-gradient(110deg,#4061ad 0%,#6059a7 45%,#2fbebe 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">feed</span></h2><p style="color:rgba(255,255,255,0.55);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:8px;font-weight:600;">Pripravujeme zen feed...</p>');
+                    window.__mfSafeSetHTML(d, '<style>@keyframes mf-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}</style><div style="width:40px;height:40px;border:4px solid rgba(255,255,255,0.15);border-top:4px solid #4061ad;border-radius:50%;animation:mf-spin 1s linear infinite;margin-bottom:20px;"></div><h2 style="margin:0;letter-spacing:-0.02em;font-size:24px;color:#ffffff;font-weight:700;font-family:\'Manrope\',sans-serif;">Meshy<span style="font-family:\'Fraunces\',Georgia,serif;font-style:italic;font-weight:600;background:linear-gradient(110deg,#4061ad 0%,#6059a7 45%,#2fbebe 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">Net</span></h2><p style="color:rgba(255,255,255,0.55);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:8px;font-weight:600;">Načítavanie...</p>');
                     document.documentElement.appendChild(d);
                     document.documentElement.style.overflow = 'hidden';
                 }
@@ -2735,8 +2755,8 @@ async fn mf_get_status(access_token: String) -> Result<JsonValue, String> {
     match result {
         Ok(status) => {
             println!(
-                "[MF] mf_get_status OK: tier={}, max_profiles={}",
-                status.status.tier, status.status.max_profiles_per_network
+                "[MF] mf_get_status OK: tier={}, max_profiles_per_platform={}",
+                status.status.tier, status.status.max_profiles_per_platform
             );
             serde_json::to_value(status).map_err(|e| e.to_string())
         }
@@ -2750,7 +2770,7 @@ async fn mf_get_status(access_token: String) -> Result<JsonValue, String> {
 // ============================================================
 // 💳 7D: Stripe Checkout session
 // ============================================================
-// Frontend zavolá tento command s tier_id ("standard" alebo "plus") a JWT
+// Frontend zavolá tento command s tier_id ("plus" alebo "unlimited") a JWT
 // prihláseného usera. Backend (cez Edge Function create-checkout-session)
 // vytvorí Stripe Checkout session a vráti URL.
 // Frontend potom túto URL otvorí v default browseri.
@@ -3220,9 +3240,9 @@ pub fn run() {
                 match backend::fetch_status(None) {
                     Ok(resp) => {
                         println!(
-                            "[MF] ✅ Backend OK: tier={}, max_profiles={}, available_tiers={}",
+                            "[MF] ✅ Backend OK: tier={}, max_profiles_per_platform={}, available_tiers={}",
                             resp.status.tier,
-                            resp.status.max_profiles_per_network,
+                            resp.status.max_profiles_per_platform,
                             resp.available_tiers.len()
                         );
                     }

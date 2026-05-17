@@ -16,6 +16,6 @@ export async function openZenMode(network: Network): Promise<void> {
   try {
     await invoke("otvor_prihlasenie", { network });
   } catch (err) {
-    console.error(`[Master Feed] Failed to open ${network} in zen mode:`, err);
+    console.error(`[MeshyNet] Failed to open ${network} in zen mode:`, err);
   }
 }

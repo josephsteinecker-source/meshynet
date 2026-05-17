@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { Post } from "../types";
 import { Avatar } from "./Avatar";
 import { formatRelativeTime, isLikelyValidImage } from "../lib/format";
@@ -7,6 +8,7 @@ import { openExternal } from "../lib/tauri";
 import { useTheme } from "../lib/theme-context";
 
 export function PostCard({ post }: { post: Post }) {
+  const { t } = useTranslation();
   const { colors: c } = useTheme();
   const [imageError, setImageError] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -156,9 +158,9 @@ export function PostCard({ post }: { post: Post }) {
               e.currentTarget.style.color = "var(--muted)";
               e.currentTarget.style.background = "transparent";
             }}
-            title="Otvoriť video v YouTube aplikácii alebo prehliadači"
+            title={t("postCard.openYouTubeTitle")}
           >
-            Otvoriť na YouTube
+            {t("postCard.openOnYouTube")}
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M7 17L17 7"/>
               <polyline points="7 7 17 7 17 17"/>

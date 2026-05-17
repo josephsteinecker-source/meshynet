@@ -1,0 +1,128 @@
+{
+  "common": {
+    "time": {
+      "justNow": "tikko",
+      "minutesAgo_zero": "{{count}} min atpakaļ",
+      "minutesAgo_one": "{{count}} min atpakaļ",
+      "minutesAgo_other": "{{count}} min atpakaļ",
+      "hoursAgo_zero": "{{count}} h atpakaļ",
+      "hoursAgo_one": "{{count}} h atpakaļ",
+      "hoursAgo_other": "{{count}} h atpakaļ",
+      "daysAgo_zero": "{{count}} d atpakaļ",
+      "daysAgo_one": "{{count}} d atpakaļ",
+      "daysAgo_other": "{{count}} d atpakaļ"
+    }
+  },
+  "index": {
+    "subtitle1": "Klusa vieta saturam, ko tu izvēlies.",
+    "subtitle2": "Ienāc un sāc.",
+    "enter": "Ienākt"
+  },
+  "feed": {
+    "loadingPosts": "Ielādē jaunākās ziņas…",
+    "updatedAgo": "Atjaunināts {{time}}",
+    "ready": "Gatavs",
+    "noSources": "Filtrā nav avotu. Pievieno pirmo, izmantojot augšējo paneli.",
+    "noPostsLoaded": "Neizdevās ielādēt ziņas.",
+    "noPostsHint": "Pārbaudi profilu nosaukumus vai mēģini Atjaunināt.",
+    "endOfFeed": "plūsmas beigas · vairāk pēc atjaunināšanas",
+    "loginButton": "Pieteikties",
+    "settingsTitle": "Iestatījumi",
+    "backTitle": "Atpakaļ uz sākumu"
+  },
+  "statusBar": {
+    "sources": "Avoti",
+    "sourcesWithCount_zero": "{{count}} avotu — noklikšķini, lai filtrētu",
+    "sourcesWithCount_one": "{{count}} avots — noklikšķini, lai filtrētu",
+    "sourcesWithCount_other": "{{count}} avotu — noklikšķini, lai filtrētu",
+    "addNetwork": "Pievienot {{network}} avotus",
+    "refreshing": "Atjaunina…",
+    "refresh": "Atjaunināt"
+  },
+  "filterPanel": {
+    "panelLabel": "Avoti",
+    "noneAdded": "Nav pievienotu",
+    "noNetworkSources": "nav avotu",
+    "collapsePanel": "Sakļaut avotu sarakstu",
+    "expandPanel": "Izvērst avotu sarakstu",
+    "collapseNetwork": "Sakļaut {{network}}",
+    "expandNetwork": "Izvērst {{network}}",
+    "addProfileTitle": "Pievienot {{network}} profilu",
+    "enterProfileName": "Ievadi profila nosaukumu",
+    "loadingSpinnerTitle": "Ielādē jaunākās ziņas…",
+    "profileBadgeTitle": "Sociālā tīkla profils",
+    "hideSource": "Paslēpt",
+    "showSource": "Rādīt",
+    "removeSource": "Noņemt",
+    "errorUrlNotAllowed": "Ievadi tikai profila nosaukumu, nevis URL vai atstarpes.",
+    "errorAddFailed": "Neizdevās pievienot. Mēģini vēlreiz.",
+    "placeholderFacebook": "Facebook lapas nosaukums (piem. fender)",
+    "placeholderInstagram": "Instagram lietotājvārds (piem. fender)",
+    "placeholderYouTube": "YouTube @handle (piem. fendermusic)",
+    "hintFacebook": "Ievadi tieši tā, kā tas parādās lapas URL (bez https://facebook.com/).",
+    "hintInstagram": "Ievadi Instagram lietotājvārdu (bez @, bez URL).",
+    "hintYouTube": "Ievadi YouTube @handle (bez @, bez URL)."
+  },
+  "upgrade": {
+    "title": "Profilu limits sasniegts",
+    "subtitle": "{{network}} · izvēlies plānu vairāk profiliem",
+    "noTiers": "Nav pieejamu augstāku tarifu.",
+    "maybeLater": "Varbūt vēlāk",
+    "unlimited": "Neierobežots",
+    "limitLabel_zero": "{{count}} profilu / platforma",
+    "limitLabel_one": "{{count}} profils / platforma",
+    "limitLabel_other": "{{count}} profilu / platforma",
+    "bestValue": "BEST VALUE",
+    "free": "Bezmaksas",
+    "perMonth": "{{price}} € / mēn.",
+    "upgradeCta": "Uzlabot"
+  },
+  "cancelBanner": {
+    "planEnds": "{{tier}} plāns beidzas",
+    "renew": "Atjaunot",
+    "renewLoading": "Atver…",
+    "portalTitle": "Atvērt Stripe Customer Portal abonementa atjaunošanai"
+  },
+  "userMenu": {
+    "tierLabel": "{{tier}} plāns",
+    "manageSubscription": "Pārvaldīt abonementu",
+    "settings": "Iestatījumi",
+    "logout": "Izrakstīties",
+    "opening": "Atver…"
+  },
+  "login": {
+    "title": "Pieteikšanās",
+    "defaultReason": "Nosūtīsim tev 6 ciparu kodu uz e-pastu. Bez parolēm.",
+    "emailPlaceholder": "tavs@epasts.lv",
+    "sendCode": "Sūtīt kodu",
+    "sendingCode": "Sūta kodu…",
+    "step2Title": "Ievadi kodu",
+    "codeSentTo": "Nosūtījām 6 ciparu kodu uz {{email}}.",
+    "verify": "Pieteikties",
+    "verifying": "Pārbauda…",
+    "useOtherEmail": "Izmantot citu e-pastu",
+    "maybeLater": "Varbūt vēlāk",
+    "errorSendFailed": "Neizdevās nosūtīt kodu. Mēģini vēlreiz.",
+    "errorUnexpected": "Negaidīta kļūda. Mēģini vēlreiz.",
+    "errorInvalidCode": "Kods ir nepareizs vai beidzies. Pārbaudi savu e-pastu.",
+    "errorVerifyFailed": "Pārbaude neizdevās. Mēģini vēlreiz."
+  },
+  "settings": {
+    "title": "Iestatījumi",
+    "appearance": "Izskats",
+    "themeLight": "☀️ Gaišs",
+    "themeDark": "🌙 Tumšs",
+    "themeSystem": "⚙️ Sistēma",
+    "language": "Valoda",
+    "close": "Aizvērt"
+  },
+  "postCard": {
+    "openOnYouTube": "Atvērt YouTube",
+    "openYouTubeTitle": "Atvērt video YouTube lietotnē vai pārlūkprogrammā"
+  },
+  "errors": {
+    "unknown": "nezināma kļūda",
+    "paymentFailed": "Neizdevās atvērt maksājumu.\n\nKļūda: {{error}}\n\nLūdzu, mēģini vēlreiz vai sazinieties ar mums.",
+    "portalFailed": "Neizdevās atvērt abonementa pārvaldību.\n\nKļūda: {{error}}\n\nLūdzu, mēģini vēlreiz vai sazinieties ar mums."
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "common": {
+    "time": {
+      "justNow": "díreach anois",
+      "minutesAgo_one": "{{count}} nóiméad ó shin",
+      "minutesAgo_two": "{{count}} nóiméad ó shin",
+      "minutesAgo_few": "{{count}} nóiméad ó shin",
+      "minutesAgo_many": "{{count}} nóiméad ó shin",
+      "minutesAgo_other": "{{count}} nóiméad ó shin",
+      "hoursAgo_one": "{{count}} uair an chloig ó shin",
+      "hoursAgo_two": "{{count}} uair an chloig ó shin",
+      "hoursAgo_few": "{{count}} uair an chloig ó shin",
+      "hoursAgo_many": "{{count}} uair an chloig ó shin",
+      "hoursAgo_other": "{{count}} uair an chloig ó shin",
+      "daysAgo_one": "{{count}} lá ó shin",
+      "daysAgo_two": "{{count}} lá ó shin",
+      "daysAgo_few": "{{count}} lá ó shin",
+      "daysAgo_many": "{{count}} lá ó shin",
+      "daysAgo_other": "{{count}} lá ó shin"
+    }
+  },
+  "index": {
+    "subtitle1": "Spás ciúin don ábhar a roghnaíonn tú.",
+    "subtitle2": "Isteach leat agus tosaigh.",
+    "enter": "Isteach"
+  },
+  "feed": {
+    "loadingPosts": "Ag lódáil na bpostanna is déanaí…",
+    "updatedAgo": "Nuashonraithe {{time}}",
+    "ready": "Réidh",
+    "noSources": "Níl aon fhoinsí sa scagaire. Cuir an chéad cheann leis tríd an bpainéal thuas.",
+    "noPostsLoaded": "Níorbh fhéidir postanna a lódáil.",
+    "noPostsHint": "Seiceáil ainmneacha na bproifílí nó bain triail as Athnuaigh.",
+    "endOfFeed": "deireadh an bheathaithe · tuilleadh tar éis athnuachana",
+    "loginButton": "Sínigh isteach",
+    "settingsTitle": "Socruithe",
+    "backTitle": "Ar ais go dtí an baile"
+  },
+  "statusBar": {
+    "sources": "Foinsí",
+    "sourcesWithCount_one": "{{count}} fhoinse — cliceáil chun scagadh",
+    "sourcesWithCount_two": "{{count}} fhoinse — cliceáil chun scagadh",
+    "sourcesWithCount_few": "{{count}} foinsí — cliceáil chun scagadh",
+    "sourcesWithCount_many": "{{count}} foinsí — cliceáil chun scagadh",
+    "sourcesWithCount_other": "{{count}} foinsí — cliceáil chun scagadh",
+    "addNetwork": "Foinsí {{network}} a chur leis",
+    "refreshing": "Ag athnuachan…",
+    "refresh": "Athnuaigh"
+  },
+  "filterPanel": {
+    "panelLabel": "Foinsí",
+    "noneAdded": "Níor cuireadh aon cheann leis",
+    "noNetworkSources": "gan foinsí",
+    "collapsePanel": "Crap liosta foinsí",
+    "expandPanel": "Leathnaigh liosta foinsí",
+    "collapseNetwork": "Crap {{network}}",
+    "expandNetwork": "Leathnaigh {{network}}",
+    "addProfileTitle": "Próifíl {{network}} a chur leis",
+    "enterProfileName": "Iontráil ainm próifíle",
+    "loadingSpinnerTitle": "Ag lódáil na bpostanna is déanaí…",
+    "profileBadgeTitle": "Próifíl líonra sóisialta",
+    "hideSource": "Folaigh",
+    "showSource": "Taispeáin",
+    "removeSource": "Bain",
+    "errorUrlNotAllowed": "Iontráil ainm na próifíle amháin, ní URL ná spásanna.",
+    "errorAddFailed": "Theip ar an gcur leis. Bain triail eile as.",
+    "placeholderFacebook": "Ainm leathanaigh Facebook (m.sh. fender)",
+    "placeholderInstagram": "Ainm úsáideora Instagram (m.sh. fender)",
+    "placeholderYouTube": "YouTube @handle (m.sh. fendermusic)",
+    "hintFacebook": "Iontráil go díreach mar a thaispeántar in URL an leathanaigh (gan https://facebook.com/).",
+    "hintInstagram": "Iontráil ainm úsáideora Instagram (gan @, gan URL).",
+    "hintYouTube": "Iontráil an YouTube @handle (gan @, gan URL)."
+  },
+  "upgrade": {
+    "title": "Sroicheadh teorainn na bproifílí",
+    "subtitle": "{{network}} · roghnaigh plean do thuilleadh próifílí",
+    "noTiers": "Níl aon leibhéal níos airde ar fáil.",
+    "maybeLater": "B'fhéidir níos déanaí",
+    "unlimited": "Gan teorainn",
+    "limitLabel_one": "{{count}} phróifíl / ardán",
+    "limitLabel_two": "{{count}} phróifíl / ardán",
+    "limitLabel_few": "{{count}} próifílí / ardán",
+    "limitLabel_many": "{{count}} próifílí / ardán",
+    "limitLabel_other": "{{count}} próifílí / ardán",
+    "bestValue": "BEST VALUE",
+    "free": "Saor in Aisce",
+    "perMonth": "{{price}} € / mí",
+    "upgradeCta": "Uasghrádaigh"
+  },
+  "cancelBanner": {
+    "planEnds": "Críochnaíonn plean {{tier}}",
+    "renew": "Athnuaigh",
+    "renewLoading": "Ag oscailt…",
+    "portalTitle": "Oscail Stripe Customer Portal chun síntiús a athnuachan"
+  },
+  "userMenu": {
+    "tierLabel": "Plean {{tier}}",
+    "manageSubscription": "Bainistigh síntiús",
+    "settings": "Socruithe",
+    "logout": "Sínigh amach",
+    "opening": "Ag oscailt…"
+  },
+  "login": {
+    "title": "Sínigh isteach",
+    "defaultReason": "Seolfaimid cód 6 dhigit chugat ar ríomhphost. Gan pasfhocail.",
+    "emailPlaceholder": "do@ríomhphost.ie",
+    "sendCode": "Seol cód",
+    "sendingCode": "Ag seoladh cód…",
+    "step2Title": "Iontráil an cód",
+    "codeSentTo": "Sheol muid cód 6 dhigit chuig {{email}}.",
+    "verify": "Sínigh isteach",
+    "verifying": "Ag fíorú…",
+    "useOtherEmail": "Úsáid ríomhphost eile",
+    "maybeLater": "B'fhéidir níos déanaí",
+    "errorSendFailed": "Theip ar sheoladh an chóid. Bain triail eile as.",
+    "errorUnexpected": "Earráid gan choinne. Bain triail eile as.",
+    "errorInvalidCode": "Tá an cód mícheart nó éagtha. Seiceáil do ríomhphost.",
+    "errorVerifyFailed": "Theip ar an bhfíorú. Bain triail eile as."
+  },
+  "settings": {
+    "title": "Socruithe",
+    "appearance": "Cuma",
+    "themeLight": "☀️ Geal",
+    "themeDark": "🌙 Dorcha",
+    "themeSystem": "⚙️ Córas",
+    "language": "Teanga",
+    "close": "Dún"
+  },
+  "postCard": {
+    "openOnYouTube": "Oscail ar YouTube",
+    "openYouTubeTitle": "Oscail físeán in aip nó brabhsálaí YouTube"
+  },
+  "errors": {
+    "unknown": "earráid anaithnid",
+    "paymentFailed": "Níorbh fhéidir an íocaíocht a oscailt.\n\nEarráid: {{error}}\n\nBain triail eile as nó déan teagmháil linn.",
+    "portalFailed": "Níorbh fhéidir bainistíocht an tsíntiúis a oscailt.\n\nEarráid: {{error}}\n\nBain triail eile as nó déan teagmháil linn."
+  }
+}

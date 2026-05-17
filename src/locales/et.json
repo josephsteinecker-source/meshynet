@@ -1,0 +1,123 @@
+{
+  "common": {
+    "time": {
+      "justNow": "just äsja",
+      "minutesAgo_one": "{{count}} min tagasi",
+      "minutesAgo_other": "{{count}} min tagasi",
+      "hoursAgo_one": "{{count}} h tagasi",
+      "hoursAgo_other": "{{count}} h tagasi",
+      "daysAgo_one": "{{count}} p tagasi",
+      "daysAgo_other": "{{count}} p tagasi"
+    }
+  },
+  "index": {
+    "subtitle1": "Rahulik ruum sinu valitud sisu jaoks.",
+    "subtitle2": "Sisene ja alusta.",
+    "enter": "Sisene"
+  },
+  "feed": {
+    "loadingPosts": "Uusimate postituste laadimine…",
+    "updatedAgo": "Uuendatud {{time}}",
+    "ready": "Valmis",
+    "noSources": "Filtris pole allikaid. Lisa esimene ülaloleva paneeli kaudu.",
+    "noPostsLoaded": "Postituste laadimine ebaõnnestus.",
+    "noPostsHint": "Kontrolli profiilide nimesid või proovi Värskendada.",
+    "endOfFeed": "voo lõpp · rohkem pärast värskendamist",
+    "loginButton": "Logi sisse",
+    "settingsTitle": "Seaded",
+    "backTitle": "Tagasi avalehele"
+  },
+  "statusBar": {
+    "sources": "Allikad",
+    "sourcesWithCount_one": "{{count}} allikas — klõpsa filtreerimiseks",
+    "sourcesWithCount_other": "{{count}} allikat — klõpsa filtreerimiseks",
+    "addNetwork": "Lisa {{network}} allikaid",
+    "refreshing": "Värskendamine…",
+    "refresh": "Värskenda"
+  },
+  "filterPanel": {
+    "panelLabel": "Allikad",
+    "noneAdded": "Ühtegi pole lisatud",
+    "noNetworkSources": "allikaid pole",
+    "collapsePanel": "Peida allikate loend",
+    "expandPanel": "Näita allikate loend",
+    "collapseNetwork": "Peida {{network}}",
+    "expandNetwork": "Näita {{network}}",
+    "addProfileTitle": "Lisa {{network}} profiil",
+    "enterProfileName": "Sisesta profiili nimi",
+    "loadingSpinnerTitle": "Uusimate postituste laadimine…",
+    "profileBadgeTitle": "Sotsiaalmeedia profiil",
+    "hideSource": "Peida",
+    "showSource": "Näita",
+    "removeSource": "Eemalda",
+    "errorUrlNotAllowed": "Sisesta ainult profiili nimi, mitte URL ega tühikuid.",
+    "errorAddFailed": "Lisamine ebaõnnestus. Proovi uuesti.",
+    "placeholderFacebook": "Facebooki lehe nimi (nt fender)",
+    "placeholderInstagram": "Instagrami kasutajanimi (nt fender)",
+    "placeholderYouTube": "YouTube @handle (nt fendermusic)",
+    "hintFacebook": "Sisesta täpselt nii, nagu see lehe URL-is kuvatakse (ilma https://facebook.com/).",
+    "hintInstagram": "Sisesta Instagrami kasutajanimi (ilma @-ta, ilma URL-ita).",
+    "hintYouTube": "Sisesta YouTube @handle (ilma @-ta, ilma URL-ita)."
+  },
+  "upgrade": {
+    "title": "Profiilide limiit täis",
+    "subtitle": "{{network}} · vali plaan rohkemate profiilide jaoks",
+    "noTiers": "Kõrgemaid tasemeid pole saadaval.",
+    "maybeLater": "Ehk hiljem",
+    "unlimited": "Piiramatu",
+    "limitLabel_one": "{{count}} profiil / platvorm",
+    "limitLabel_other": "{{count}} profiili / platvorm",
+    "bestValue": "BEST VALUE",
+    "free": "Tasuta",
+    "perMonth": "{{price}} € / kuu",
+    "upgradeCta": "Uuenda"
+  },
+  "cancelBanner": {
+    "planEnds": "{{tier}} plaan lõpeb",
+    "renew": "Uuenda",
+    "renewLoading": "Avamine…",
+    "portalTitle": "Ava Stripe Customer Portal tellimuse uuendamiseks"
+  },
+  "userMenu": {
+    "tierLabel": "{{tier}} plaan",
+    "manageSubscription": "Halda tellimust",
+    "settings": "Seaded",
+    "logout": "Logi välja",
+    "opening": "Avamine…"
+  },
+  "login": {
+    "title": "Logi sisse",
+    "defaultReason": "Saadame sulle 6-kohalise koodi e-postile. Paroole pole vaja.",
+    "emailPlaceholder": "sinu@email.ee",
+    "sendCode": "Saada kood",
+    "sendingCode": "Koodi saatmine…",
+    "step2Title": "Sisesta kood",
+    "codeSentTo": "Saatsime 6-kohalise koodi aadressile {{email}}.",
+    "verify": "Logi sisse",
+    "verifying": "Kontrollimine…",
+    "useOtherEmail": "Kasuta teist e-posti",
+    "maybeLater": "Ehk hiljem",
+    "errorSendFailed": "Koodi saatmine ebaõnnestus. Proovi uuesti.",
+    "errorUnexpected": "Ootamatu viga. Proovi uuesti.",
+    "errorInvalidCode": "Kood on vale või aegunud. Kontrolli oma e-posti.",
+    "errorVerifyFailed": "Kontrollimine ebaõnnestus. Proovi uuesti."
+  },
+  "settings": {
+    "title": "Seaded",
+    "appearance": "Välimus",
+    "themeLight": "☀️ Hele",
+    "themeDark": "🌙 Tume",
+    "themeSystem": "⚙️ Süsteem",
+    "language": "Keel",
+    "close": "Sulge"
+  },
+  "postCard": {
+    "openOnYouTube": "Ava YouTube'is",
+    "openYouTubeTitle": "Ava video YouTube'i rakenduses või brauseris"
+  },
+  "errors": {
+    "unknown": "tundmatu viga",
+    "paymentFailed": "Makset ei saanud avada.\n\nViga: {{error}}\n\nProovi uuesti või võta meiega ühendust.",
+    "portalFailed": "Tellimuse haldust ei saanud avada.\n\nViga: {{error}}\n\nProovi uuesti või võta meiega ühendust."
+  }
+}

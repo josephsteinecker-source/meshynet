@@ -1,0 +1,133 @@
+{
+  "common": {
+    "time": {
+      "justNow": "pravkar",
+      "minutesAgo_one": "pred {{count}} min",
+      "minutesAgo_two": "pred {{count}} min",
+      "minutesAgo_few": "pred {{count}} min",
+      "minutesAgo_other": "pred {{count}} min",
+      "hoursAgo_one": "pred {{count}} h",
+      "hoursAgo_two": "pred {{count}} h",
+      "hoursAgo_few": "pred {{count}} h",
+      "hoursAgo_other": "pred {{count}} h",
+      "daysAgo_one": "pred {{count}} d",
+      "daysAgo_two": "pred {{count}} d",
+      "daysAgo_few": "pred {{count}} d",
+      "daysAgo_other": "pred {{count}} d"
+    }
+  },
+  "index": {
+    "subtitle1": "Tih prostor za vsebino, ki jo izbirate.",
+    "subtitle2": "Vstopi in začni.",
+    "enter": "Vstopi"
+  },
+  "feed": {
+    "loadingPosts": "Nalaganje najnovejših objav…",
+    "updatedAgo": "Posodobljeno {{time}}",
+    "ready": "Pripravljeno",
+    "noSources": "V filtru ni virov. Dodaj prvega prek zgornje plošče.",
+    "noPostsLoaded": "Objav ni bilo mogoče naložiti.",
+    "noPostsHint": "Preveri imena profilov ali poskusi Osveži.",
+    "endOfFeed": "konec vira · več po osvežitvi",
+    "loginButton": "Prijava",
+    "settingsTitle": "Nastavitve",
+    "backTitle": "Nazaj na začetek"
+  },
+  "statusBar": {
+    "sources": "Viri",
+    "sourcesWithCount_one": "{{count}} vir — klikni za filtriranje",
+    "sourcesWithCount_two": "{{count}} vira — klikni za filtriranje",
+    "sourcesWithCount_few": "{{count}} viri — klikni za filtriranje",
+    "sourcesWithCount_other": "{{count}} virov — klikni za filtriranje",
+    "addNetwork": "Dodaj {{network}} vire",
+    "refreshing": "Osveževanje…",
+    "refresh": "Osveži"
+  },
+  "filterPanel": {
+    "panelLabel": "Viri",
+    "noneAdded": "Ni dodanih",
+    "noNetworkSources": "ni virov",
+    "collapsePanel": "Skrči seznam virov",
+    "expandPanel": "Razširi seznam virov",
+    "collapseNetwork": "Skrči {{network}}",
+    "expandNetwork": "Razširi {{network}}",
+    "addProfileTitle": "Dodaj {{network}} profil",
+    "enterProfileName": "Vnesi ime profila",
+    "loadingSpinnerTitle": "Nalaganje najnovejših objav…",
+    "profileBadgeTitle": "Profil družbenega omrežja",
+    "hideSource": "Skrij",
+    "showSource": "Pokaži",
+    "removeSource": "Odstrani",
+    "errorUrlNotAllowed": "Vnesi samo ime profila, ne URL ali presledkov.",
+    "errorAddFailed": "Dodajanje ni uspelo. Poskusi znova.",
+    "placeholderFacebook": "Ime Facebook strani (npr. fender)",
+    "placeholderInstagram": "Instagram uporabniško ime (npr. fender)",
+    "placeholderYouTube": "YouTube @handle (npr. fendermusic)",
+    "hintFacebook": "Vnesi natanko tako, kot je prikazano v URL strani (brez https://facebook.com/).",
+    "hintInstagram": "Vnesi Instagram uporabniško ime (brez @, brez URL).",
+    "hintYouTube": "Vnesi YouTube @handle (brez @, brez URL)."
+  },
+  "upgrade": {
+    "title": "Dosežena omejitev profilov",
+    "subtitle": "{{network}} · izberi načrt za več profilov",
+    "noTiers": "Ni višjih tarifnih ravni.",
+    "maybeLater": "Morda kasneje",
+    "unlimited": "Neomejeno",
+    "limitLabel_one": "{{count}} profil / platforma",
+    "limitLabel_two": "{{count}} profila / platforma",
+    "limitLabel_few": "{{count}} profili / platforma",
+    "limitLabel_other": "{{count}} profilov / platforma",
+    "bestValue": "BEST VALUE",
+    "free": "Brezplačno",
+    "perMonth": "{{price}} € / mes.",
+    "upgradeCta": "Nadgradi"
+  },
+  "cancelBanner": {
+    "planEnds": "{{tier}} načrt se konča",
+    "renew": "Obnovi",
+    "renewLoading": "Odpiranje…",
+    "portalTitle": "Odpri Stripe Customer Portal za obnovitev naročnine"
+  },
+  "userMenu": {
+    "tierLabel": "{{tier}} načrt",
+    "manageSubscription": "Upravljaj naročnino",
+    "settings": "Nastavitve",
+    "logout": "Odjava",
+    "opening": "Odpiranje…"
+  },
+  "login": {
+    "title": "Prijava",
+    "defaultReason": "Poslali ti bomo 6-mestno kodo na e-pošto. Brez gesel.",
+    "emailPlaceholder": "tvoj@email.si",
+    "sendCode": "Pošlji kodo",
+    "sendingCode": "Pošiljanje kode…",
+    "step2Title": "Vnesi kodo",
+    "codeSentTo": "Poslali smo 6-mestno kodo na {{email}}.",
+    "verify": "Prijava",
+    "verifying": "Preverjanje…",
+    "useOtherEmail": "Uporabi drug e-naslov",
+    "maybeLater": "Morda kasneje",
+    "errorSendFailed": "Kode ni bilo mogoče poslati. Poskusi znova.",
+    "errorUnexpected": "Nepričakovana napaka. Poskusi znova.",
+    "errorInvalidCode": "Koda je napačna ali je potekla. Preveri e-pošto.",
+    "errorVerifyFailed": "Preverjanje ni uspelo. Poskusi znova."
+  },
+  "settings": {
+    "title": "Nastavitve",
+    "appearance": "Videz",
+    "themeLight": "☀️ Svetla",
+    "themeDark": "🌙 Temna",
+    "themeSystem": "⚙️ Sistem",
+    "language": "Jezik",
+    "close": "Zapri"
+  },
+  "postCard": {
+    "openOnYouTube": "Odpri na YouTube",
+    "openYouTubeTitle": "Odpri video v aplikaciji ali brskalniku YouTube"
+  },
+  "errors": {
+    "unknown": "neznana napaka",
+    "paymentFailed": "Plačila ni bilo mogoče odpreti.\n\nNapaka: {{error}}\n\nPoskusi znova ali nas kontaktiraj.",
+    "portalFailed": "Upravljanja naročnine ni bilo mogoče odpreti.\n\nNapaka: {{error}}\n\nPoskusi znova ali nas kontaktiraj."
+  }
+}

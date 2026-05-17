@@ -1,0 +1,128 @@
+{
+  "common": {
+    "time": {
+      "justNow": "právě teď",
+      "minutesAgo_one": "před {{count}} min",
+      "minutesAgo_few": "před {{count}} min",
+      "minutesAgo_other": "před {{count}} min",
+      "hoursAgo_one": "před {{count}} h",
+      "hoursAgo_few": "před {{count}} h",
+      "hoursAgo_other": "před {{count}} h",
+      "daysAgo_one": "před {{count}} d",
+      "daysAgo_few": "před {{count}} d",
+      "daysAgo_other": "před {{count}} d"
+    }
+  },
+  "index": {
+    "subtitle1": "Klidný prostor pro obsah, který si vybíráš.",
+    "subtitle2": "Vstup a začni.",
+    "enter": "Vstoupit"
+  },
+  "feed": {
+    "loadingPosts": "Načítám nejnovější příspěvky…",
+    "updatedAgo": "Aktualizováno {{time}}",
+    "ready": "Připraveno",
+    "noSources": "Žádné zdroje ve filtru. Přidej první přes panel výše.",
+    "noPostsLoaded": "Nepodařilo se načíst žádné příspěvky.",
+    "noPostsHint": "Zkontroluj jména profilů nebo zkus Obnovit.",
+    "endOfFeed": "konec feedu · další po obnovení",
+    "loginButton": "Přihlásit se",
+    "settingsTitle": "Nastavení",
+    "backTitle": "Zpět na úvod"
+  },
+  "statusBar": {
+    "sources": "Zdroje",
+    "sourcesWithCount_one": "{{count}} zdroj — klikni pro filtrování",
+    "sourcesWithCount_few": "{{count}} zdroje — klikni pro filtrování",
+    "sourcesWithCount_other": "{{count}} zdrojů — klikni pro filtrování",
+    "addNetwork": "Přidat {{network}} zdroje",
+    "refreshing": "Obnovuje se…",
+    "refresh": "Obnovit"
+  },
+  "filterPanel": {
+    "panelLabel": "Zdroje",
+    "noneAdded": "Žádné přidány",
+    "noNetworkSources": "žádné zdroje",
+    "collapsePanel": "Sbalit seznam zdrojů",
+    "expandPanel": "Rozbalit seznam zdrojů",
+    "collapseNetwork": "Sbalit {{network}}",
+    "expandNetwork": "Rozbalit {{network}}",
+    "addProfileTitle": "Přidat {{network}} profil",
+    "enterProfileName": "Zadej jméno profilu",
+    "loadingSpinnerTitle": "Načítám nejnovější příspěvky…",
+    "profileBadgeTitle": "Profil ze sociální sítě",
+    "hideSource": "Skrýt",
+    "showSource": "Zobrazit",
+    "removeSource": "Odebrat",
+    "errorUrlNotAllowed": "Zadej pouze jméno profilu, ne URL ani mezery.",
+    "errorAddFailed": "Nepodařilo se přidat. Zkus znovu.",
+    "placeholderFacebook": "Název Facebook stránky (např. fender)",
+    "placeholderInstagram": "Instagram username (např. fender)",
+    "placeholderYouTube": "YouTube @handle (např. fendermusic)",
+    "hintFacebook": "Zadej přesně tak, jak se zobrazuje v URL stránky (bez https://facebook.com/).",
+    "hintInstagram": "Zadej Instagram username (bez @, bez URL).",
+    "hintYouTube": "Zadej YouTube @handle (bez @, bez URL)."
+  },
+  "upgrade": {
+    "title": "Dosaženo maximum profilů",
+    "subtitle": "{{network}} · vyber plán pro více profilů",
+    "noTiers": "Nejsou dostupné žádné vyšší tarify.",
+    "maybeLater": "Možná později",
+    "unlimited": "Bez limitu",
+    "limitLabel_one": "{{count}} profil / platforma",
+    "limitLabel_few": "{{count}} profily / platforma",
+    "limitLabel_other": "{{count}} profilů / platforma",
+    "bestValue": "BEST VALUE",
+    "free": "Zdarma",
+    "perMonth": "{{price}} € / měs.",
+    "upgradeCta": "Upgradovat"
+  },
+  "cancelBanner": {
+    "planEnds": "{{tier}} plán končí",
+    "renew": "Obnovit",
+    "renewLoading": "Otevírám…",
+    "portalTitle": "Otevřít Stripe Customer Portal pro obnovení předplatného"
+  },
+  "userMenu": {
+    "tierLabel": "{{tier}} plán",
+    "manageSubscription": "Spravovat předplatné",
+    "settings": "Nastavení",
+    "logout": "Odhlásit se",
+    "opening": "Otevírám…"
+  },
+  "login": {
+    "title": "Přihlášení",
+    "defaultReason": "Pošleme ti 6místný kód na e-mail. Žádná hesla.",
+    "emailPlaceholder": "tvuj@email.cz",
+    "sendCode": "Odeslat kód",
+    "sendingCode": "Odesílám kód…",
+    "step2Title": "Zadej kód",
+    "codeSentTo": "Poslali jsme 6místný kód na {{email}}.",
+    "verify": "Přihlásit se",
+    "verifying": "Ověřuji…",
+    "useOtherEmail": "Použít jiný e-mail",
+    "maybeLater": "Možná později",
+    "errorSendFailed": "Nepodařilo se odeslat kód. Zkus znovu.",
+    "errorUnexpected": "Neočekávaná chyba. Zkus znovu.",
+    "errorInvalidCode": "Kód je nesprávný nebo expiroval. Zkontroluj e-mail.",
+    "errorVerifyFailed": "Ověření selhalo. Zkus znovu."
+  },
+  "settings": {
+    "title": "Nastavení",
+    "appearance": "Vzhled",
+    "themeLight": "☀️ Světlý",
+    "themeDark": "🌙 Tmavý",
+    "themeSystem": "⚙️ Systém",
+    "language": "Jazyk",
+    "close": "Zavřít"
+  },
+  "postCard": {
+    "openOnYouTube": "Otevřít na YouTube",
+    "openYouTubeTitle": "Otevřít video v aplikaci nebo prohlížeči YouTube"
+  },
+  "errors": {
+    "unknown": "neznámá chyba",
+    "paymentFailed": "Nepodařilo se otevřít platbu.\n\nChyba: {{error}}\n\nZkus to prosím znovu nebo nás kontaktuj.",
+    "portalFailed": "Nepodařilo se otevřít správu předplatného.\n\nChyba: {{error}}\n\nZkus to prosím znovu nebo nás kontaktuj."
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "common": {
+    "time": {
+      "justNow": "upravo sada",
+      "minutesAgo_one": "prije {{count}} min",
+      "minutesAgo_few": "prije {{count}} min",
+      "minutesAgo_other": "prije {{count}} min",
+      "hoursAgo_one": "prije {{count}} h",
+      "hoursAgo_few": "prije {{count}} h",
+      "hoursAgo_other": "prije {{count}} h",
+      "daysAgo_one": "prije {{count}} d",
+      "daysAgo_few": "prije {{count}} d",
+      "daysAgo_other": "prije {{count}} d"
+    }
+  },
+  "index": {
+    "subtitle1": "Tihi prostor za sadržaj koji odabireš.",
+    "subtitle2": "Uđi i počni.",
+    "enter": "Uđi"
+  },
+  "feed": {
+    "loadingPosts": "Učitavanje najnovijih objava…",
+    "updatedAgo": "Ažurirano {{time}}",
+    "ready": "Spremno",
+    "noSources": "Nema izvora u filtru. Dodaj prvi putem gornje ploče.",
+    "noPostsLoaded": "Objave se nisu mogle učitati.",
+    "noPostsHint": "Provjeri nazive profila ili pokušaj Osvježi.",
+    "endOfFeed": "kraj feeda · više nakon osvježavanja",
+    "loginButton": "Prijava",
+    "settingsTitle": "Postavke",
+    "backTitle": "Natrag na početak"
+  },
+  "statusBar": {
+    "sources": "Izvori",
+    "sourcesWithCount_one": "{{count}} izvor — klikni za filtriranje",
+    "sourcesWithCount_few": "{{count}} izvora — klikni za filtriranje",
+    "sourcesWithCount_other": "{{count}} izvora — klikni za filtriranje",
+    "addNetwork": "Dodaj {{network}} izvore",
+    "refreshing": "Osvježavanje…",
+    "refresh": "Osvježi"
+  },
+  "filterPanel": {
+    "panelLabel": "Izvori",
+    "noneAdded": "Ništa nije dodano",
+    "noNetworkSources": "nema izvora",
+    "collapsePanel": "Sažmi popis izvora",
+    "expandPanel": "Proširi popis izvora",
+    "collapseNetwork": "Sažmi {{network}}",
+    "expandNetwork": "Proširi {{network}}",
+    "addProfileTitle": "Dodaj {{network}} profil",
+    "enterProfileName": "Unesi naziv profila",
+    "loadingSpinnerTitle": "Učitavanje najnovijih objava…",
+    "profileBadgeTitle": "Profil društvene mreže",
+    "hideSource": "Sakrij",
+    "showSource": "Prikaži",
+    "removeSource": "Ukloni",
+    "errorUrlNotAllowed": "Unesi samo naziv profila, ne URL ni razmake.",
+    "errorAddFailed": "Dodavanje nije uspjelo. Pokušaj ponovo.",
+    "placeholderFacebook": "Naziv Facebook stranice (npr. fender)",
+    "placeholderInstagram": "Instagram korisničko ime (npr. fender)",
+    "placeholderYouTube": "YouTube @handle (npr. fendermusic)",
+    "hintFacebook": "Unesi točno onako kako se prikazuje u URL-u stranice (bez https://facebook.com/).",
+    "hintInstagram": "Unesi Instagram korisničko ime (bez @, bez URL-a).",
+    "hintYouTube": "Unesi YouTube @handle (bez @, bez URL-a)."
+  },
+  "upgrade": {
+    "title": "Dostignut je limit profila",
+    "subtitle": "{{network}} · odaberi plan za više profila",
+    "noTiers": "Nema dostupnih viših razina.",
+    "maybeLater": "Možda kasnije",
+    "unlimited": "Neograničeno",
+    "limitLabel_one": "{{count}} profil / platforma",
+    "limitLabel_few": "{{count}} profila / platforma",
+    "limitLabel_other": "{{count}} profila / platforma",
+    "bestValue": "BEST VALUE",
+    "free": "Besplatno",
+    "perMonth": "{{price}} € / mjes.",
+    "upgradeCta": "Nadogradnja"
+  },
+  "cancelBanner": {
+    "planEnds": "{{tier}} plan završava",
+    "renew": "Obnovi",
+    "renewLoading": "Otvaranje…",
+    "portalTitle": "Otvori Stripe Customer Portal za obnovu pretplate"
+  },
+  "userMenu": {
+    "tierLabel": "{{tier}} plan",
+    "manageSubscription": "Upravljaj pretplatom",
+    "settings": "Postavke",
+    "logout": "Odjava",
+    "opening": "Otvaranje…"
+  },
+  "login": {
+    "title": "Prijava",
+    "defaultReason": "Poslat ćemo ti 6-znamenkasti kod na e-mail. Bez lozinki.",
+    "emailPlaceholder": "tvoj@email.hr",
+    "sendCode": "Pošalji kod",
+    "sendingCode": "Slanje koda…",
+    "step2Title": "Unesi kod",
+    "codeSentTo": "Poslali smo 6-znamenkasti kod na {{email}}.",
+    "verify": "Prijava",
+    "verifying": "Provjera…",
+    "useOtherEmail": "Koristi drugi e-mail",
+    "maybeLater": "Možda kasnije",
+    "errorSendFailed": "Slanje koda nije uspjelo. Pokušaj ponovo.",
+    "errorUnexpected": "Neočekivana greška. Pokušaj ponovo.",
+    "errorInvalidCode": "Kod je netočan ili je istekao. Provjeri e-mail.",
+    "errorVerifyFailed": "Provjera nije uspjela. Pokušaj ponovo."
+  },
+  "settings": {
+    "title": "Postavke",
+    "appearance": "Izgled",
+    "themeLight": "☀️ Svjetla",
+    "themeDark": "🌙 Tamna",
+    "themeSystem": "⚙️ Sustav",
+    "language": "Jezik",
+    "close": "Zatvori"
+  },
+  "postCard": {
+    "openOnYouTube": "Otvori na YouTube",
+    "openYouTubeTitle": "Otvori video u YouTube aplikaciji ili pregledniku"
+  },
+  "errors": {
+    "unknown": "nepoznata greška",
+    "paymentFailed": "Plaćanje se nije moglo otvoriti.\n\nGreška: {{error}}\n\nMolimo pokušaj ponovo ili nas kontaktiraj.",
+    "portalFailed": "Upravljanje pretplatom se nije moglo otvoriti.\n\nGreška: {{error}}\n\nMolimo pokušaj ponovo ili nas kontaktiraj."
+  }
+}

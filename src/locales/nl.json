@@ -1,0 +1,123 @@
+{
+  "common": {
+    "time": {
+      "justNow": "zojuist",
+      "minutesAgo_one": "{{count}} min geleden",
+      "minutesAgo_other": "{{count}} min geleden",
+      "hoursAgo_one": "{{count}} u geleden",
+      "hoursAgo_other": "{{count}} u geleden",
+      "daysAgo_one": "{{count}} d geleden",
+      "daysAgo_other": "{{count}} d geleden"
+    }
+  },
+  "index": {
+    "subtitle1": "Een rustige plek voor de inhoud die jij kiest.",
+    "subtitle2": "Stap binnen en begin.",
+    "enter": "Binnengaan"
+  },
+  "feed": {
+    "loadingPosts": "Laatste berichten worden geladen…",
+    "updatedAgo": "Bijgewerkt {{time}}",
+    "ready": "Klaar",
+    "noSources": "Geen bronnen in het filter. Voeg de eerste toe via het paneel hierboven.",
+    "noPostsLoaded": "Er konden geen berichten worden geladen.",
+    "noPostsHint": "Controleer de profielnamen of probeer Vernieuwen.",
+    "endOfFeed": "einde van feed · meer na vernieuwen",
+    "loginButton": "Aanmelden",
+    "settingsTitle": "Instellingen",
+    "backTitle": "Terug naar home"
+  },
+  "statusBar": {
+    "sources": "Bronnen",
+    "sourcesWithCount_one": "{{count}} bron — klik om te filteren",
+    "sourcesWithCount_other": "{{count}} bronnen — klik om te filteren",
+    "addNetwork": "{{network}}-bronnen toevoegen",
+    "refreshing": "Vernieuwen…",
+    "refresh": "Vernieuwen"
+  },
+  "filterPanel": {
+    "panelLabel": "Bronnen",
+    "noneAdded": "Geen toegevoegd",
+    "noNetworkSources": "geen bronnen",
+    "collapsePanel": "Bronnenlijst inklappen",
+    "expandPanel": "Bronnenlijst uitklappen",
+    "collapseNetwork": "{{network}} inklappen",
+    "expandNetwork": "{{network}} uitklappen",
+    "addProfileTitle": "{{network}}-profiel toevoegen",
+    "enterProfileName": "Profielnaam invoeren",
+    "loadingSpinnerTitle": "Laatste berichten worden geladen…",
+    "profileBadgeTitle": "Sociaal netwerk profiel",
+    "hideSource": "Verbergen",
+    "showSource": "Tonen",
+    "removeSource": "Verwijderen",
+    "errorUrlNotAllowed": "Voer alleen de profielnaam in, geen URL of spaties.",
+    "errorAddFailed": "Toevoegen mislukt. Probeer opnieuw.",
+    "placeholderFacebook": "Naam van Facebook-pagina (bv. fender)",
+    "placeholderInstagram": "Instagram-gebruikersnaam (bv. fender)",
+    "placeholderYouTube": "YouTube @handle (bv. fendermusic)",
+    "hintFacebook": "Voer precies in zoals weergegeven in de pagina-URL (zonder https://facebook.com/).",
+    "hintInstagram": "Voer de Instagram-gebruikersnaam in (zonder @, zonder URL).",
+    "hintYouTube": "Voer de YouTube @handle in (zonder @, zonder URL)."
+  },
+  "upgrade": {
+    "title": "Profiellimiet bereikt",
+    "subtitle": "{{network}} · kies een plan voor meer profielen",
+    "noTiers": "Geen hogere abonnementen beschikbaar.",
+    "maybeLater": "Misschien later",
+    "unlimited": "Onbeperkt",
+    "limitLabel_one": "{{count}} profiel / platform",
+    "limitLabel_other": "{{count}} profielen / platform",
+    "bestValue": "BEST VALUE",
+    "free": "Gratis",
+    "perMonth": "{{price}} € / mnd.",
+    "upgradeCta": "Upgraden"
+  },
+  "cancelBanner": {
+    "planEnds": "{{tier}}-plan eindigt",
+    "renew": "Verlengen",
+    "renewLoading": "Openen…",
+    "portalTitle": "Stripe Customer Portal openen om abonnement te verlengen"
+  },
+  "userMenu": {
+    "tierLabel": "{{tier}}-plan",
+    "manageSubscription": "Abonnement beheren",
+    "settings": "Instellingen",
+    "logout": "Uitloggen",
+    "opening": "Openen…"
+  },
+  "login": {
+    "title": "Aanmelden",
+    "defaultReason": "We sturen je een 6-cijferige code per e-mail. Geen wachtwoorden.",
+    "emailPlaceholder": "jouw@email.nl",
+    "sendCode": "Code versturen",
+    "sendingCode": "Code wordt verstuurd…",
+    "step2Title": "Code invoeren",
+    "codeSentTo": "We hebben een 6-cijferige code gestuurd naar {{email}}.",
+    "verify": "Aanmelden",
+    "verifying": "Verifiëren…",
+    "useOtherEmail": "Ander e-mailadres gebruiken",
+    "maybeLater": "Misschien later",
+    "errorSendFailed": "Verzenden van code mislukt. Probeer opnieuw.",
+    "errorUnexpected": "Onverwachte fout. Probeer opnieuw.",
+    "errorInvalidCode": "Code is onjuist of verlopen. Controleer je e-mail.",
+    "errorVerifyFailed": "Verificatie mislukt. Probeer opnieuw."
+  },
+  "settings": {
+    "title": "Instellingen",
+    "appearance": "Weergave",
+    "themeLight": "☀️ Licht",
+    "themeDark": "🌙 Donker",
+    "themeSystem": "⚙️ Systeem",
+    "language": "Taal",
+    "close": "Sluiten"
+  },
+  "postCard": {
+    "openOnYouTube": "Openen op YouTube",
+    "openYouTubeTitle": "Video openen in de YouTube-app of browser"
+  },
+  "errors": {
+    "unknown": "onbekende fout",
+    "paymentFailed": "Betaling kon niet worden geopend.\n\nFout: {{error}}\n\nProbeer opnieuw of neem contact met ons op.",
+    "portalFailed": "Abonnementsbeheer kon niet worden geopend.\n\nFout: {{error}}\n\nProbeer opnieuw of neem contact met ons op."
+  }
+}

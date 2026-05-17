@@ -1,8 +1,38 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import i18n from "../lib/i18n";
 import { useTheme } from "../lib/theme-context";
 import type { Theme } from "../lib/theme";
 
+const LANGUAGES: { code: string; label: string }[] = [
+  { code: "sk", label: "Slovenčina" },
+  { code: "en", label: "English" },
+  { code: "cs", label: "Čeština" },
+  { code: "de", label: "Deutsch" },
+  { code: "fr", label: "Français" },
+  { code: "es", label: "Español" },
+  { code: "it", label: "Italiano" },
+  { code: "pt", label: "Português" },
+  { code: "nl", label: "Nederlands" },
+  { code: "pl", label: "Polski" },
+  { code: "hu", label: "Magyar" },
+  { code: "ro", label: "Română" },
+  { code: "bg", label: "Български" },
+  { code: "el", label: "Ελληνικά" },
+  { code: "da", label: "Dansk" },
+  { code: "sv", label: "Svenska" },
+  { code: "fi", label: "Suomi" },
+  { code: "et", label: "Eesti" },
+  { code: "lv", label: "Latviešu" },
+  { code: "lt", label: "Lietuvių" },
+  { code: "sl", label: "Slovenščina" },
+  { code: "hr", label: "Hrvatski" },
+  { code: "mt", label: "Malti" },
+  { code: "ga", label: "Gaeilge" },
+];
+
 export function SettingsModal({ onClose }: { onClose: () => void }) {
+  const { t } = useTranslation();
   const { theme, setTheme, colors: c } = useTheme();
 
   useEffect(() => {
@@ -12,6 +42,12 @@ export function SettingsModal({ onClose }: { onClose: () => void }) {
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [onClose]);
+
+  const currentLang = i18n.language?.split("-")[0] || "sk";
+
+  const handleLangChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    i18n.changeLanguage(e.target.value);
+  };
 
   return (
     <div
@@ -53,10 +89,9 @@ export function SettingsModal({ onClose }: { onClose: () => void }) {
             color: c.fg,
           }}
         >
-          Nastavenia
+          {t("settings.title")}
         </h2>
 
-        {/* Vzhľad */}
         <section style={{ marginBottom: 28 }}>
           <div style={{
             fontSize: 11,
@@ -66,24 +101,20 @@ export function SettingsModal({ onClose }: { onClose: () => void }) {
             color: c.muted,
             marginBottom: 12,
           }}>
-            Vzhľad
+            {t("settings.appearance")}
           </div>
-          <div style={{
-            display: "flex",
-            gap: 8,
-          }}>
-            {(["light", "dark", "system"] as Theme[]).map((t) => (
+          <div style={{ display: "flex", gap: 8 }}>
+            {(["light", "dark", "system"] as Theme[]).map((themeVal) => (
               <ThemeOption
-                key={t}
-                value={t}
-                active={theme === t}
-                onSelect={() => setTheme(t)}
+                key={themeVal}
+                value={themeVal}
+                active={theme === themeVal}
+                onSelect={() => setTheme(themeVal)}
               />
             ))}
           </div>
         </section>
 
-        {/* Jazyk */}
         <section style={{ marginBottom: 28 }}>
           <div style={{
             fontSize: 11,
@@ -93,10 +124,11 @@ export function SettingsModal({ onClose }: { onClose: () => void }) {
             color: c.muted,
             marginBottom: 12,
           }}>
-            Jazyk
+            {t("settings.language")}
           </div>
           <select
-            disabled
+            value={currentLang}
+            onChange={handleLangChange}
             style={{
               width: "100%",
               padding: "10px 12px",
@@ -107,20 +139,13 @@ export function SettingsModal({ onClose }: { onClose: () => void }) {
               color: c.fg,
               fontFamily: "inherit",
               appearance: "none",
-              cursor: "not-allowed",
-              opacity: 0.6,
+              cursor: "pointer",
             }}
           >
-            <option value="sk">🇸🇰 Slovenčina</option>
+            {LANGUAGES.map(({ code, label }) => (
+              <option key={code} value={code}>{label}</option>
+            ))}
           </select>
-          <div style={{
-            fontSize: 12,
-            color: c.muted,
-            marginTop: 6,
-            paddingLeft: 2,
-          }}>
-            Ďalšie jazyky prídu v ďalšej verzii.
-          </div>
         </section>
 
         <button
@@ -137,7 +162,7 @@ export function SettingsModal({ onClose }: { onClose: () => void }) {
             fontFamily: "inherit",
           }}
         >
-          Zatvoriť
+          {t("settings.close")}
         </button>
       </div>
     </div>
@@ -153,9 +178,14 @@ function ThemeOption({
   active: boolean;
   onSelect: () => void;
 }) {
+  const { t } = useTranslation();
   const { colors: c } = useTheme();
 
-  const label = value === "light" ? "☀️ Svetlý" : value === "dark" ? "🌙 Tmavý" : "⚙️ Systém";
+  const label = value === "light"
+    ? t("settings.themeLight")
+    : value === "dark"
+    ? t("settings.themeDark")
+    : t("settings.themeSystem");
 
   return (
     <button

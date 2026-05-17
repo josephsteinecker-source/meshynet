@@ -1,21 +1,10 @@
 import { useState, useRef, useEffect, useMemo, type RefObject } from "react";
+import { useTranslation } from "react-i18next";
 import type { Network, SourcesByNetwork, SourceConfig } from "../types";
 import { NETWORK_KEYS } from "../types";
 import { sourceKey, loadFilterExpanded, saveFilterExpanded, loadNetworkExpanded, saveNetworkExpanded } from "../lib/storage";
 import { EyeIcon, MinusIcon, SpinnerIcon, ChevronIcon, PlusIcon } from "./icons";
 import { useTheme } from "../lib/theme-context";
-
-const PLACEHOLDER_BY_NETWORK: Record<Network, string> = {
-  Facebook: "Meno Facebook stránky (napr. fender)",
-  Instagram: "Instagram username (napr. fender)",
-  YouTube: "YouTube @handle (napr. fendermusic)",
-};
-
-const HINT_BY_NETWORK: Record<Network, string> = {
-  Facebook: "Zadaj presne tak, ako sa zobrazuje v URL stránky (bez https://facebook.com/).",
-  Instagram: "Zadaj Instagram username (bez @, bez URL).",
-  YouTube: "Zadaj YouTube @handle (bez @, bez URL).",
-};
 
 function AddSourceForm({
   network,
@@ -26,13 +15,23 @@ function AddSourceForm({
   onAdd: (name: string, scrapeQuery: string) => Promise<void> | void;
   inputRef: RefObject<HTMLInputElement | null>;
 }) {
+  const { t } = useTranslation();
   const { colors: c } = useTheme();
   const [value, setValue] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const placeholder = PLACEHOLDER_BY_NETWORK[network];
-  const hint = HINT_BY_NETWORK[network];
+  const placeholder = network === "Facebook"
+    ? t("filterPanel.placeholderFacebook")
+    : network === "Instagram"
+    ? t("filterPanel.placeholderInstagram")
+    : t("filterPanel.placeholderYouTube");
+
+  const hint = network === "Facebook"
+    ? t("filterPanel.hintFacebook")
+    : network === "Instagram"
+    ? t("filterPanel.hintInstagram")
+    : t("filterPanel.hintYouTube");
 
   const trimmed = value.trim();
   const canSubmit = !busy && trimmed.length >= 2;
@@ -41,7 +40,7 @@ function AddSourceForm({
     if (!canSubmit) return;
 
     if (/^https?:\/\//i.test(trimmed) || trimmed.includes(" ")) {
-      setError("Zadaj len meno profilu, nie URL ani medzery.");
+      setError(t("filterPanel.errorUrlNotAllowed"));
       return;
     }
 
@@ -55,7 +54,7 @@ function AddSourceForm({
       if (e?.message === "MF_LIMIT_REACHED") {
         // No-op — parent zobrazil upgrade modal
       } else {
-        setError("Nepodarilo sa pridať. Skús znova.");
+        setError(t("filterPanel.errorAddFailed"));
       }
     } finally {
       setBusy(false);
@@ -102,7 +101,9 @@ function AddSourceForm({
         <button
           onClick={handleAdd}
           disabled={!canSubmit}
-          title={canSubmit ? `Pridať ${network} profil` : "Zadaj meno profilu"}
+          title={canSubmit
+            ? t("filterPanel.addProfileTitle", { network })
+            : t("filterPanel.enterProfileName")}
           style={{
             background: "transparent",
             border: "none",
@@ -154,6 +155,7 @@ function SourceRow({
   onRemove: () => void;
   isScraping?: boolean;
 }) {
+  const { t } = useTranslation();
   const { colors: c } = useTheme();
   const isScrapeSource = !!source.scrapeQuery;
   return (
@@ -164,12 +166,12 @@ function SourceRow({
       padding: "10px 0",
     }}>
       {isScrapeSource && isScraping && (
-        <span title="Načítavam najnovšie posty…" style={{ display: "inline-flex" }}>
+        <span title={t("filterPanel.loadingSpinnerTitle")} style={{ display: "inline-flex" }}>
           <SpinnerIcon />
         </span>
       )}
       {isScrapeSource && !isScraping && (
-        <span title="Profil zo sociálnej siete" style={{
+        <span title={t("filterPanel.profileBadgeTitle")} style={{
           fontSize: 11,
           color: c.accent,
           fontWeight: 600,
@@ -196,7 +198,7 @@ function SourceRow({
       </span>
       <button
         onClick={onToggle}
-        title={enabled ? "Skryť" : "Zobraziť"}
+        title={enabled ? t("filterPanel.hideSource") : t("filterPanel.showSource")}
         style={{
           background: "transparent",
           border: "none",
@@ -210,7 +212,7 @@ function SourceRow({
       </button>
       <button
         onClick={onRemove}
-        title="Odobrať"
+        title={t("filterPanel.removeSource")}
         style={{
           background: "transparent",
           border: "none",
@@ -242,6 +244,7 @@ export function FilterPanel({
   onAddSource: (network: Network, name: string, scrapeQuery: string) => Promise<void>;
   onRemoveSource: (network: Network, sourceId: string) => void;
 }) {
+  const { t } = useTranslation();
   const { colors: c } = useTheme();
   const [isPanelExpanded, setIsPanelExpanded] = useState<boolean>(loadFilterExpanded);
   const [networkExpanded, setNetworkExpanded] =
@@ -346,7 +349,7 @@ export function FilterPanel({
           textAlign: "left",
           transition: "background 160ms ease",
         }}
-        title={isPanelExpanded ? "Zbaliť zoznam zdrojov" : "Rozbaliť zoznam zdrojov"}
+        title={isPanelExpanded ? t("filterPanel.collapsePanel") : t("filterPanel.expandPanel")}
       >
         <div style={{ display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}>
           <span style={{
@@ -355,7 +358,7 @@ export function FilterPanel({
             color: c.fg,
             letterSpacing: "-0.1px",
           }}>
-            Zdroje
+            {t("filterPanel.panelLabel")}
           </span>
           <span style={{
             fontSize: 12,
@@ -363,7 +366,7 @@ export function FilterPanel({
             fontWeight: 400,
           }}>
             {counts.total === 0
-              ? "Žiadne pridané"
+              ? t("filterPanel.noneAdded")
               : `${counts.Facebook} Facebook · ${counts.Instagram} Instagram · ${counts.YouTube} YouTube`}
           </span>
         </div>
@@ -419,7 +422,9 @@ export function FilterPanel({
                       textAlign: "left",
                       transition: "background 160ms ease",
                     }}
-                    title={isNetExpanded ? `Zbaliť ${network}` : `Rozbaliť ${network}`}
+                    title={isNetExpanded
+                      ? t("filterPanel.collapseNetwork", { network })
+                      : t("filterPanel.expandNetwork", { network })}
                   >
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       <span style={{
@@ -469,7 +474,7 @@ export function FilterPanel({
                             padding: "6px 0",
                             fontStyle: "italic",
                           }}>
-                            žiadne zdroje
+                            {t("filterPanel.noNetworkSources")}
                           </div>
                         ) : (
                           list.map((s) => {

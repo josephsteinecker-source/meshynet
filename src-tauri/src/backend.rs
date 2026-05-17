@@ -29,7 +29,7 @@ pub struct UserStatus {
     pub subscription_status: String,
     pub current_period_end: Option<String>,
     pub cancel_at_period_end: bool,
-    pub max_profiles_per_network: i32,
+    pub max_profiles_per_platform: i32,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -38,7 +38,7 @@ pub struct PricingTier {
     pub display_name: String,
     pub description: Option<String>,
     pub price_eur: f64,
-    pub max_profiles_per_network: i32,
+    pub max_profiles_per_platform: i32,
     pub display_order: i32,
     pub features: Option<JsonValue>,
 }
@@ -170,7 +170,7 @@ pub fn fetch_zen_script() -> Result<ZenScriptResponse, String> {
 
 /// 7D: Vytvorí Stripe Checkout Session pre upgrade na zadanú tarifu.
 ///
-/// `tier_id` — "standard" alebo "plus" (musí mať Stripe price ID v DB)
+/// `tier_id` — "plus" alebo "unlimited" (musí mať Stripe price ID v DB)
 /// `access_token` — JWT prihláseného usera (zo Supabase session)
 ///
 /// Vráti URL Stripe Checkout stránky, ktorú Tauri appka otvorí v default browseri.

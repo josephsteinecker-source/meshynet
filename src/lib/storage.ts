@@ -1,9 +1,8 @@
 import seedPravidla from "../pravidla.json";
-import type { Mode, Network, SourcesByNetwork } from "../types";
+import type { Network, SourcesByNetwork } from "../types";
 
 const SOURCES_STORAGE_KEY = "mf-sources-v2";
 const HIDDEN_STORAGE_KEY = "mf-hidden-sources-v1";
-const MODE_STORAGE_KEY = "mf-mode-v1";
 const FILTER_EXPANDED_KEY = "mf-filter-expanded-v1";
 const NETWORK_EXPANDED_KEY = "mf-network-expanded-v1";
 
@@ -44,32 +43,6 @@ export function loadHidden(): Set<string> {
 export function saveHidden(disabled: Set<string>) {
   try {
     localStorage.setItem(HIDDEN_STORAGE_KEY, JSON.stringify([...disabled]));
-  } catch {}
-}
-
-export function loadMode(): Mode {
-  try {
-    const params = new URLSearchParams(window.location.search);
-    const urlMode = params.get("mode");
-    if (urlMode === "free" || urlMode === "filter") {
-      try {
-        localStorage.setItem(MODE_STORAGE_KEY, urlMode);
-        const cleanUrl = window.location.pathname + window.location.hash;
-        window.history.replaceState({}, "", cleanUrl);
-      } catch {}
-      return urlMode;
-    }
-  } catch {}
-  try {
-    const saved = localStorage.getItem(MODE_STORAGE_KEY);
-    if (saved === "free" || saved === "filter") return saved;
-  } catch {}
-  return "free";
-}
-
-export function saveMode(m: Mode) {
-  try {
-    localStorage.setItem(MODE_STORAGE_KEY, m);
   } catch {}
 }
 

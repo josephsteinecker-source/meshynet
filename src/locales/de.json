@@ -1,0 +1,123 @@
+{
+  "common": {
+    "time": {
+      "justNow": "gerade eben",
+      "minutesAgo_one": "vor {{count}} Min.",
+      "minutesAgo_other": "vor {{count}} Min.",
+      "hoursAgo_one": "vor {{count}} Std.",
+      "hoursAgo_other": "vor {{count}} Std.",
+      "daysAgo_one": "vor {{count}} Tag",
+      "daysAgo_other": "vor {{count}} Tagen"
+    }
+  },
+  "index": {
+    "subtitle1": "Ein ruhiger Ort für die Inhalte, die du wählst.",
+    "subtitle2": "Eintreten und loslegen.",
+    "enter": "Eintreten"
+  },
+  "feed": {
+    "loadingPosts": "Neueste Beiträge werden geladen…",
+    "updatedAgo": "Aktualisiert {{time}}",
+    "ready": "Bereit",
+    "noSources": "Keine Quellen im Filter. Füge die erste über das Panel oben hinzu.",
+    "noPostsLoaded": "Es konnten keine Beiträge geladen werden.",
+    "noPostsHint": "Überprüfe die Profilnamen oder versuche Aktualisieren.",
+    "endOfFeed": "Ende des Feeds · mehr nach Aktualisierung",
+    "loginButton": "Anmelden",
+    "settingsTitle": "Einstellungen",
+    "backTitle": "Zurück zur Startseite"
+  },
+  "statusBar": {
+    "sources": "Quellen",
+    "sourcesWithCount_one": "{{count}} Quelle — klicken zum Filtern",
+    "sourcesWithCount_other": "{{count}} Quellen — klicken zum Filtern",
+    "addNetwork": "{{network}}-Quellen hinzufügen",
+    "refreshing": "Wird aktualisiert…",
+    "refresh": "Aktualisieren"
+  },
+  "filterPanel": {
+    "panelLabel": "Quellen",
+    "noneAdded": "Keine hinzugefügt",
+    "noNetworkSources": "keine Quellen",
+    "collapsePanel": "Quellenliste einklappen",
+    "expandPanel": "Quellenliste ausklappen",
+    "collapseNetwork": "{{network}} einklappen",
+    "expandNetwork": "{{network}} ausklappen",
+    "addProfileTitle": "{{network}}-Profil hinzufügen",
+    "enterProfileName": "Profilname eingeben",
+    "loadingSpinnerTitle": "Neueste Beiträge werden geladen…",
+    "profileBadgeTitle": "Social-Media-Profil",
+    "hideSource": "Ausblenden",
+    "showSource": "Einblenden",
+    "removeSource": "Entfernen",
+    "errorUrlNotAllowed": "Nur Profilname eingeben, keine URL oder Leerzeichen.",
+    "errorAddFailed": "Hinzufügen fehlgeschlagen. Erneut versuchen.",
+    "placeholderFacebook": "Facebook-Seitenname (z. B. fender)",
+    "placeholderInstagram": "Instagram-Benutzername (z. B. fender)",
+    "placeholderYouTube": "YouTube @Handle (z. B. fendermusic)",
+    "hintFacebook": "Genau so eingeben, wie es in der Seiten-URL erscheint (ohne https://facebook.com/).",
+    "hintInstagram": "Instagram-Benutzername eingeben (ohne @, ohne URL).",
+    "hintYouTube": "YouTube @Handle eingeben (ohne @, ohne URL)."
+  },
+  "upgrade": {
+    "title": "Profillimit erreicht",
+    "subtitle": "{{network}} · Wähle einen Plan für mehr Profile",
+    "noTiers": "Keine höheren Tarife verfügbar.",
+    "maybeLater": "Vielleicht später",
+    "unlimited": "Unbegrenzt",
+    "limitLabel_one": "{{count}} Profil / Plattform",
+    "limitLabel_other": "{{count}} Profile / Plattform",
+    "bestValue": "BEST VALUE",
+    "free": "Kostenlos",
+    "perMonth": "{{price}} € / Mon.",
+    "upgradeCta": "Upgraden"
+  },
+  "cancelBanner": {
+    "planEnds": "{{tier}}-Plan endet",
+    "renew": "Verlängern",
+    "renewLoading": "Wird geöffnet…",
+    "portalTitle": "Stripe Customer Portal zum Verlängern des Abonnements öffnen"
+  },
+  "userMenu": {
+    "tierLabel": "{{tier}}-Plan",
+    "manageSubscription": "Abonnement verwalten",
+    "settings": "Einstellungen",
+    "logout": "Abmelden",
+    "opening": "Wird geöffnet…"
+  },
+  "login": {
+    "title": "Anmelden",
+    "defaultReason": "Wir senden dir einen 6-stelligen Code per E-Mail. Keine Passwörter.",
+    "emailPlaceholder": "deine@email.de",
+    "sendCode": "Code senden",
+    "sendingCode": "Code wird gesendet…",
+    "step2Title": "Code eingeben",
+    "codeSentTo": "Wir haben einen 6-stelligen Code an {{email}} gesendet.",
+    "verify": "Anmelden",
+    "verifying": "Wird überprüft…",
+    "useOtherEmail": "Andere E-Mail verwenden",
+    "maybeLater": "Vielleicht später",
+    "errorSendFailed": "Code konnte nicht gesendet werden. Erneut versuchen.",
+    "errorUnexpected": "Unerwarteter Fehler. Erneut versuchen.",
+    "errorInvalidCode": "Code ist falsch oder abgelaufen. E-Mail überprüfen.",
+    "errorVerifyFailed": "Überprüfung fehlgeschlagen. Erneut versuchen."
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "appearance": "Erscheinungsbild",
+    "themeLight": "☀️ Hell",
+    "themeDark": "🌙 Dunkel",
+    "themeSystem": "⚙️ System",
+    "language": "Sprache",
+    "close": "Schließen"
+  },
+  "postCard": {
+    "openOnYouTube": "Auf YouTube öffnen",
+    "openYouTubeTitle": "Video in der YouTube-App oder im Browser öffnen"
+  },
+  "errors": {
+    "unknown": "unbekannter Fehler",
+    "paymentFailed": "Zahlung konnte nicht geöffnet werden.\n\nFehler: {{error}}\n\nBitte erneut versuchen oder uns kontaktieren.",
+    "portalFailed": "Abonnementverwaltung konnte nicht geöffnet werden.\n\nFehler: {{error}}\n\nBitte erneut versuchen oder uns kontaktieren."
+  }
+}

@@ -47,7 +47,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, [theme]);
 
   const setTheme = (t: Theme) => {
+    const dark = resolveIsDark(t);
     setThemeState(t);
+    setIsDark(dark);
+    document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
     try {
       localStorage.setItem(STORAGE_KEY, t);
     } catch {}

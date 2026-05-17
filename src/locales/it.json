@@ -1,0 +1,123 @@
+{
+  "common": {
+    "time": {
+      "justNow": "proprio ora",
+      "minutesAgo_one": "{{count}} min fa",
+      "minutesAgo_other": "{{count}} min fa",
+      "hoursAgo_one": "{{count}} h fa",
+      "hoursAgo_other": "{{count}} h fa",
+      "daysAgo_one": "{{count}} g fa",
+      "daysAgo_other": "{{count}} g fa"
+    }
+  },
+  "index": {
+    "subtitle1": "Uno spazio tranquillo per i contenuti che scegli.",
+    "subtitle2": "Entra e inizia.",
+    "enter": "Entra"
+  },
+  "feed": {
+    "loadingPosts": "Caricamento degli ultimi post…",
+    "updatedAgo": "Aggiornato {{time}}",
+    "ready": "Pronto",
+    "noSources": "Nessuna fonte nel filtro. Aggiungine una prima tramite il pannello in alto.",
+    "noPostsLoaded": "Impossibile caricare i post.",
+    "noPostsHint": "Controlla i nomi dei profili o prova Aggiorna.",
+    "endOfFeed": "fine del feed · altri dopo l'aggiornamento",
+    "loginButton": "Accedi",
+    "settingsTitle": "Impostazioni",
+    "backTitle": "Torna alla home"
+  },
+  "statusBar": {
+    "sources": "Fonti",
+    "sourcesWithCount_one": "{{count}} fonte — clicca per filtrare",
+    "sourcesWithCount_other": "{{count}} fonti — clicca per filtrare",
+    "addNetwork": "Aggiungi fonti {{network}}",
+    "refreshing": "Aggiornamento…",
+    "refresh": "Aggiorna"
+  },
+  "filterPanel": {
+    "panelLabel": "Fonti",
+    "noneAdded": "Nessuna aggiunta",
+    "noNetworkSources": "nessuna fonte",
+    "collapsePanel": "Comprimi elenco fonti",
+    "expandPanel": "Espandi elenco fonti",
+    "collapseNetwork": "Comprimi {{network}}",
+    "expandNetwork": "Espandi {{network}}",
+    "addProfileTitle": "Aggiungi profilo {{network}}",
+    "enterProfileName": "Inserisci il nome del profilo",
+    "loadingSpinnerTitle": "Caricamento degli ultimi post…",
+    "profileBadgeTitle": "Profilo social network",
+    "hideSource": "Nascondi",
+    "showSource": "Mostra",
+    "removeSource": "Rimuovi",
+    "errorUrlNotAllowed": "Inserisci solo il nome del profilo, non un URL né spazi.",
+    "errorAddFailed": "Aggiunta non riuscita. Riprova.",
+    "placeholderFacebook": "Nome della pagina Facebook (es. fender)",
+    "placeholderInstagram": "Nome utente Instagram (es. fender)",
+    "placeholderYouTube": "Handle @YouTube (es. fendermusic)",
+    "hintFacebook": "Inserisci esattamente come appare nell'URL della pagina (senza https://facebook.com/).",
+    "hintInstagram": "Inserisci il nome utente Instagram (senza @, senza URL).",
+    "hintYouTube": "Inserisci l'handle @YouTube (senza @, senza URL)."
+  },
+  "upgrade": {
+    "title": "Limite di profili raggiunto",
+    "subtitle": "{{network}} · scegli un piano per più profili",
+    "noTiers": "Nessun livello superiore disponibile.",
+    "maybeLater": "Forse più tardi",
+    "unlimited": "Illimitato",
+    "limitLabel_one": "{{count}} profilo / piattaforma",
+    "limitLabel_other": "{{count}} profili / piattaforma",
+    "bestValue": "BEST VALUE",
+    "free": "Gratuito",
+    "perMonth": "{{price}} € / mese",
+    "upgradeCta": "Aggiorna piano"
+  },
+  "cancelBanner": {
+    "planEnds": "Il piano {{tier}} termina",
+    "renew": "Rinnova",
+    "renewLoading": "Apertura…",
+    "portalTitle": "Apri Stripe Customer Portal per rinnovare l'abbonamento"
+  },
+  "userMenu": {
+    "tierLabel": "Piano {{tier}}",
+    "manageSubscription": "Gestisci abbonamento",
+    "settings": "Impostazioni",
+    "logout": "Esci",
+    "opening": "Apertura…"
+  },
+  "login": {
+    "title": "Accesso",
+    "defaultReason": "Ti invieremo un codice a 6 cifre via e-mail. Nessuna password.",
+    "emailPlaceholder": "tua@email.it",
+    "sendCode": "Invia codice",
+    "sendingCode": "Invio codice…",
+    "step2Title": "Inserisci il codice",
+    "codeSentTo": "Abbiamo inviato un codice a 6 cifre a {{email}}.",
+    "verify": "Accedi",
+    "verifying": "Verifica…",
+    "useOtherEmail": "Usa un'altra e-mail",
+    "maybeLater": "Forse più tardi",
+    "errorSendFailed": "Invio del codice non riuscito. Riprova.",
+    "errorUnexpected": "Errore imprevisto. Riprova.",
+    "errorInvalidCode": "Il codice è errato o scaduto. Controlla la tua e-mail.",
+    "errorVerifyFailed": "Verifica non riuscita. Riprova."
+  },
+  "settings": {
+    "title": "Impostazioni",
+    "appearance": "Aspetto",
+    "themeLight": "☀️ Chiaro",
+    "themeDark": "🌙 Scuro",
+    "themeSystem": "⚙️ Sistema",
+    "language": "Lingua",
+    "close": "Chiudi"
+  },
+  "postCard": {
+    "openOnYouTube": "Apri su YouTube",
+    "openYouTubeTitle": "Apri il video nell'app o nel browser YouTube"
+  },
+  "errors": {
+    "unknown": "errore sconosciuto",
+    "paymentFailed": "Impossibile aprire il pagamento.\n\nErrore: {{error}}\n\nRiprova o contattaci.",
+    "portalFailed": "Impossibile aprire la gestione dell'abbonamento.\n\nErrore: {{error}}\n\nRiprova o contattaci."
+  }
+}

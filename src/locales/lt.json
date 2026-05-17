@@ -1,0 +1,128 @@
+{
+  "common": {
+    "time": {
+      "justNow": "ką tik",
+      "minutesAgo_one": "prieš {{count}} min",
+      "minutesAgo_few": "prieš {{count}} min",
+      "minutesAgo_other": "prieš {{count}} min",
+      "hoursAgo_one": "prieš {{count}} val",
+      "hoursAgo_few": "prieš {{count}} val",
+      "hoursAgo_other": "prieš {{count}} val",
+      "daysAgo_one": "prieš {{count}} d",
+      "daysAgo_few": "prieš {{count}} d",
+      "daysAgo_other": "prieš {{count}} d"
+    }
+  },
+  "index": {
+    "subtitle1": "Rami vieta turiniui, kurį renkiesi.",
+    "subtitle2": "Įeik ir pradėk.",
+    "enter": "Įeiti"
+  },
+  "feed": {
+    "loadingPosts": "Įkeliami naujausi įrašai…",
+    "updatedAgo": "Atnaujinta {{time}}",
+    "ready": "Paruošta",
+    "noSources": "Filtre nėra šaltinių. Pridėk pirmą naudodamas viršutinę juostą.",
+    "noPostsLoaded": "Nepavyko įkelti įrašų.",
+    "noPostsHint": "Patikrink profilių pavadinimus arba pabandyk Atnaujinti.",
+    "endOfFeed": "srauto pabaiga · daugiau po atnaujinimo",
+    "loginButton": "Prisijungti",
+    "settingsTitle": "Nustatymai",
+    "backTitle": "Grįžti į pradžią"
+  },
+  "statusBar": {
+    "sources": "Šaltiniai",
+    "sourcesWithCount_one": "{{count}} šaltinis — spustelėk filtruoti",
+    "sourcesWithCount_few": "{{count}} šaltiniai — spustelėk filtruoti",
+    "sourcesWithCount_other": "{{count}} šaltinių — spustelėk filtruoti",
+    "addNetwork": "Pridėti {{network}} šaltinių",
+    "refreshing": "Atnaujinama…",
+    "refresh": "Atnaujinti"
+  },
+  "filterPanel": {
+    "panelLabel": "Šaltiniai",
+    "noneAdded": "Nepridėta",
+    "noNetworkSources": "šaltinių nėra",
+    "collapsePanel": "Sutraukti šaltinių sąrašą",
+    "expandPanel": "Išskleisti šaltinių sąrašą",
+    "collapseNetwork": "Sutraukti {{network}}",
+    "expandNetwork": "Išskleisti {{network}}",
+    "addProfileTitle": "Pridėti {{network}} profilį",
+    "enterProfileName": "Įveskite profilio pavadinimą",
+    "loadingSpinnerTitle": "Įkeliami naujausi įrašai…",
+    "profileBadgeTitle": "Socialinio tinklo profilis",
+    "hideSource": "Slėpti",
+    "showSource": "Rodyti",
+    "removeSource": "Šalinti",
+    "errorUrlNotAllowed": "Įveskite tik profilio pavadinimą, ne URL ar tarpus.",
+    "errorAddFailed": "Nepavyko pridėti. Bandyk dar kartą.",
+    "placeholderFacebook": "Facebook puslapio pavadinimas (pvz. fender)",
+    "placeholderInstagram": "Instagram vartotojo vardas (pvz. fender)",
+    "placeholderYouTube": "YouTube @handle (pvz. fendermusic)",
+    "hintFacebook": "Įveskite tiksliai taip, kaip rodoma puslapio URL (be https://facebook.com/).",
+    "hintInstagram": "Įveskite Instagram vartotojo vardą (be @, be URL).",
+    "hintYouTube": "Įveskite YouTube @handle (be @, be URL)."
+  },
+  "upgrade": {
+    "title": "Profilių limitas pasiektas",
+    "subtitle": "{{network}} · pasirinkite planą daugiau profilių",
+    "noTiers": "Nėra aukštesnių tarifų.",
+    "maybeLater": "Galbūt vėliau",
+    "unlimited": "Neribota",
+    "limitLabel_one": "{{count}} profilis / platforma",
+    "limitLabel_few": "{{count}} profiliai / platforma",
+    "limitLabel_other": "{{count}} profilių / platforma",
+    "bestValue": "BEST VALUE",
+    "free": "Nemokama",
+    "perMonth": "{{price}} € / mėn.",
+    "upgradeCta": "Atnaujinti planą"
+  },
+  "cancelBanner": {
+    "planEnds": "{{tier}} planas baigiasi",
+    "renew": "Atnaujinti",
+    "renewLoading": "Atidaroma…",
+    "portalTitle": "Atidaryti Stripe Customer Portal prenumeratai atnaujinti"
+  },
+  "userMenu": {
+    "tierLabel": "{{tier}} planas",
+    "manageSubscription": "Tvarkyti prenumeratą",
+    "settings": "Nustatymai",
+    "logout": "Atsijungti",
+    "opening": "Atidaroma…"
+  },
+  "login": {
+    "title": "Prisijungimas",
+    "defaultReason": "Atsiųsime tau 6 skaitmenų kodą el. paštu. Jokių slaptažodžių.",
+    "emailPlaceholder": "tavo@email.lt",
+    "sendCode": "Siųsti kodą",
+    "sendingCode": "Siunčiamas kodas…",
+    "step2Title": "Įveskite kodą",
+    "codeSentTo": "Išsiuntėme 6 skaitmenų kodą į {{email}}.",
+    "verify": "Prisijungti",
+    "verifying": "Tikrinama…",
+    "useOtherEmail": "Naudoti kitą el. paštą",
+    "maybeLater": "Galbūt vėliau",
+    "errorSendFailed": "Nepavyko išsiųsti kodo. Bandyk dar kartą.",
+    "errorUnexpected": "Netikėta klaida. Bandyk dar kartą.",
+    "errorInvalidCode": "Kodas neteisingas arba pasibaigęs. Patikrink el. paštą.",
+    "errorVerifyFailed": "Patikrinimas nepavyko. Bandyk dar kartą."
+  },
+  "settings": {
+    "title": "Nustatymai",
+    "appearance": "Išvaizda",
+    "themeLight": "☀️ Šviesi",
+    "themeDark": "🌙 Tamsi",
+    "themeSystem": "⚙️ Sistema",
+    "language": "Kalba",
+    "close": "Uždaryti"
+  },
+  "postCard": {
+    "openOnYouTube": "Atidaryti YouTube",
+    "openYouTubeTitle": "Atidaryti vaizdo įrašą YouTube programėlėje ar naršyklėje"
+  },
+  "errors": {
+    "unknown": "nežinoma klaida",
+    "paymentFailed": "Nepavyko atidaryti mokėjimo.\n\nKlaida: {{error}}\n\nBandykite dar kartą arba susisiekite su mumis.",
+    "portalFailed": "Nepavyko atidaryti prenumeratos valdymo.\n\nKlaida: {{error}}\n\nBandykite dar kartą arba susisiekite su mumis."
+  }
+}

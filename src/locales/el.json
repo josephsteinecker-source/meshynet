@@ -1,0 +1,123 @@
+{
+  "common": {
+    "time": {
+      "justNow": "μόλις τώρα",
+      "minutesAgo_one": "πριν {{count}} λεπτό",
+      "minutesAgo_other": "πριν {{count}} λεπτά",
+      "hoursAgo_one": "πριν {{count}} ώρα",
+      "hoursAgo_other": "πριν {{count}} ώρες",
+      "daysAgo_one": "πριν {{count}} μέρα",
+      "daysAgo_other": "πριν {{count}} μέρες"
+    }
+  },
+  "index": {
+    "subtitle1": "Ένας ήσυχος χώρος για το περιεχόμενο που επιλέγεις.",
+    "subtitle2": "Μπες και ξεκίνα.",
+    "enter": "Είσοδος"
+  },
+  "feed": {
+    "loadingPosts": "Φόρτωση τελευταίων αναρτήσεων…",
+    "updatedAgo": "Ενημερώθηκε {{time}}",
+    "ready": "Έτοιμο",
+    "noSources": "Δεν υπάρχουν πηγές στο φίλτρο. Πρόσθεσε την πρώτη μέσω του πάνελ.",
+    "noPostsLoaded": "Δεν ήταν δυνατή η φόρτωση αναρτήσεων.",
+    "noPostsHint": "Έλεγξε τα ονόματα προφίλ ή δοκίμασε Ανανέωση.",
+    "endOfFeed": "τέλος ροής · περισσότερα μετά την ανανέωση",
+    "loginButton": "Σύνδεση",
+    "settingsTitle": "Ρυθμίσεις",
+    "backTitle": "Πίσω στην αρχική"
+  },
+  "statusBar": {
+    "sources": "Πηγές",
+    "sourcesWithCount_one": "{{count}} πηγή — κλικ για φίλτρο",
+    "sourcesWithCount_other": "{{count}} πηγές — κλικ για φίλτρο",
+    "addNetwork": "Προσθήκη πηγών {{network}}",
+    "refreshing": "Ανανέωση…",
+    "refresh": "Ανανέωση"
+  },
+  "filterPanel": {
+    "panelLabel": "Πηγές",
+    "noneAdded": "Καμία προστέθηκε",
+    "noNetworkSources": "καμία πηγή",
+    "collapsePanel": "Σύμπτυξη λίστας πηγών",
+    "expandPanel": "Ανάπτυξη λίστας πηγών",
+    "collapseNetwork": "Σύμπτυξη {{network}}",
+    "expandNetwork": "Ανάπτυξη {{network}}",
+    "addProfileTitle": "Προσθήκη προφίλ {{network}}",
+    "enterProfileName": "Εισαγωγή ονόματος προφίλ",
+    "loadingSpinnerTitle": "Φόρτωση τελευταίων αναρτήσεων…",
+    "profileBadgeTitle": "Προφίλ κοινωνικού δικτύου",
+    "hideSource": "Απόκρυψη",
+    "showSource": "Εμφάνιση",
+    "removeSource": "Αφαίρεση",
+    "errorUrlNotAllowed": "Εισάγετε μόνο το όνομα προφίλ, όχι URL ή κενά.",
+    "errorAddFailed": "Η προσθήκη απέτυχε. Δοκίμασε ξανά.",
+    "placeholderFacebook": "Όνομα σελίδας Facebook (π.χ. fender)",
+    "placeholderInstagram": "Όνομα χρήστη Instagram (π.χ. fender)",
+    "placeholderYouTube": "YouTube @handle (π.χ. fendermusic)",
+    "hintFacebook": "Εισάγετε ακριβώς όπως εμφανίζεται στο URL της σελίδας (χωρίς https://facebook.com/).",
+    "hintInstagram": "Εισάγετε το όνομα χρήστη Instagram (χωρίς @, χωρίς URL).",
+    "hintYouTube": "Εισάγετε το YouTube @handle (χωρίς @, χωρίς URL)."
+  },
+  "upgrade": {
+    "title": "Επιτεύχθηκε το όριο προφίλ",
+    "subtitle": "{{network}} · επίλεξε πλάνο για περισσότερα προφίλ",
+    "noTiers": "Δεν υπάρχουν διαθέσιμα υψηλότερα πλάνα.",
+    "maybeLater": "Ίσως αργότερα",
+    "unlimited": "Απεριόριστο",
+    "limitLabel_one": "{{count}} προφίλ / πλατφόρμα",
+    "limitLabel_other": "{{count}} προφίλ / πλατφόρμα",
+    "bestValue": "BEST VALUE",
+    "free": "Δωρεάν",
+    "perMonth": "{{price}} € / μήνα",
+    "upgradeCta": "Αναβάθμιση"
+  },
+  "cancelBanner": {
+    "planEnds": "Το πλάνο {{tier}} λήγει",
+    "renew": "Ανανέωση",
+    "renewLoading": "Άνοιγμα…",
+    "portalTitle": "Άνοιγμα Stripe Customer Portal για ανανέωση συνδρομής"
+  },
+  "userMenu": {
+    "tierLabel": "Πλάνο {{tier}}",
+    "manageSubscription": "Διαχείριση συνδρομής",
+    "settings": "Ρυθμίσεις",
+    "logout": "Αποσύνδεση",
+    "opening": "Άνοιγμα…"
+  },
+  "login": {
+    "title": "Σύνδεση",
+    "defaultReason": "Θα σου στείλουμε έναν 6ψήφιο κωδικό μέσω email. Χωρίς κωδικούς πρόσβασης.",
+    "emailPlaceholder": "το@email.gr",
+    "sendCode": "Αποστολή κωδικού",
+    "sendingCode": "Αποστολή κωδικού…",
+    "step2Title": "Εισαγωγή κωδικού",
+    "codeSentTo": "Στείλαμε έναν 6ψήφιο κωδικό στο {{email}}.",
+    "verify": "Σύνδεση",
+    "verifying": "Επαλήθευση…",
+    "useOtherEmail": "Χρήση άλλου email",
+    "maybeLater": "Ίσως αργότερα",
+    "errorSendFailed": "Αποτυχία αποστολής κωδικού. Δοκίμασε ξανά.",
+    "errorUnexpected": "Απρόσμενο σφάλμα. Δοκίμασε ξανά.",
+    "errorInvalidCode": "Ο κωδικός είναι λανθασμένος ή έχει λήξει. Έλεγξε το email σου.",
+    "errorVerifyFailed": "Η επαλήθευση απέτυχε. Δοκίμασε ξανά."
+  },
+  "settings": {
+    "title": "Ρυθμίσεις",
+    "appearance": "Εμφάνιση",
+    "themeLight": "☀️ Φωτεινό",
+    "themeDark": "🌙 Σκοτεινό",
+    "themeSystem": "⚙️ Σύστημα",
+    "language": "Γλώσσα",
+    "close": "Κλείσιμο"
+  },
+  "postCard": {
+    "openOnYouTube": "Άνοιγμα στο YouTube",
+    "openYouTubeTitle": "Άνοιγμα βίντεο στην εφαρμογή ή τον περιηγητή YouTube"
+  },
+  "errors": {
+    "unknown": "άγνωστο σφάλμα",
+    "paymentFailed": "Δεν ήταν δυνατό το άνοιγμα πληρωμής.\n\nΣφάλμα: {{error}}\n\nΔοκίμασε ξανά ή επικοινώνησε μαζί μας.",
+    "portalFailed": "Δεν ήταν δυνατό το άνοιγμα διαχείρισης συνδρομής.\n\nΣφάλμα: {{error}}\n\nΔοκίμασε ξανά ή επικοινώνησε μαζί μας."
+  }
+}

@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { invoke } from "@tauri-apps/api/core";
 import { supabase, type Session } from "./lib/supabase";
-import type { Network, View, Mode, StatusResponse, SourcesByNetwork } from "./types";
-import { loadSources, saveSources, loadMode, saveMode, totalSourceCount } from "./lib/storage";
-import { openExternal, openZenMode } from "./lib/tauri";
+import type { View, StatusResponse, SourcesByNetwork } from "./types";
+import { loadSources, saveSources, totalSourceCount } from "./lib/storage";
+import { openExternal } from "./lib/tauri";
 import { ThemeProvider } from "./lib/theme-context";
 import { IndexView } from "./IndexView";
 import { MasterFeedView } from "./MasterFeedView";
@@ -15,16 +16,11 @@ import { SettingsModal } from "./components/SettingsModal";
 // ============================================================
 
 function App() {
+  const { t } = useTranslation();
   const [sources, setSourcesState] = useState<SourcesByNetwork>(loadSources);
-  const [view, setView] = useState<View>(() => {
-    try {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("mode")) return "feed";
-    } catch {}
-    return totalSourceCount(loadSources()) > 0 ? "feed" : "index";
-  });
-  const [pickedNetwork, setPickedNetwork] = useState<Network | null>(null);
-  const [mode, setModeState] = useState<Mode>(loadMode);
+  const [view, setView] = useState<View>(() =>
+    totalSourceCount(loadSources()) > 0 ? "feed" : "index"
+  );
 
   const [billingStatus, setBillingStatus] = useState<StatusResponse | null>(null);
   const [billingLoaded, setBillingLoaded] = useState(false);
@@ -87,7 +83,7 @@ function App() {
         if (cancelled) return;
         console.log(
           `[MF] Billing loaded: tier=${resp.status.tier}, ` +
-          `max_profiles=${resp.status.max_profiles_per_network}, ` +
+          `max_profiles_per_platform=${resp.status.max_profiles_per_platform}, ` +
           `tiers=${resp.available_tiers.length}`
         );
         setBillingStatus(resp);
@@ -111,7 +107,7 @@ function App() {
             subscription_status: "none",
             current_period_end: null,
             cancel_at_period_end: false,
-            max_profiles_per_network: 3,
+            max_profiles_per_platform: 10,
           },
           available_tiers: [],
         });
@@ -126,21 +122,11 @@ function App() {
     saveSources(s);
   }, []);
 
-  const setMode = useCallback((m: Mode) => {
-    setModeState(m);
-    saveMode(m);
+  const handleEnterFeed = useCallback(() => {
+    setView("feed");
   }, []);
 
-  const handlePickNetwork = useCallback((n: Network) => {
-    setPickedNetwork(n);
-    setView("feed");
-    if (mode === "free") {
-      openZenMode(n);
-    }
-  }, [mode]);
-
   const handleBackToIndex = useCallback(() => {
-    setPickedNetwork(null);
     setView("index");
   }, []);
 
@@ -173,18 +159,14 @@ function App() {
       await openExternal(portalUrl);
     } catch (err: any) {
       console.error("[MF] Portal session failed:", err);
-      alert(
-        `Nepodarilo sa otvoriť správu predplatného.\n\n` +
-        `Chyba: ${err?.message || err || "neznáma chyba"}\n\n` +
-        `Skús prosím znova alebo nás kontaktuj.`
-      );
+      alert(t("errors.portalFailed", { error: err?.message || err || t("errors.unknown") }));
     }
   }, [session]);
 
   if (view === "index") {
     return (
       <ThemeProvider>
-        <IndexView onPickNetwork={handlePickNetwork} />
+        <IndexView onEnter={handleEnterFeed} />
         {loginModalOpen && (
           <LoginModal
             reason={loginModalReason || undefined}
@@ -203,10 +185,7 @@ function App() {
       <MasterFeedView
         sources={sources}
         setSources={setSources}
-        initialFocusNetwork={pickedNetwork}
         onBackToIndex={handleBackToIndex}
-        mode={mode}
-        setMode={setMode}
         billingStatus={billingStatus}
         billingLoaded={billingLoaded}
         session={session}

@@ -1,16 +1,17 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import type { Session } from "./lib/supabase";
 import type {
-  Network, NetworkStatus, Mode, SourcesByNetwork, SourceConfig,
+  Network, NetworkStatus, SourcesByNetwork, SourceConfig,
   Post, PricingTier, StatusResponse,
 } from "./types";
 import { NETWORK_KEYS } from "./types";
 import { loadHidden, saveHidden, sourceKey, networkKey, generateId } from "./lib/storage";
 import { formatRelativeTime } from "./lib/format";
 import { REFRESH_INTERVAL_MS, POSTS_PER_SOURCE, REFRESH_DEBOUNCE_MS, refreshState } from "./lib/scraping";
-import { openExternal, openZenMode } from "./lib/tauri";
+import { openExternal } from "./lib/tauri";
 import { filterValidPermalinks, dedupePosts } from "./lib/post-filters";
 import { BRAND_GRADIENT } from "./lib/theme";
 import { useTheme } from "./lib/theme-context";
@@ -23,7 +24,6 @@ import { UserMenu } from "./components/UserMenu";
 
 export function MasterFeedView({
   sources, setSources, initialFocusNetwork, onBackToIndex,
-  mode, setMode,
   billingStatus, billingLoaded,
   session, authLoaded, onOpenLogin, onLogout, onOpenPortal,
   onOpenSettings,
@@ -32,8 +32,6 @@ export function MasterFeedView({
   setSources: (s: SourcesByNetwork) => void;
   initialFocusNetwork?: Network | null;
   onBackToIndex: () => void;
-  mode: Mode;
-  setMode: (m: Mode) => void;
   billingStatus: StatusResponse | null;
   billingLoaded: boolean;
   session: Session | null;
@@ -43,20 +41,17 @@ export function MasterFeedView({
   onOpenPortal: () => Promise<void>;
   onOpenSettings: () => void;
 }) {
+  const { t } = useTranslation();
   const { colors: c } = useTheme();
   const [refreshing, setRefreshing] = useState(true);
   const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
   const [status, setStatus] = useState<Record<Network, NetworkStatus>>({
     Facebook: "empty", Instagram: "empty", YouTube: "empty",
   });
-  const filterOpen = mode === "filter";
   const [focusNetwork, setFocusNetwork] = useState<Network | null>(
     initialFocusNetwork || null
   );
   const [hiddenIds, setHiddenIds] = useState<Set<string>>(loadHidden);
-  const [loginStatus] = useState<Record<Network, boolean>>({
-    Facebook: false, Instagram: false, YouTube: false,
-  });
 
   const [scrapedPosts, setScrapedPosts] = useState<Map<string, Post[]>>(new Map());
   const [scrapingIds, setScrapingIds] = useState<Set<string>>(new Set());
@@ -222,7 +217,7 @@ export function MasterFeedView({
   const addSource = useCallback(
     async (network: Network, name: string, scrapeQuery: string) => {
       if (billingLoaded && billingStatus) {
-        const limit = billingStatus.status.max_profiles_per_network;
+        const limit = billingStatus.status.max_profiles_per_platform;
         const k = networkKey(network);
         const currentCount = sourcesRef.current[k].length;
         if (currentCount >= limit) {
@@ -308,18 +303,9 @@ export function MasterFeedView({
   );
 
   const onClickNetwork = useCallback((n: Network) => {
-    if (mode === "free") {
-      openZenMode(n);
-    } else {
-      setFocusNetwork(null);
-      setTimeout(() => setFocusNetwork(n), 0);
-    }
-  }, [mode]);
-
-  const onToggleMode = useCallback(() => {
-    const next: Mode = mode === "free" ? "filter" : "free";
-    setMode(next);
-  }, [mode, setMode]);
+    setFocusNetwork(null);
+    setTimeout(() => setFocusNetwork(n), 0);
+  }, []);
 
   const visiblePosts = useMemo(() => {
     const validIds = new Set<string>();
@@ -376,10 +362,7 @@ export function MasterFeedView({
 
     if (!session) {
       setUpgradeModalNetwork(null);
-      onOpenLogin(
-        `Pre upgrade na ${tier.display_name} sa najprv prihlás. ` +
-        `Pošleme ti 6-miestny kód na e-mail.`
-      );
+      onOpenLogin();
       return;
     }
 
@@ -393,11 +376,7 @@ export function MasterFeedView({
       setUpgradeModalNetwork(null);
     } catch (err: any) {
       console.error("[MF] Checkout session failed:", err);
-      alert(
-        `Nepodarilo sa otvoriť platbu.\n\n` +
-        `Chyba: ${err?.message || err || "neznáma chyba"}\n\n` +
-        `Skús prosím znova alebo nás kontaktuj.`
-      );
+      alert(t("errors.paymentFailed", { error: err?.message || err || t("errors.unknown") }));
     }
   }, [session, onOpenLogin]);
 
@@ -422,28 +401,25 @@ export function MasterFeedView({
               color: c.fg,
               fontFamily: "'Manrope', sans-serif",
             }}>
-              Master{" "}
-              <span style={{
-                fontFamily: "'Fraunces', serif",
+              Meshy<span style={{
+                fontFamily: "'Fraunces', Georgia, serif",
                 fontStyle: "italic",
                 fontWeight: 600,
                 background: BRAND_GRADIENT.cssString,
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 color: "transparent",
-              }}>
-                feed
-              </span>
+              }}>Net</span>
             </h1>
             <p style={{
               margin: 0, fontSize: 13, color: c.muted, fontWeight: 400,
               fontFamily: "'Manrope', sans-serif",
             }}>
               {isAnyScraping
-                ? "Načítavam najnovšie posty…"
+                ? t("feed.loadingPosts")
                 : lastRefresh
-                ? `Aktualizované ${formatRelativeTime(lastRefresh)}`
-                : "Pripravené"}
+                ? t("feed.updatedAgo", { time: formatRelativeTime(lastRefresh) })
+                : t("feed.ready")}
             </p>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -470,12 +446,24 @@ export function MasterFeedView({
                     letterSpacing: "0.3px",
                     fontFamily: "'Manrope', sans-serif",
                   }}
-                  title="Prihlásiť sa"
+                  title={t("feed.loginButton")}
                 >
-                  Prihlásiť
+                  {t("feed.loginButton")}
                 </button>
               )
             )}
+            <button
+              onClick={onOpenSettings}
+              style={{
+                background: "transparent", border: "none",
+                color: c.muted, cursor: "pointer",
+                fontSize: 15, padding: "4px 6px",
+                fontFamily: "inherit",
+              }}
+              title={t("feed.settingsTitle")}
+            >
+              ⚙
+            </button>
             <button
               onClick={onBackToIndex}
               style={{
@@ -485,7 +473,7 @@ export function MasterFeedView({
                 padding: "4px 8px",
                 fontFamily: "inherit",
               }}
-              title="Späť na úvod"
+              title={t("feed.backTitle")}
             >
               ↺
             </button>
@@ -497,10 +485,7 @@ export function MasterFeedView({
           sourceCounts={sourceCounts}
           onRefresh={manualRefresh}
           refreshing={refreshing || isAnyScraping}
-          mode={mode}
-          onToggleMode={onToggleMode}
           onClickNetwork={onClickNetwork}
-          loginStatus={loginStatus}
         />
 
         {/* 7E: Cancel banner — viditeľný len ak user zrušil predplatné a stále má
@@ -515,19 +500,17 @@ export function MasterFeedView({
           />
         )}
 
-        {filterOpen && (
-          <FilterPanel
-            sources={sources}
-            hiddenIds={hiddenIds}
-            focusNetwork={focusNetwork}
-            scrapingIds={scrapingIds}
-            onToggleSource={toggleSource}
-            onAddSource={addSource}
-            onRemoveSource={removeSource}
-          />
-        )}
+        <FilterPanel
+          sources={sources}
+          hiddenIds={hiddenIds}
+          focusNetwork={focusNetwork}
+          scrapingIds={scrapingIds}
+          onToggleSource={toggleSource}
+          onAddSource={addSource}
+          onRemoveSource={removeSource}
+        />
 
-        {mode === "free" && (
+        {totalSources === 0 && (
           <div style={{
             textAlign: "center", padding: "40px 20px",
             color: c.muted, fontSize: 14,
@@ -535,63 +518,42 @@ export function MasterFeedView({
             borderRadius: 12,
             fontFamily: "'Manrope', sans-serif",
           }}>
-            Klikni na <strong>Facebook</strong>, <strong>Instagram</strong> alebo <strong>YouTube</strong> hore pre čistý feed danej platformy.
-            <br /><br />
-            <span style={{ fontSize: 12, color: c.muted, opacity: 0.7 }}>
-              Alebo zapni <strong>Filter</strong> pre kurátorovaný master feed z konkrétnych profilov.
-            </span>
+            {t("feed.noSources")}
           </div>
         )}
 
-        {mode === "filter" && totalSources === 0 && (
-          <div style={{
-            textAlign: "center", padding: "40px 20px",
-            color: c.muted, fontSize: 14,
-            background: c.bgElevated, border: `0.5px solid ${c.border}`,
-            borderRadius: 12,
-            fontFamily: "'Manrope', sans-serif",
-          }}>
-            Žiadne zdroje vo filtri. Pridaj svoj prvý cez panel vyššie.
-          </div>
-        )}
-
-        {mode === "filter" && totalSources > 0 && visiblePosts.length === 0 && !isAnyScraping && (
+        {totalSources > 0 && visiblePosts.length === 0 && !isAnyScraping && (
           <div style={{
             textAlign: "center", padding: "40px 20px",
             color: c.muted, fontSize: 14,
             fontFamily: "'Manrope', sans-serif",
           }}>
-            Žiadne príspevky sa nepodarilo načítať.<br />
-            Skontroluj mená profilov alebo skús Obnoviť.
+            {t("feed.noPostsLoaded")}<br />
+            {t("feed.noPostsHint")}
           </div>
         )}
 
-        {mode === "filter" && (
-          <>
-            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              {visiblePosts.map((p) => (
-                <PostCard key={p.id} post={p} />
-              ))}
-            </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          {visiblePosts.map((p) => (
+            <PostCard key={p.id} post={p} />
+          ))}
+        </div>
 
-            {visiblePosts.length > 0 && (
-              <div style={{
-                textAlign: "center", fontSize: 11,
-                letterSpacing: "0.4px", color: c.muted,
-                marginTop: 20, fontWeight: 500,
-                fontFamily: "'Manrope', sans-serif",
-              }}>
-                koniec feedu · ďalšie po obnove
-              </div>
-            )}
-          </>
+        {visiblePosts.length > 0 && (
+          <div style={{
+            textAlign: "center", fontSize: 11,
+            letterSpacing: "0.4px", color: c.muted,
+            marginTop: 20, fontWeight: 500,
+            fontFamily: "'Manrope', sans-serif",
+          }}>
+            {t("feed.endOfFeed")}
+          </div>
         )}
       </div>
 
       {upgradeModalNetwork && billingStatus && (
         <UpgradeModal
           currentTier={billingStatus.status.tier}
-          currentLimit={billingStatus.status.max_profiles_per_network}
           network={upgradeModalNetwork}
           availableTiers={billingStatus.available_tiers}
           onClose={() => setUpgradeModalNetwork(null)}

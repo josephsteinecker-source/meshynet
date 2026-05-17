@@ -1,0 +1,123 @@
+{
+  "common": {
+    "time": {
+      "justNow": "just nu",
+      "minutesAgo_one": "för {{count}} min sedan",
+      "minutesAgo_other": "för {{count}} min sedan",
+      "hoursAgo_one": "för {{count}} h sedan",
+      "hoursAgo_other": "för {{count}} h sedan",
+      "daysAgo_one": "för {{count}} d sedan",
+      "daysAgo_other": "för {{count}} d sedan"
+    }
+  },
+  "index": {
+    "subtitle1": "En lugn plats för det innehåll du väljer.",
+    "subtitle2": "Gå in och börja.",
+    "enter": "Gå in"
+  },
+  "feed": {
+    "loadingPosts": "Laddar senaste inlägg…",
+    "updatedAgo": "Uppdaterat {{time}}",
+    "ready": "Klart",
+    "noSources": "Inga källor i filtret. Lägg till den första via panelen ovan.",
+    "noPostsLoaded": "Inga inlägg kunde laddas.",
+    "noPostsHint": "Kontrollera profilnamnen eller prova Uppdatera.",
+    "endOfFeed": "slut på flödet · mer efter uppdatering",
+    "loginButton": "Logga in",
+    "settingsTitle": "Inställningar",
+    "backTitle": "Tillbaka till start"
+  },
+  "statusBar": {
+    "sources": "Källor",
+    "sourcesWithCount_one": "{{count}} källa — klicka för att filtrera",
+    "sourcesWithCount_other": "{{count}} källor — klicka för att filtrera",
+    "addNetwork": "Lägg till {{network}}-källor",
+    "refreshing": "Uppdaterar…",
+    "refresh": "Uppdatera"
+  },
+  "filterPanel": {
+    "panelLabel": "Källor",
+    "noneAdded": "Inga tillagda",
+    "noNetworkSources": "inga källor",
+    "collapsePanel": "Dölj källlista",
+    "expandPanel": "Visa källlista",
+    "collapseNetwork": "Dölj {{network}}",
+    "expandNetwork": "Visa {{network}}",
+    "addProfileTitle": "Lägg till {{network}}-profil",
+    "enterProfileName": "Ange profilnamn",
+    "loadingSpinnerTitle": "Laddar senaste inlägg…",
+    "profileBadgeTitle": "Socialt nätverksprofil",
+    "hideSource": "Dölj",
+    "showSource": "Visa",
+    "removeSource": "Ta bort",
+    "errorUrlNotAllowed": "Ange bara profilnamnet, inte en URL eller mellanslag.",
+    "errorAddFailed": "Kunde inte lägga till. Försök igen.",
+    "placeholderFacebook": "Facebook-sidans namn (t.ex. fender)",
+    "placeholderInstagram": "Instagram-användarnamn (t.ex. fender)",
+    "placeholderYouTube": "YouTube @handle (t.ex. fendermusic)",
+    "hintFacebook": "Ange exakt som det visas i sidans URL (utan https://facebook.com/).",
+    "hintInstagram": "Ange Instagram-användarnamnet (utan @, utan URL).",
+    "hintYouTube": "Ange YouTube @handle (utan @, utan URL)."
+  },
+  "upgrade": {
+    "title": "Profilgränsen nådd",
+    "subtitle": "{{network}} · välj en plan för fler profiler",
+    "noTiers": "Inga högre nivåer tillgängliga.",
+    "maybeLater": "Kanske senare",
+    "unlimited": "Obegränsat",
+    "limitLabel_one": "{{count}} profil / plattform",
+    "limitLabel_other": "{{count}} profiler / plattform",
+    "bestValue": "BEST VALUE",
+    "free": "Gratis",
+    "perMonth": "{{price}} € / mån.",
+    "upgradeCta": "Uppgradera"
+  },
+  "cancelBanner": {
+    "planEnds": "{{tier}}-planen avslutas",
+    "renew": "Förnya",
+    "renewLoading": "Öppnar…",
+    "portalTitle": "Öppna Stripe Customer Portal för att förnya prenumeration"
+  },
+  "userMenu": {
+    "tierLabel": "{{tier}}-plan",
+    "manageSubscription": "Hantera prenumeration",
+    "settings": "Inställningar",
+    "logout": "Logga ut",
+    "opening": "Öppnar…"
+  },
+  "login": {
+    "title": "Logga in",
+    "defaultReason": "Vi skickar dig en 6-siffrig kod via e-post. Inga lösenord.",
+    "emailPlaceholder": "din@email.se",
+    "sendCode": "Skicka kod",
+    "sendingCode": "Skickar kod…",
+    "step2Title": "Ange kod",
+    "codeSentTo": "Vi skickade en 6-siffrig kod till {{email}}.",
+    "verify": "Logga in",
+    "verifying": "Verifierar…",
+    "useOtherEmail": "Använd annan e-post",
+    "maybeLater": "Kanske senare",
+    "errorSendFailed": "Misslyckades med att skicka kod. Försök igen.",
+    "errorUnexpected": "Oväntat fel. Försök igen.",
+    "errorInvalidCode": "Koden är felaktig eller har gått ut. Kontrollera din e-post.",
+    "errorVerifyFailed": "Verifiering misslyckades. Försök igen."
+  },
+  "settings": {
+    "title": "Inställningar",
+    "appearance": "Utseende",
+    "themeLight": "☀️ Ljust",
+    "themeDark": "🌙 Mörkt",
+    "themeSystem": "⚙️ System",
+    "language": "Språk",
+    "close": "Stäng"
+  },
+  "postCard": {
+    "openOnYouTube": "Öppna på YouTube",
+    "openYouTubeTitle": "Öppna video i YouTube-appen eller webbläsaren"
+  },
+  "errors": {
+    "unknown": "okänt fel",
+    "paymentFailed": "Kunde inte öppna betalning.\n\nFel: {{error}}\n\nFörsök igen eller kontakta oss.",
+    "portalFailed": "Kunde inte öppna prenumerationshantering.\n\nFel: {{error}}\n\nFörsök igen eller kontakta oss."
+  }
+}

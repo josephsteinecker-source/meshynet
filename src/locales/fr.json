@@ -1,0 +1,123 @@
+{
+  "common": {
+    "time": {
+      "justNow": "à l'instant",
+      "minutesAgo_one": "il y a {{count}} min",
+      "minutesAgo_other": "il y a {{count}} min",
+      "hoursAgo_one": "il y a {{count}} h",
+      "hoursAgo_other": "il y a {{count}} h",
+      "daysAgo_one": "il y a {{count}} j",
+      "daysAgo_other": "il y a {{count}} j"
+    }
+  },
+  "index": {
+    "subtitle1": "Un espace calme pour le contenu que tu choisis.",
+    "subtitle2": "Entre et commence.",
+    "enter": "Entrer"
+  },
+  "feed": {
+    "loadingPosts": "Chargement des dernières publications…",
+    "updatedAgo": "Mis à jour {{time}}",
+    "ready": "Prêt",
+    "noSources": "Aucune source dans le filtre. Ajoute la première via le panneau ci-dessus.",
+    "noPostsLoaded": "Aucune publication n'a pu être chargée.",
+    "noPostsHint": "Vérifie les noms de profils ou essaie Actualiser.",
+    "endOfFeed": "fin du fil · plus après actualisation",
+    "loginButton": "Se connecter",
+    "settingsTitle": "Paramètres",
+    "backTitle": "Retour à l'accueil"
+  },
+  "statusBar": {
+    "sources": "Sources",
+    "sourcesWithCount_one": "{{count}} source — cliquer pour filtrer",
+    "sourcesWithCount_other": "{{count}} sources — cliquer pour filtrer",
+    "addNetwork": "Ajouter des sources {{network}}",
+    "refreshing": "Actualisation…",
+    "refresh": "Actualiser"
+  },
+  "filterPanel": {
+    "panelLabel": "Sources",
+    "noneAdded": "Aucune ajoutée",
+    "noNetworkSources": "aucune source",
+    "collapsePanel": "Réduire la liste des sources",
+    "expandPanel": "Développer la liste des sources",
+    "collapseNetwork": "Réduire {{network}}",
+    "expandNetwork": "Développer {{network}}",
+    "addProfileTitle": "Ajouter un profil {{network}}",
+    "enterProfileName": "Entrer le nom du profil",
+    "loadingSpinnerTitle": "Chargement des dernières publications…",
+    "profileBadgeTitle": "Profil de réseau social",
+    "hideSource": "Masquer",
+    "showSource": "Afficher",
+    "removeSource": "Supprimer",
+    "errorUrlNotAllowed": "Entrer uniquement le nom du profil, pas une URL ni des espaces.",
+    "errorAddFailed": "Échec de l'ajout. Réessayer.",
+    "placeholderFacebook": "Nom de la page Facebook (ex. fender)",
+    "placeholderInstagram": "Nom d'utilisateur Instagram (ex. fender)",
+    "placeholderYouTube": "Identifiant YouTube @handle (ex. fendermusic)",
+    "hintFacebook": "Entrer exactement comme affiché dans l'URL de la page (sans https://facebook.com/).",
+    "hintInstagram": "Entrer le nom d'utilisateur Instagram (sans @, sans URL).",
+    "hintYouTube": "Entrer l'identifiant YouTube @handle (sans @, sans URL)."
+  },
+  "upgrade": {
+    "title": "Limite de profils atteinte",
+    "subtitle": "{{network}} · choisir un plan pour plus de profils",
+    "noTiers": "Aucun niveau supérieur disponible.",
+    "maybeLater": "Peut-être plus tard",
+    "unlimited": "Illimité",
+    "limitLabel_one": "{{count}} profil / plateforme",
+    "limitLabel_other": "{{count}} profils / plateforme",
+    "bestValue": "BEST VALUE",
+    "free": "Gratuit",
+    "perMonth": "{{price}} € / mois",
+    "upgradeCta": "Mettre à niveau"
+  },
+  "cancelBanner": {
+    "planEnds": "Le plan {{tier}} se termine",
+    "renew": "Renouveler",
+    "renewLoading": "Ouverture…",
+    "portalTitle": "Ouvrir le Stripe Customer Portal pour renouveler l'abonnement"
+  },
+  "userMenu": {
+    "tierLabel": "Plan {{tier}}",
+    "manageSubscription": "Gérer l'abonnement",
+    "settings": "Paramètres",
+    "logout": "Se déconnecter",
+    "opening": "Ouverture…"
+  },
+  "login": {
+    "title": "Connexion",
+    "defaultReason": "Nous t'enverrons un code à 6 chiffres par e-mail. Pas de mot de passe.",
+    "emailPlaceholder": "ton@email.fr",
+    "sendCode": "Envoyer le code",
+    "sendingCode": "Envoi du code…",
+    "step2Title": "Entrer le code",
+    "codeSentTo": "Nous avons envoyé un code à 6 chiffres à {{email}}.",
+    "verify": "Se connecter",
+    "verifying": "Vérification…",
+    "useOtherEmail": "Utiliser un autre e-mail",
+    "maybeLater": "Peut-être plus tard",
+    "errorSendFailed": "Échec de l'envoi du code. Réessayer.",
+    "errorUnexpected": "Erreur inattendue. Réessayer.",
+    "errorInvalidCode": "Le code est incorrect ou expiré. Vérifier l'e-mail.",
+    "errorVerifyFailed": "La vérification a échoué. Réessayer."
+  },
+  "settings": {
+    "title": "Paramètres",
+    "appearance": "Apparence",
+    "themeLight": "☀️ Clair",
+    "themeDark": "🌙 Sombre",
+    "themeSystem": "⚙️ Système",
+    "language": "Langue",
+    "close": "Fermer"
+  },
+  "postCard": {
+    "openOnYouTube": "Ouvrir sur YouTube",
+    "openYouTubeTitle": "Ouvrir la vidéo dans l'application ou le navigateur YouTube"
+  },
+  "errors": {
+    "unknown": "erreur inconnue",
+    "paymentFailed": "Impossible d'ouvrir le paiement.\n\nErreur : {{error}}\n\nVeuillez réessayer ou nous contacter.",
+    "portalFailed": "Impossible d'ouvrir la gestion de l'abonnement.\n\nErreur : {{error}}\n\nVeuillez réessayer ou nous contacter."
+  }
+}

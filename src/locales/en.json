@@ -1,0 +1,123 @@
+{
+  "common": {
+    "time": {
+      "justNow": "just now",
+      "minutesAgo_one": "{{count}} min ago",
+      "minutesAgo_other": "{{count}} min ago",
+      "hoursAgo_one": "{{count}} h ago",
+      "hoursAgo_other": "{{count}} h ago",
+      "daysAgo_one": "{{count}} d ago",
+      "daysAgo_other": "{{count}} d ago"
+    }
+  },
+  "index": {
+    "subtitle1": "A quiet space for the content you choose.",
+    "subtitle2": "Enter and start.",
+    "enter": "Enter"
+  },
+  "feed": {
+    "loadingPosts": "Loading latest posts…",
+    "updatedAgo": "Updated {{time}}",
+    "ready": "Ready",
+    "noSources": "No sources in filter. Add your first one via the panel above.",
+    "noPostsLoaded": "No posts could be loaded.",
+    "noPostsHint": "Check profile names or try Refresh.",
+    "endOfFeed": "end of feed · more after refresh",
+    "loginButton": "Sign in",
+    "settingsTitle": "Settings",
+    "backTitle": "Back to home"
+  },
+  "statusBar": {
+    "sources": "Sources",
+    "sourcesWithCount_one": "{{count}} source — click to filter",
+    "sourcesWithCount_other": "{{count}} sources — click to filter",
+    "addNetwork": "Add {{network}} sources",
+    "refreshing": "Refreshing…",
+    "refresh": "Refresh"
+  },
+  "filterPanel": {
+    "panelLabel": "Sources",
+    "noneAdded": "None added",
+    "noNetworkSources": "no sources",
+    "collapsePanel": "Collapse source list",
+    "expandPanel": "Expand source list",
+    "collapseNetwork": "Collapse {{network}}",
+    "expandNetwork": "Expand {{network}}",
+    "addProfileTitle": "Add {{network}} profile",
+    "enterProfileName": "Enter profile name",
+    "loadingSpinnerTitle": "Loading latest posts…",
+    "profileBadgeTitle": "Social network profile",
+    "hideSource": "Hide",
+    "showSource": "Show",
+    "removeSource": "Remove",
+    "errorUrlNotAllowed": "Enter only the profile name, not a URL or spaces.",
+    "errorAddFailed": "Failed to add. Try again.",
+    "placeholderFacebook": "Facebook page name (e.g. fender)",
+    "placeholderInstagram": "Instagram username (e.g. fender)",
+    "placeholderYouTube": "YouTube @handle (e.g. fendermusic)",
+    "hintFacebook": "Enter exactly as shown in the page URL (without https://facebook.com/).",
+    "hintInstagram": "Enter the Instagram username (without @, without URL).",
+    "hintYouTube": "Enter the YouTube @handle (without @, without URL)."
+  },
+  "upgrade": {
+    "title": "Profile limit reached",
+    "subtitle": "{{network}} · choose a plan for more profiles",
+    "noTiers": "No higher tiers available.",
+    "maybeLater": "Maybe later",
+    "unlimited": "Unlimited",
+    "limitLabel_one": "{{count}} profile / platform",
+    "limitLabel_other": "{{count}} profiles / platform",
+    "bestValue": "BEST VALUE",
+    "free": "Free",
+    "perMonth": "{{price}} € / mo.",
+    "upgradeCta": "Upgrade"
+  },
+  "cancelBanner": {
+    "planEnds": "{{tier}} plan ends",
+    "renew": "Renew",
+    "renewLoading": "Opening…",
+    "portalTitle": "Open Stripe Customer Portal to renew subscription"
+  },
+  "userMenu": {
+    "tierLabel": "{{tier}} plan",
+    "manageSubscription": "Manage subscription",
+    "settings": "Settings",
+    "logout": "Log out",
+    "opening": "Opening…"
+  },
+  "login": {
+    "title": "Sign in",
+    "defaultReason": "We'll send you a 6-digit code by email. No passwords.",
+    "emailPlaceholder": "your@email.com",
+    "sendCode": "Send code",
+    "sendingCode": "Sending code…",
+    "step2Title": "Enter code",
+    "codeSentTo": "We sent a 6-digit code to {{email}}.",
+    "verify": "Sign in",
+    "verifying": "Verifying…",
+    "useOtherEmail": "Use a different email",
+    "maybeLater": "Maybe later",
+    "errorSendFailed": "Failed to send code. Try again.",
+    "errorUnexpected": "Unexpected error. Try again.",
+    "errorInvalidCode": "Code is incorrect or expired. Check your email.",
+    "errorVerifyFailed": "Verification failed. Try again."
+  },
+  "settings": {
+    "title": "Settings",
+    "appearance": "Appearance",
+    "themeLight": "☀️ Light",
+    "themeDark": "🌙 Dark",
+    "themeSystem": "⚙️ System",
+    "language": "Language",
+    "close": "Close"
+  },
+  "postCard": {
+    "openOnYouTube": "Open on YouTube",
+    "openYouTubeTitle": "Open video in YouTube app or browser"
+  },
+  "errors": {
+    "unknown": "unknown error",
+    "paymentFailed": "Failed to open payment.\n\nError: {{error}}\n\nPlease try again or contact us.",
+    "portalFailed": "Failed to open subscription management.\n\nError: {{error}}\n\nPlease try again or contact us."
+  }
+}

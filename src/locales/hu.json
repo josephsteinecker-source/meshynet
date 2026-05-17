@@ -1,0 +1,123 @@
+{
+  "common": {
+    "time": {
+      "justNow": "épp most",
+      "minutesAgo_one": "{{count}} perce",
+      "minutesAgo_other": "{{count}} perce",
+      "hoursAgo_one": "{{count}} órája",
+      "hoursAgo_other": "{{count}} órája",
+      "daysAgo_one": "{{count}} napja",
+      "daysAgo_other": "{{count}} napja"
+    }
+  },
+  "index": {
+    "subtitle1": "Csendes tér a te általad választott tartalmakhoz.",
+    "subtitle2": "Lépj be és kezdj el.",
+    "enter": "Belépés"
+  },
+  "feed": {
+    "loadingPosts": "A legújabb bejegyzések betöltése…",
+    "updatedAgo": "Frissítve {{time}}",
+    "ready": "Kész",
+    "noSources": "Nincs forrás a szűrőben. Adj hozzá egyet a fenti panelen keresztül.",
+    "noPostsLoaded": "Nem sikerült betölteni a bejegyzéseket.",
+    "noPostsHint": "Ellenőrizd a profilneveket, vagy próbáld Frissíteni.",
+    "endOfFeed": "a feed vége · frissítés után több",
+    "loginButton": "Bejelentkezés",
+    "settingsTitle": "Beállítások",
+    "backTitle": "Vissza a főoldalra"
+  },
+  "statusBar": {
+    "sources": "Források",
+    "sourcesWithCount_one": "{{count}} forrás — kattints a szűréshez",
+    "sourcesWithCount_other": "{{count}} forrás — kattints a szűréshez",
+    "addNetwork": "{{network}}-források hozzáadása",
+    "refreshing": "Frissítés…",
+    "refresh": "Frissítés"
+  },
+  "filterPanel": {
+    "panelLabel": "Források",
+    "noneAdded": "Nincs hozzáadva",
+    "noNetworkSources": "nincs forrás",
+    "collapsePanel": "Forráslistát összecsuk",
+    "expandPanel": "Forráslistát kibont",
+    "collapseNetwork": "{{network}} összecsuk",
+    "expandNetwork": "{{network}} kibont",
+    "addProfileTitle": "{{network}}-profil hozzáadása",
+    "enterProfileName": "Profil nevének megadása",
+    "loadingSpinnerTitle": "A legújabb bejegyzések betöltése…",
+    "profileBadgeTitle": "Közösségi média profil",
+    "hideSource": "Elrejt",
+    "showSource": "Megjelenít",
+    "removeSource": "Eltávolít",
+    "errorUrlNotAllowed": "Csak a profil nevét add meg, ne URL-t vagy szóközt.",
+    "errorAddFailed": "Nem sikerült hozzáadni. Próbáld újra.",
+    "placeholderFacebook": "Facebook oldal neve (pl. fender)",
+    "placeholderInstagram": "Instagram felhasználónév (pl. fender)",
+    "placeholderYouTube": "YouTube @handle (pl. fendermusic)",
+    "hintFacebook": "Pontosan úgy add meg, ahogy az oldal URL-jében szerepel (https://facebook.com/ nélkül).",
+    "hintInstagram": "Add meg az Instagram felhasználónevet (@ nélkül, URL nélkül).",
+    "hintYouTube": "Add meg a YouTube @handle-t (@ nélkül, URL nélkül)."
+  },
+  "upgrade": {
+    "title": "Elérted a profilok maximumát",
+    "subtitle": "{{network}} · válassz csomagot több profilhoz",
+    "noTiers": "Nincs elérhető magasabb csomag.",
+    "maybeLater": "Talán később",
+    "unlimited": "Korlátlan",
+    "limitLabel_one": "{{count}} profil / platform",
+    "limitLabel_other": "{{count}} profil / platform",
+    "bestValue": "BEST VALUE",
+    "free": "Ingyenes",
+    "perMonth": "{{price}} € / hó",
+    "upgradeCta": "Frissítés"
+  },
+  "cancelBanner": {
+    "planEnds": "A {{tier}} csomag lejár",
+    "renew": "Megújítás",
+    "renewLoading": "Megnyitás…",
+    "portalTitle": "Stripe Customer Portal megnyitása az előfizetés megújításához"
+  },
+  "userMenu": {
+    "tierLabel": "{{tier}} csomag",
+    "manageSubscription": "Előfizetés kezelése",
+    "settings": "Beállítások",
+    "logout": "Kijelentkezés",
+    "opening": "Megnyitás…"
+  },
+  "login": {
+    "title": "Bejelentkezés",
+    "defaultReason": "6 jegyű kódot küldünk e-mailben. Nincs jelszó.",
+    "emailPlaceholder": "te@email.hu",
+    "sendCode": "Kód küldése",
+    "sendingCode": "Kód küldése…",
+    "step2Title": "Kód megadása",
+    "codeSentTo": "6 jegyű kódot küldtünk a következő e-mail-re: {{email}}.",
+    "verify": "Bejelentkezés",
+    "verifying": "Ellenőrzés…",
+    "useOtherEmail": "Másik e-mail használata",
+    "maybeLater": "Talán később",
+    "errorSendFailed": "Nem sikerült elküldeni a kódot. Próbáld újra.",
+    "errorUnexpected": "Váratlan hiba. Próbáld újra.",
+    "errorInvalidCode": "A kód helytelen vagy lejárt. Ellenőrizd az e-mailedet.",
+    "errorVerifyFailed": "Az ellenőrzés sikertelen. Próbáld újra."
+  },
+  "settings": {
+    "title": "Beállítások",
+    "appearance": "Megjelenés",
+    "themeLight": "☀️ Világos",
+    "themeDark": "🌙 Sötét",
+    "themeSystem": "⚙️ Rendszer",
+    "language": "Nyelv",
+    "close": "Bezárás"
+  },
+  "postCard": {
+    "openOnYouTube": "Megnyitás YouTube-on",
+    "openYouTubeTitle": "Videó megnyitása a YouTube alkalmazásban vagy böngészőben"
+  },
+  "errors": {
+    "unknown": "ismeretlen hiba",
+    "paymentFailed": "Nem sikerült megnyitni a fizetést.\n\nHiba: {{error}}\n\nKérjük, próbáld újra vagy vedd fel velünk a kapcsolatot.",
+    "portalFailed": "Nem sikerült megnyitni az előfizetés kezelését.\n\nHiba: {{error}}\n\nKérjük, próbáld újra vagy vedd fel velünk a kapcsolatot."
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "common": {
+    "time": {
+      "justNow": "chiar acum",
+      "minutesAgo_one": "acum {{count}} min",
+      "minutesAgo_few": "acum {{count}} min",
+      "minutesAgo_other": "acum {{count}} min",
+      "hoursAgo_one": "acum {{count}} h",
+      "hoursAgo_few": "acum {{count}} h",
+      "hoursAgo_other": "acum {{count}} h",
+      "daysAgo_one": "acum {{count}} zi",
+      "daysAgo_few": "acum {{count}} zile",
+      "daysAgo_other": "acum {{count}} de zile"
+    }
+  },
+  "index": {
+    "subtitle1": "Un spațiu liniștit pentru conținutul pe care îl alegi.",
+    "subtitle2": "Intră și începe.",
+    "enter": "Intră"
+  },
+  "feed": {
+    "loadingPosts": "Se încarcă cele mai recente postări…",
+    "updatedAgo": "Actualizat {{time}}",
+    "ready": "Gata",
+    "noSources": "Nicio sursă în filtru. Adaugă prima prin panoul de mai sus.",
+    "noPostsLoaded": "Nu s-au putut încărca postări.",
+    "noPostsHint": "Verifică numele profilurilor sau încearcă Reîmprospătare.",
+    "endOfFeed": "sfârșitul feedului · mai mult după reîmprospătare",
+    "loginButton": "Conectare",
+    "settingsTitle": "Setări",
+    "backTitle": "Înapoi la pagina principală"
+  },
+  "statusBar": {
+    "sources": "Surse",
+    "sourcesWithCount_one": "{{count}} sursă — clic pentru filtrare",
+    "sourcesWithCount_few": "{{count}} surse — clic pentru filtrare",
+    "sourcesWithCount_other": "{{count}} de surse — clic pentru filtrare",
+    "addNetwork": "Adaugă surse {{network}}",
+    "refreshing": "Se reîmprospătează…",
+    "refresh": "Reîmprospătare"
+  },
+  "filterPanel": {
+    "panelLabel": "Surse",
+    "noneAdded": "Nicio sursă adăugată",
+    "noNetworkSources": "nicio sursă",
+    "collapsePanel": "Restrânge lista de surse",
+    "expandPanel": "Extinde lista de surse",
+    "collapseNetwork": "Restrânge {{network}}",
+    "expandNetwork": "Extinde {{network}}",
+    "addProfileTitle": "Adaugă profil {{network}}",
+    "enterProfileName": "Introdu numele profilului",
+    "loadingSpinnerTitle": "Se încarcă cele mai recente postări…",
+    "profileBadgeTitle": "Profil de rețea socială",
+    "hideSource": "Ascunde",
+    "showSource": "Afișează",
+    "removeSource": "Elimină",
+    "errorUrlNotAllowed": "Introdu doar numele profilului, nu un URL sau spații.",
+    "errorAddFailed": "Adăugarea a eșuat. Încearcă din nou.",
+    "placeholderFacebook": "Numele paginii Facebook (ex. fender)",
+    "placeholderInstagram": "Numele de utilizator Instagram (ex. fender)",
+    "placeholderYouTube": "Handle @YouTube (ex. fendermusic)",
+    "hintFacebook": "Introdu exact cum apare în URL-ul paginii (fără https://facebook.com/).",
+    "hintInstagram": "Introdu numele de utilizator Instagram (fără @, fără URL).",
+    "hintYouTube": "Introdu handle-ul @YouTube (fără @, fără URL)."
+  },
+  "upgrade": {
+    "title": "Limita de profiluri atinsă",
+    "subtitle": "{{network}} · alege un plan pentru mai multe profiluri",
+    "noTiers": "Nu sunt disponibile niveluri superioare.",
+    "maybeLater": "Poate mai târziu",
+    "unlimited": "Nelimitat",
+    "limitLabel_one": "{{count}} profil / platformă",
+    "limitLabel_few": "{{count}} profiluri / platformă",
+    "limitLabel_other": "{{count}} de profiluri / platformă",
+    "bestValue": "BEST VALUE",
+    "free": "Gratuit",
+    "perMonth": "{{price}} € / lună",
+    "upgradeCta": "Upgrade"
+  },
+  "cancelBanner": {
+    "planEnds": "Planul {{tier}} se încheie",
+    "renew": "Reînnoire",
+    "renewLoading": "Se deschide…",
+    "portalTitle": "Deschide Stripe Customer Portal pentru reînnoirea abonamentului"
+  },
+  "userMenu": {
+    "tierLabel": "Plan {{tier}}",
+    "manageSubscription": "Gestionează abonamentul",
+    "settings": "Setări",
+    "logout": "Deconectare",
+    "opening": "Se deschide…"
+  },
+  "login": {
+    "title": "Conectare",
+    "defaultReason": "Îți vom trimite un cod de 6 cifre pe e-mail. Fără parole.",
+    "emailPlaceholder": "adresa@email.ro",
+    "sendCode": "Trimite codul",
+    "sendingCode": "Se trimite codul…",
+    "step2Title": "Introdu codul",
+    "codeSentTo": "Am trimis un cod de 6 cifre la {{email}}.",
+    "verify": "Conectare",
+    "verifying": "Se verifică…",
+    "useOtherEmail": "Folosește alt e-mail",
+    "maybeLater": "Poate mai târziu",
+    "errorSendFailed": "Trimiterea codului a eșuat. Încearcă din nou.",
+    "errorUnexpected": "Eroare neașteptată. Încearcă din nou.",
+    "errorInvalidCode": "Codul este incorect sau a expirat. Verifică e-mailul.",
+    "errorVerifyFailed": "Verificarea a eșuat. Încearcă din nou."
+  },
+  "settings": {
+    "title": "Setări",
+    "appearance": "Aspect",
+    "themeLight": "☀️ Deschis",
+    "themeDark": "🌙 Întunecat",
+    "themeSystem": "⚙️ Sistem",
+    "language": "Limbă",
+    "close": "Închide"
+  },
+  "postCard": {
+    "openOnYouTube": "Deschide pe YouTube",
+    "openYouTubeTitle": "Deschide videoclipul în aplicația sau browserul YouTube"
+  },
+  "errors": {
+    "unknown": "eroare necunoscută",
+    "paymentFailed": "Nu s-a putut deschide plata.\n\nEroare: {{error}}\n\nÎncearcă din nou sau contactează-ne.",
+    "portalFailed": "Nu s-a putut deschide gestionarea abonamentului.\n\nEroare: {{error}}\n\nÎncearcă din nou sau contactează-ne."
+  }
+}

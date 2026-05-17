@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import type { Network, PricingTier } from "../types";
+import { useTheme } from "../lib/theme-context";
 
 export function UpgradeModal({
   currentTier,
@@ -16,6 +17,7 @@ export function UpgradeModal({
   onClose: () => void;
   onPickTier: (tier: PricingTier) => void;
 }) {
+  const { colors: c } = useTheme();
   const upgradableTiers = useMemo(
     () =>
       availableTiers
@@ -38,7 +40,7 @@ export function UpgradeModal({
       style={{
         position: "fixed",
         inset: 0,
-        background: "rgba(0,0,0,0.4)",
+        background: "rgba(0,0,0,0.6)",
         backdropFilter: "blur(8px)",
         WebkitBackdropFilter: "blur(8px)",
         display: "flex",
@@ -49,21 +51,18 @@ export function UpgradeModal({
         animation: "mf-fadein 180ms ease",
       }}
     >
-      <style>{`
-        @keyframes mf-fadein { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes mf-slidein { from { transform: translateY(8px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-      `}</style>
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          background: "#ffffff",
-          borderRadius: 18,
+          background: c.bgElevated,
+          borderRadius: 20,
           padding: "32px 28px 24px",
           maxWidth: 400,
           width: "100%",
-          boxShadow: "0 20px 60px rgba(0,0,0,0.18)",
+          boxShadow: c.shadow,
+          border: `0.5px solid ${c.border}`,
           animation: "mf-slidein 220ms ease",
-          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+          fontFamily: "'Manrope', sans-serif",
         }}
       >
         <h2
@@ -72,7 +71,7 @@ export function UpgradeModal({
             fontSize: 20,
             fontWeight: 600,
             letterSpacing: "-0.3px",
-            color: "#1d1d1f",
+            color: c.fg,
             textAlign: "center",
           }}
         >
@@ -82,7 +81,7 @@ export function UpgradeModal({
           style={{
             margin: "0 0 24px",
             fontSize: 13,
-            color: "#86868b",
+            color: c.muted,
             textAlign: "center",
             lineHeight: 1.5,
           }}
@@ -98,7 +97,7 @@ export function UpgradeModal({
             <div
               style={{
                 fontSize: 13,
-                color: "#86868b",
+                color: c.muted,
                 textAlign: "center",
                 padding: "20px 0",
               }}
@@ -114,7 +113,7 @@ export function UpgradeModal({
             width: "100%",
             background: "transparent",
             border: "none",
-            color: "#86868b",
+            color: c.muted,
             fontSize: 13,
             fontWeight: 500,
             padding: "10px 0",
@@ -136,6 +135,7 @@ function UpgradeTierButton({
   tier: PricingTier;
   onClick: () => void;
 }) {
+  const { colors: c } = useTheme();
   const [hovered, setHovered] = useState(false);
   const priceLabel =
     tier.price_eur === 0
@@ -153,8 +153,8 @@ function UpgradeTierButton({
         justifyContent: "space-between",
         gap: 12,
         padding: "14px 16px",
-        background: hovered ? "#f5f5f7" : "#ffffff",
-        border: "0.5px solid rgba(0,0,0,0.12)",
+        background: hovered ? c.bgHover : c.bgElevated,
+        border: `0.5px solid ${c.borderStrong}`,
         borderRadius: 12,
         cursor: "pointer",
         fontFamily: "inherit",
@@ -162,10 +162,10 @@ function UpgradeTierButton({
       }}
     >
       <div style={{ textAlign: "left" }}>
-        <div style={{ fontSize: 15, fontWeight: 500, color: "#1d1d1f" }}>
+        <div style={{ fontSize: 15, fontWeight: 500, color: c.fg }}>
           {tier.display_name}
         </div>
-        <div style={{ fontSize: 12, color: "#86868b", marginTop: 2 }}>
+        <div style={{ fontSize: 12, color: c.muted, marginTop: 2 }}>
           {tier.max_profiles_per_network} profilov per sieť
         </div>
       </div>
@@ -173,7 +173,7 @@ function UpgradeTierButton({
         style={{
           fontSize: 14,
           fontWeight: 600,
-          color: "#0071e3",
+          color: c.accent,
           whiteSpace: "nowrap",
         }}
       >

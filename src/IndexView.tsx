@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Network } from "./types";
-import { BRAND_GRADIENT } from "./types";
+import { BRAND_GRADIENT } from "./lib/theme";
+import { useTheme } from "./lib/theme-context";
 
 function BigNetworkButton({
   network, onClick,
@@ -15,21 +16,22 @@ function BigNetworkButton({
       onMouseLeave={() => setHovered(false)}
       style={{
         width: 340,
-        padding: "20px 28px",
-        borderRadius: 18,
-        background: BRAND_GRADIENT,
+        padding: "15px 32px",
+        borderRadius: 999,
+        background: BRAND_GRADIENT.cssString,
         color: "#ffffff",
         border: "none",
         cursor: "pointer",
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: 600,
-        letterSpacing: "1.5px",
-        textTransform: "uppercase",
+        letterSpacing: "-0.01em",
+        fontFamily: "'Manrope', sans-serif",
         boxShadow: hovered
-          ? "0 12px 32px rgba(64, 97, 173, 0.32)"
-          : "0 6px 20px rgba(64, 97, 173, 0.22)",
-        transform: hovered ? "translateY(-2px)" : "none",
-        transition: "transform 220ms ease, box-shadow 220ms ease",
+          ? "0 10px 32px rgba(47, 190, 190, 0.4)"
+          : "0 6px 24px rgba(47, 190, 190, 0.25)",
+        transform: hovered ? "translateY(-1px)" : "none",
+        transition: "transform 0.2s, box-shadow 0.2s, filter 0.2s",
+        filter: hovered ? "brightness(1.08)" : "none",
       }}
     >
       {network}
@@ -38,22 +40,24 @@ function BigNetworkButton({
 }
 
 export function IndexView({ onPickNetwork }: { onPickNetwork: (n: Network) => void }) {
+  const { colors: c } = useTheme();
   return (
     <div style={{
-      backgroundColor: "#ffffff",
-      color: "#1d1d1f",
+      backgroundColor: c.bg,
+      color: c.fg,
       minHeight: "100vh",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      fontFamily: "'Manrope', sans-serif",
       padding: "40px 20px",
+      position: "relative",
     }}>
       <img
         src="/MeshyNet_logo.svg"
         alt="MeshyNet"
-        style={{ width: 280, height: "auto", marginBottom: 24 }}
+        style={{ width: 120, height: "auto", marginBottom: 32 }}
         onError={(e) => {
           e.currentTarget.style.display = "none";
         }}
@@ -63,24 +67,34 @@ export function IndexView({ onPickNetwork }: { onPickNetwork: (n: Network) => vo
         margin: "0 0 14px",
         fontSize: 32,
         fontWeight: 700,
-        letterSpacing: "5px",
-        background: BRAND_GRADIENT,
-        WebkitBackgroundClip: "text",
-        backgroundClip: "text",
-        color: "transparent",
+        letterSpacing: "-0.02em",
         lineHeight: 1.1,
+        color: c.fg,
+        fontFamily: "'Manrope', sans-serif",
       }}>
-        MASTER FEED
+        Master{" "}
+        <span style={{
+          fontFamily: "'Fraunces', serif",
+          fontStyle: "italic",
+          fontWeight: 600,
+          background: BRAND_GRADIENT.cssString,
+          WebkitBackgroundClip: "text",
+          backgroundClip: "text",
+          color: "transparent",
+        }}>
+          feed
+        </span>
       </h1>
 
       <p style={{
         margin: "0 0 48px",
-        color: "#86868b",
-        fontSize: 14,
+        color: c.muted,
+        fontSize: 15,
         fontWeight: 400,
         textAlign: "center",
         maxWidth: 380,
         lineHeight: 1.5,
+        fontFamily: "'Manrope', sans-serif",
       }}>
         Tichý priestor pre obsah, ktorý si vyberáš.
         <br />Vyber sieť a začni.

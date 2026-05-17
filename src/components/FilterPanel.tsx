@@ -3,6 +3,7 @@ import type { Network, SourcesByNetwork, SourceConfig } from "../types";
 import { NETWORK_KEYS } from "../types";
 import { sourceKey, loadFilterExpanded, saveFilterExpanded, loadNetworkExpanded, saveNetworkExpanded } from "../lib/storage";
 import { EyeIcon, MinusIcon, SpinnerIcon, ChevronIcon, PlusIcon } from "./icons";
+import { useTheme } from "../lib/theme-context";
 
 const PLACEHOLDER_BY_NETWORK: Record<Network, string> = {
   Facebook: "Meno Facebook stránky (napr. fender)",
@@ -25,6 +26,7 @@ function AddSourceForm({
   onAdd: (name: string, scrapeQuery: string) => Promise<void> | void;
   inputRef: RefObject<HTMLInputElement | null>;
 }) {
+  const { colors: c } = useTheme();
   const [value, setValue] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -67,10 +69,10 @@ function AddSourceForm({
         alignItems: "center",
         gap: 6,
         padding: "8px 12px",
-        background: "#f5f5f7",
+        background: c.inputBg,
         border: error
-          ? "0.5px solid #ff9500"
-          : "0.5px solid rgba(0,0,0,0.06)",
+          ? `0.5px solid ${c.warning}`
+          : `0.5px solid ${c.inputBorder}`,
         borderRadius: 10,
         transition: "border-color 200ms ease",
       }}>
@@ -92,8 +94,8 @@ function AddSourceForm({
             border: "none",
             outline: "none",
             fontSize: 14,
-            color: "#1d1d1f",
-            fontFamily: "inherit",
+            color: c.fg,
+            fontFamily: "'Manrope', sans-serif",
             padding: "4px 0",
           }}
         />
@@ -118,7 +120,7 @@ function AddSourceForm({
       {error ? (
         <div style={{
           fontSize: 12,
-          color: "#ff9500",
+          color: c.warning,
           marginTop: 6,
           paddingLeft: 4,
         }}>
@@ -127,7 +129,7 @@ function AddSourceForm({
       ) : (
         <div style={{
           fontSize: 11,
-          color: "#86868b",
+          color: c.muted,
           marginTop: 6,
           paddingLeft: 4,
           lineHeight: 1.4,
@@ -152,6 +154,7 @@ function SourceRow({
   onRemove: () => void;
   isScraping?: boolean;
 }) {
+  const { colors: c } = useTheme();
   const isScrapeSource = !!source.scrapeQuery;
   return (
     <div style={{
@@ -168,11 +171,11 @@ function SourceRow({
       {isScrapeSource && !isScraping && (
         <span title="Profil zo sociálnej siete" style={{
           fontSize: 11,
-          color: "#0071e3",
+          color: c.accent,
           fontWeight: 600,
           letterSpacing: "0.3px",
           padding: "2px 6px",
-          background: "rgba(0,113,227,0.08)",
+          background: `${c.accent}14`,
           borderRadius: 4,
         }}>
           @
@@ -181,12 +184,13 @@ function SourceRow({
       <span style={{
         flex: 1,
         fontSize: 14,
-        color: enabled ? "#1d1d1f" : "#86868b",
+        color: enabled ? c.fg : c.muted,
         fontWeight: 400,
         overflow: "hidden",
         textOverflow: "ellipsis",
         whiteSpace: "nowrap",
         transition: "color 200ms ease",
+        fontFamily: "'Manrope', sans-serif",
       }}>
         {source.nazov}
       </span>
@@ -238,6 +242,7 @@ export function FilterPanel({
   onAddSource: (network: Network, name: string, scrapeQuery: string) => Promise<void>;
   onRemoveSource: (network: Network, sourceId: string) => void;
 }) {
+  const { colors: c } = useTheme();
   const [isPanelExpanded, setIsPanelExpanded] = useState<boolean>(loadFilterExpanded);
   const [networkExpanded, setNetworkExpanded] =
     useState<Record<Network, boolean>>(loadNetworkExpanded);
@@ -312,11 +317,12 @@ export function FilterPanel({
 
   return (
     <div style={{
-      background: "#ffffff",
-      border: "0.5px solid rgba(0,0,0,0.08)",
-      borderRadius: 12,
+      background: c.bgElevated,
+      border: `0.5px solid ${c.border}`,
+      borderRadius: 14,
       marginBottom: 14,
       overflow: "hidden",
+      fontFamily: "'Manrope', sans-serif",
     }}>
       {/* PANEL HEADER — vždy viditeľný, klikateľný */}
       <button
@@ -333,7 +339,7 @@ export function FilterPanel({
           gap: 12,
           width: "100%",
           padding: "14px 20px",
-          background: panelHeaderHovered ? "#fafafa" : "transparent",
+          background: panelHeaderHovered ? c.bgHover : "transparent",
           border: "none",
           cursor: "pointer",
           fontFamily: "inherit",
@@ -346,14 +352,14 @@ export function FilterPanel({
           <span style={{
             fontSize: 15,
             fontWeight: 500,
-            color: "#1d1d1f",
+            color: c.fg,
             letterSpacing: "-0.1px",
           }}>
             Zdroje
           </span>
           <span style={{
             fontSize: 12,
-            color: "#86868b",
+            color: c.muted,
             fontWeight: 400,
           }}>
             {counts.total === 0
@@ -376,7 +382,7 @@ export function FilterPanel({
       >
         <div style={{ overflow: "hidden", minHeight: 0 }}>
           <div style={{
-            borderTop: "0.5px solid rgba(0,0,0,0.06)",
+            borderTop: `0.5px solid ${c.border}`,
           }}>
             {NETWORK_KEYS.map(({ key, network }, idx) => {
               const list = sources[key];
@@ -389,7 +395,7 @@ export function FilterPanel({
                   key={network}
                   ref={sectionRefByNetwork[network]}
                   style={{
-                    borderBottom: isLast ? "none" : "0.5px solid rgba(0,0,0,0.06)",
+                    borderBottom: isLast ? "none" : `0.5px solid ${c.border}`,
                   }}
                 >
                   {/* NETWORK HEADER */}
@@ -406,7 +412,7 @@ export function FilterPanel({
                       gap: 10,
                       width: "100%",
                       padding: "12px 20px",
-                      background: isHovered ? "#fafafa" : "transparent",
+                      background: isHovered ? c.bgHover : "transparent",
                       border: "none",
                       cursor: "pointer",
                       fontFamily: "inherit",
@@ -419,16 +425,16 @@ export function FilterPanel({
                       <span style={{
                         fontSize: 15,
                         fontWeight: 500,
-                        color: "#1d1d1f",
+                        color: c.fg,
                       }}>
                         {network}
                       </span>
                       <span style={{
                         fontSize: 12,
                         fontWeight: 500,
-                        color: list.length === 0 ? "#c7c7cc" : "#86868b",
+                        color: list.length === 0 ? c.muted : c.fgSecondary,
                         padding: "1px 8px",
-                        background: list.length === 0 ? "transparent" : "#f5f5f7",
+                        background: list.length === 0 ? "transparent" : c.bgHover,
                         borderRadius: 10,
                         minWidth: 22,
                         textAlign: "center",
@@ -459,7 +465,7 @@ export function FilterPanel({
                         {list.length === 0 ? (
                           <div style={{
                             fontSize: 13,
-                            color: "#c7c7cc",
+                            color: c.muted,
                             padding: "6px 0",
                             fontStyle: "italic",
                           }}>

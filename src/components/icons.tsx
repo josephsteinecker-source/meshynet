@@ -1,5 +1,8 @@
+import { useTheme } from "../lib/theme-context";
+
 export function EyeIcon({ active }: { active: boolean }) {
-  const color = active ? "#34c759" : "#c7c7cc";
+  const { colors: c } = useTheme();
+  const color = active ? c.online : c.muted;
   if (active) {
     return (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -17,8 +20,9 @@ export function EyeIcon({ active }: { active: boolean }) {
 }
 
 export function MinusIcon() {
+  const { colors: c } = useTheme();
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff3b30" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={c.danger} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="10"/>
       <line x1="8" y1="12" x2="16" y2="12"/>
     </svg>
@@ -26,8 +30,9 @@ export function MinusIcon() {
 }
 
 export function PlusIcon() {
+  const { colors: c } = useTheme();
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0071e3" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={c.accent} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="10"/>
       <line x1="12" y1="8" x2="12" y2="16"/>
       <line x1="8" y1="12" x2="16" y2="12"/>
@@ -36,26 +41,28 @@ export function PlusIcon() {
 }
 
 export function SpinnerIcon() {
+  const { colors: c } = useTheme();
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0071e3" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ animation: "mf-spin 1s linear infinite" }}>
-      <style>{`@keyframes mf-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={c.accent} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ animation: "mf-spin 1s linear infinite" }}>
       <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
     </svg>
   );
 }
 
-export function ChevronIcon({ expanded, size = 18, color = "#86868b" }: {
+export function ChevronIcon({ expanded, size = 18, color }: {
   expanded: boolean;
   size?: number;
   color?: string;
 }) {
+  const { colors: c } = useTheme();
+  const strokeColor = color ?? c.muted;
   return (
     <svg
       width={size}
       height={size}
       viewBox="0 0 24 24"
       fill="none"
-      stroke={color}
+      stroke={strokeColor}
       strokeWidth="2.2"
       strokeLinecap="round"
       strokeLinejoin="round"

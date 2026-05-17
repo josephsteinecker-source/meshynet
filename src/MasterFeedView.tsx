@@ -12,6 +12,8 @@ import { formatRelativeTime } from "./lib/format";
 import { REFRESH_INTERVAL_MS, POSTS_PER_SOURCE, REFRESH_DEBOUNCE_MS, refreshState } from "./lib/scraping";
 import { openExternal, openZenMode } from "./lib/tauri";
 import { filterValidPermalinks, dedupePosts } from "./lib/post-filters";
+import { BRAND_GRADIENT } from "./lib/theme";
+import { useTheme } from "./lib/theme-context";
 import { StatusBar } from "./components/StatusBar";
 import { CancelBanner } from "./components/CancelBanner";
 import { FilterPanel } from "./components/FilterPanel";
@@ -24,6 +26,7 @@ export function MasterFeedView({
   mode, setMode,
   billingStatus, billingLoaded,
   session, authLoaded, onOpenLogin, onLogout, onOpenPortal,
+  onOpenSettings,
 }: {
   sources: SourcesByNetwork;
   setSources: (s: SourcesByNetwork) => void;
@@ -38,7 +41,9 @@ export function MasterFeedView({
   onOpenLogin: (reason?: string) => void;
   onLogout: () => void;
   onOpenPortal: () => Promise<void>;
+  onOpenSettings: () => void;
 }) {
+  const { colors: c } = useTheme();
   const [refreshing, setRefreshing] = useState(true);
   const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
   const [status, setStatus] = useState<Record<Network, NetworkStatus>>({
@@ -398,10 +403,10 @@ export function MasterFeedView({
 
   return (
     <div style={{
-      backgroundColor: "#f5f5f7",
-      color: "#1d1d1f",
+      backgroundColor: c.bg,
+      color: c.fg,
       minHeight: "100vh",
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      fontFamily: "'Manrope', sans-serif",
       padding: "32px 16px 60px",
     }}>
       <div style={{ maxWidth: 540, margin: "0 auto" }}>
@@ -412,13 +417,27 @@ export function MasterFeedView({
           <div>
             <h1 style={{
               margin: "0 0 4px",
-              fontSize: 22, fontWeight: 500,
-              letterSpacing: "-0.3px", color: "#1d1d1f",
+              fontSize: 22, fontWeight: 700,
+              letterSpacing: "-0.02em",
+              color: c.fg,
+              fontFamily: "'Manrope', sans-serif",
             }}>
-              Master feed
+              Master{" "}
+              <span style={{
+                fontFamily: "'Fraunces', serif",
+                fontStyle: "italic",
+                fontWeight: 600,
+                background: BRAND_GRADIENT.cssString,
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
+              }}>
+                feed
+              </span>
             </h1>
             <p style={{
-              margin: 0, fontSize: 13, color: "#86868b", fontWeight: 400,
+              margin: 0, fontSize: 13, color: c.muted, fontWeight: 400,
+              fontFamily: "'Manrope', sans-serif",
             }}>
               {isAnyScraping
                 ? "Načítavam najnovšie posty…"
@@ -435,20 +454,21 @@ export function MasterFeedView({
                   tier={billingStatus?.status.tier || "free"}
                   onLogout={onLogout}
                   onOpenPortal={onOpenPortal}
+                  onOpenSettings={onOpenSettings}
                 />
               ) : (
                 <button
                   onClick={() => onOpenLogin()}
                   style={{
                     background: "transparent",
-                    border: "0.5px solid rgba(0,0,0,0.12)",
-                    color: "#0071e3",
+                    border: `0.5px solid ${c.border}`,
+                    color: c.accent,
                     cursor: "pointer",
                     fontSize: 12, fontWeight: 600,
                     padding: "5px 12px",
                     borderRadius: 7,
                     letterSpacing: "0.3px",
-                    fontFamily: "inherit",
+                    fontFamily: "'Manrope', sans-serif",
                   }}
                   title="Prihlásiť sa"
                 >
@@ -460,9 +480,10 @@ export function MasterFeedView({
               onClick={onBackToIndex}
               style={{
                 background: "transparent", border: "none",
-                color: "#86868b", cursor: "pointer",
+                color: c.muted, cursor: "pointer",
                 fontSize: 16, fontWeight: 500,
                 padding: "4px 8px",
+                fontFamily: "inherit",
               }}
               title="Späť na úvod"
             >
@@ -509,13 +530,14 @@ export function MasterFeedView({
         {mode === "free" && (
           <div style={{
             textAlign: "center", padding: "40px 20px",
-            color: "#86868b", fontSize: 14,
-            background: "#ffffff", border: "0.5px solid rgba(0,0,0,0.08)",
+            color: c.muted, fontSize: 14,
+            background: c.bgElevated, border: `0.5px solid ${c.border}`,
             borderRadius: 12,
+            fontFamily: "'Manrope', sans-serif",
           }}>
             Klikni na <strong>Facebook</strong>, <strong>Instagram</strong> alebo <strong>YouTube</strong> hore pre čistý feed danej platformy.
             <br /><br />
-            <span style={{ fontSize: 12, color: "#c7c7cc" }}>
+            <span style={{ fontSize: 12, color: c.muted, opacity: 0.7 }}>
               Alebo zapni <strong>Filter</strong> pre kurátorovaný master feed z konkrétnych profilov.
             </span>
           </div>
@@ -524,9 +546,10 @@ export function MasterFeedView({
         {mode === "filter" && totalSources === 0 && (
           <div style={{
             textAlign: "center", padding: "40px 20px",
-            color: "#86868b", fontSize: 14,
-            background: "#ffffff", border: "0.5px solid rgba(0,0,0,0.08)",
+            color: c.muted, fontSize: 14,
+            background: c.bgElevated, border: `0.5px solid ${c.border}`,
             borderRadius: 12,
+            fontFamily: "'Manrope', sans-serif",
           }}>
             Žiadne zdroje vo filtri. Pridaj svoj prvý cez panel vyššie.
           </div>
@@ -535,7 +558,8 @@ export function MasterFeedView({
         {mode === "filter" && totalSources > 0 && visiblePosts.length === 0 && !isAnyScraping && (
           <div style={{
             textAlign: "center", padding: "40px 20px",
-            color: "#86868b", fontSize: 14,
+            color: c.muted, fontSize: 14,
+            fontFamily: "'Manrope', sans-serif",
           }}>
             Žiadne príspevky sa nepodarilo načítať.<br />
             Skontroluj mená profilov alebo skús Obnoviť.
@@ -553,8 +577,9 @@ export function MasterFeedView({
             {visiblePosts.length > 0 && (
               <div style={{
                 textAlign: "center", fontSize: 11,
-                letterSpacing: "0.4px", color: "#c7c7cc",
+                letterSpacing: "0.4px", color: c.muted,
                 marginTop: 20, fontWeight: 500,
+                fontFamily: "'Manrope', sans-serif",
               }}>
                 koniec feedu · ďalšie po obnove
               </div>

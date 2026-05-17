@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { formatPlanEndDate } from "../lib/format";
+import { useTheme } from "../lib/theme-context";
 
 export function CancelBanner({
   endDate,
@@ -10,6 +11,7 @@ export function CancelBanner({
   tier: string;
   onManage: () => Promise<void>;
 }) {
+  const { colors: c, isDark } = useTheme();
   const [loading, setLoading] = useState(false);
   const formatted = formatPlanEndDate(endDate);
   if (!formatted) return null;
@@ -26,28 +28,32 @@ export function CancelBanner({
     }
   };
 
+  const warnColor = isDark ? "rgba(255, 159, 10, 0.06)" : "rgba(255, 149, 0, 0.06)";
+  const warnBorder = isDark ? "rgba(255, 159, 10, 0.25)" : "rgba(255, 149, 0, 0.25)";
+
   return (
     <div style={{
       display: "flex",
       alignItems: "center",
       gap: 12,
       padding: "11px 16px",
-      background: "rgba(255, 149, 0, 0.06)",
-      border: "0.5px solid rgba(255, 149, 0, 0.25)",
+      background: warnColor,
+      border: `0.5px solid ${warnBorder}`,
       borderRadius: 10,
       fontSize: 13,
       marginBottom: 14,
       flexWrap: "wrap",
+      fontFamily: "'Manrope', sans-serif",
     }}>
       <span style={{
         width: 6, height: 6, borderRadius: "50%",
-        background: "#ff9500", display: "inline-block",
+        background: c.warning, display: "inline-block",
         flexShrink: 0,
       }}/>
-      <span style={{ color: "#1d1d1f", fontWeight: 500 }}>
+      <span style={{ color: c.fg, fontWeight: 500 }}>
         {tierLabel} plán končí
       </span>
-      <span style={{ color: "#86868b" }}>
+      <span style={{ color: c.muted }}>
         {formatted}
       </span>
       <span style={{ flex: 1 }} />
@@ -57,7 +63,7 @@ export function CancelBanner({
         style={{
           background: "transparent",
           border: "none",
-          color: loading ? "#c7c7cc" : "#0071e3",
+          color: loading ? c.muted : c.accent,
           cursor: loading ? "default" : "pointer",
           fontSize: 13,
           fontWeight: 500,

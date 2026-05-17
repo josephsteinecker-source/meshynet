@@ -4,8 +4,10 @@ import { Avatar } from "./Avatar";
 import { formatRelativeTime, isLikelyValidImage } from "../lib/format";
 import { extractYouTubeVideoId } from "../lib/youtube";
 import { openExternal } from "../lib/tauri";
+import { useTheme } from "../lib/theme-context";
 
 export function PostCard({ post }: { post: Post }) {
+  const { colors: c } = useTheme();
   const [imageError, setImageError] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [videoEmbedded, setVideoEmbedded] = useState(false);
@@ -48,14 +50,15 @@ export function PostCard({ post }: { post: Post }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        background: "#ffffff",
-        border: "0.5px solid rgba(0,0,0,0.08)",
-        borderRadius: 12,
+        background: c.bgElevated,
+        border: `0.5px solid ${c.border}`,
+        borderRadius: 14,
         padding: "18px 20px",
         cursor: post.permalink ? "pointer" : "default",
         transition: "transform 180ms ease, box-shadow 180ms ease",
         transform: hovered && !videoEmbedded ? "translateY(-1px)" : "none",
-        boxShadow: hovered && !videoEmbedded ? "0 4px 14px rgba(0,0,0,0.06)" : "none",
+        boxShadow: hovered && !videoEmbedded ? c.shadow : "none",
+        fontFamily: "'Manrope', sans-serif",
       }}
     >
       <header style={{
@@ -64,12 +67,12 @@ export function PostCard({ post }: { post: Post }) {
         <Avatar name={post.sourceName} src={post.authorAvatar} />
         <div style={{ minWidth: 0, flex: 1 }}>
           <div style={{
-            fontSize: 15, fontWeight: 500, color: "#1d1d1f", lineHeight: 1.3,
+            fontSize: 15, fontWeight: 500, color: c.fg, lineHeight: 1.3,
             overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
           }}>
             {post.sourceName}
           </div>
-          <div style={{ fontSize: 13, color: "#86868b", marginTop: 1 }}>
+          <div style={{ fontSize: 13, color: c.muted, marginTop: 1 }}>
             {formatRelativeTime(post.publishedAt)} · {post.network}
           </div>
         </div>
@@ -77,8 +80,8 @@ export function PostCard({ post }: { post: Post }) {
 
       {post.body && (
         <p style={{
-          fontFamily: 'Georgia, "IBM Plex Serif", "Charter", serif',
-          fontSize: 16, lineHeight: 1.65, color: "#1d1d1f",
+          fontFamily: "'Manrope', sans-serif",
+          fontSize: 15, lineHeight: 1.65, color: c.fgSecondary,
           margin: showImage || showVideoThumb ? "0 0 12px" : "0",
           fontWeight: 400,
           display: "-webkit-box",
@@ -140,17 +143,17 @@ export function PostCard({ post }: { post: Post }) {
               cursor: "pointer",
               fontSize: 12,
               fontWeight: 500,
-              color: "#86868b",
+              color: c.muted,
               fontFamily: "inherit",
               borderRadius: 6,
               transition: "color 160ms ease, background 160ms ease",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.color = "#0071e3";
-              e.currentTarget.style.background = "rgba(0,113,227,0.06)";
+              e.currentTarget.style.color = "var(--accent)";
+              e.currentTarget.style.background = "var(--input-bg)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.color = "#86868b";
+              e.currentTarget.style.color = "var(--muted)";
               e.currentTarget.style.background = "transparent";
             }}
             title="Otvoriť video v YouTube aplikácii alebo prehliadači"

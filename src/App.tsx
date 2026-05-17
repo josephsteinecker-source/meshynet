@@ -4,9 +4,11 @@ import { supabase, type Session } from "./lib/supabase";
 import type { Network, View, Mode, StatusResponse, SourcesByNetwork } from "./types";
 import { loadSources, saveSources, loadMode, saveMode, totalSourceCount } from "./lib/storage";
 import { openExternal, openZenMode } from "./lib/tauri";
+import { ThemeProvider } from "./lib/theme-context";
 import { IndexView } from "./IndexView";
 import { MasterFeedView } from "./MasterFeedView";
 import { LoginModal } from "./components/LoginModal";
+import { SettingsModal } from "./components/SettingsModal";
 
 // ============================================================
 // App root
@@ -33,6 +35,8 @@ function App() {
 
   const [loginModalReason, setLoginModalReason] = useState<string | null>(null);
   const loginModalOpen = loginModalReason !== null;
+
+  const [showSettings, setShowSettings] = useState(false);
 
   // 7D: Pri mount načítaj aktuálnu session (z localStorage) a subscribe
   // na zmeny — po OTP verify sa session automaticky uloží + propagne.
@@ -179,7 +183,7 @@ function App() {
 
   if (view === "index") {
     return (
-      <>
+      <ThemeProvider>
         <IndexView onPickNetwork={handlePickNetwork} />
         {loginModalOpen && (
           <LoginModal
@@ -187,12 +191,15 @@ function App() {
             onClose={() => setLoginModalReason(null)}
           />
         )}
-      </>
+        {showSettings && (
+          <SettingsModal onClose={() => setShowSettings(false)} />
+        )}
+      </ThemeProvider>
     );
   }
 
   return (
-    <>
+    <ThemeProvider>
       <MasterFeedView
         sources={sources}
         setSources={setSources}
@@ -207,6 +214,7 @@ function App() {
         onOpenLogin={openLoginModal}
         onLogout={handleLogout}
         onOpenPortal={handleOpenPortal}
+        onOpenSettings={() => setShowSettings(true)}
       />
       {loginModalOpen && (
         <LoginModal
@@ -214,7 +222,10 @@ function App() {
           onClose={() => setLoginModalReason(null)}
         />
       )}
-    </>
+      {showSettings && (
+        <SettingsModal onClose={() => setShowSettings(false)} />
+      )}
+    </ThemeProvider>
   );
 }
 

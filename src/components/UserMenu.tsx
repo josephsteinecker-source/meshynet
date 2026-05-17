@@ -1,17 +1,21 @@
 import { useState, useRef, useEffect } from "react";
-import { BRAND_GRADIENT } from "../types";
+import { BRAND_GRADIENT } from "../lib/theme";
+import { useTheme } from "../lib/theme-context";
 
 export function UserMenu({
   email,
   tier,
   onLogout,
   onOpenPortal,
+  onOpenSettings,
 }: {
   email: string;
   tier: string;
   onLogout: () => void;
   onOpenPortal: () => Promise<void> | void;
+  onOpenSettings: () => void;
 }) {
+  const { colors: c } = useTheme();
   const [open, setOpen] = useState(false);
   const [portalLoading, setPortalLoading] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -53,7 +57,7 @@ export function UserMenu({
         title={email}
         style={{
           width: 28, height: 28, borderRadius: "50%",
-          background: BRAND_GRADIENT,
+          background: BRAND_GRADIENT.cssString,
           color: "#ffffff",
           border: "none",
           cursor: "pointer",
@@ -61,7 +65,7 @@ export function UserMenu({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontFamily: "inherit",
+          fontFamily: "'Manrope', sans-serif",
           padding: 0,
         }}
       >
@@ -73,25 +77,26 @@ export function UserMenu({
             position: "absolute",
             top: "calc(100% + 6px)",
             right: 0,
-            background: "#ffffff",
-            border: "0.5px solid rgba(0,0,0,0.08)",
+            background: c.bgElevated,
+            border: `0.5px solid ${c.border}`,
             borderRadius: 10,
-            boxShadow: "0 6px 20px rgba(0,0,0,0.08)",
+            boxShadow: c.shadow,
             minWidth: 220,
             padding: "8px 0",
             zIndex: 1000,
+            fontFamily: "'Manrope', sans-serif",
           }}
         >
           {/* Email + tier badge */}
           <div
             style={{
               padding: "4px 14px 10px",
-              borderBottom: "0.5px solid rgba(0,0,0,0.06)",
+              borderBottom: `0.5px solid ${c.border}`,
             }}
           >
             <div style={{
               fontSize: 11,
-              color: "#86868b",
+              color: c.muted,
               wordBreak: "break-all",
               lineHeight: 1.4,
               marginBottom: 4,
@@ -101,8 +106,8 @@ export function UserMenu({
             <div style={{
               fontSize: 11,
               fontWeight: 600,
-              color: isPaid ? "transparent" : "#86868b",
-              backgroundImage: isPaid ? BRAND_GRADIENT : undefined,
+              color: isPaid ? "transparent" : c.muted,
+              backgroundImage: isPaid ? BRAND_GRADIENT.cssString : undefined,
               WebkitBackgroundClip: isPaid ? "text" : undefined,
               backgroundClip: isPaid ? "text" : undefined,
               letterSpacing: "0.3px",
@@ -124,19 +129,39 @@ export function UserMenu({
                 border: "none",
                 padding: "10px 14px",
                 fontSize: 13,
-                color: portalLoading ? "#c7c7cc" : "#1d1d1f",
+                color: portalLoading ? c.muted : c.fg,
                 fontFamily: "inherit",
                 cursor: portalLoading ? "default" : "pointer",
                 textAlign: "left",
               }}
               onMouseEnter={(e) => {
-                if (!portalLoading) e.currentTarget.style.background = "#f5f5f7";
+                if (!portalLoading) e.currentTarget.style.background = "var(--bg-hover)";
               }}
               onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
             >
               {portalLoading ? "Otváram…" : "Spravovať predplatné"}
             </button>
           )}
+
+          <button
+            onClick={() => { setOpen(false); onOpenSettings(); }}
+            style={{
+              display: "block",
+              width: "100%",
+              background: "transparent",
+              border: "none",
+              padding: "10px 14px",
+              fontSize: 13,
+              color: c.fg,
+              fontFamily: "inherit",
+              cursor: "pointer",
+              textAlign: "left",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "var(--bg-hover)")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+          >
+            Nastavenia
+          </button>
 
           <button
             onClick={() => { setOpen(false); onLogout(); }}
@@ -147,12 +172,12 @@ export function UserMenu({
               border: "none",
               padding: "10px 14px",
               fontSize: 13,
-              color: "#1d1d1f",
+              color: c.fg,
               fontFamily: "inherit",
               cursor: "pointer",
               textAlign: "left",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "#f5f5f7")}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "var(--bg-hover)")}
             onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
           >
             Odhlásiť sa

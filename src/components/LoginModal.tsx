@@ -10,6 +10,7 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
+import { useTheme } from "../lib/theme-context";
 
 type LoginStage = "email" | "sending_email" | "code" | "verifying" | "error";
 
@@ -20,6 +21,7 @@ export function LoginModal({
   reason?: string;
   onClose: () => void;
 }) {
+  const { colors: c } = useTheme();
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [stage, setStage] = useState<LoginStage>("email");
@@ -108,7 +110,7 @@ export function LoginModal({
       style={{
         position: "fixed",
         inset: 0,
-        background: "rgba(0,0,0,0.4)",
+        background: "rgba(0,0,0,0.6)",
         backdropFilter: "blur(8px)",
         WebkitBackdropFilter: "blur(8px)",
         display: "flex",
@@ -122,14 +124,15 @@ export function LoginModal({
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          background: "#ffffff",
-          borderRadius: 18,
+          background: c.bgElevated,
+          borderRadius: 20,
           padding: "32px 28px 24px",
           maxWidth: 400,
           width: "100%",
-          boxShadow: "0 20px 60px rgba(0,0,0,0.18)",
+          boxShadow: c.shadow,
+          border: `0.5px solid ${c.border}`,
           animation: "mf-slidein 220ms ease",
-          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+          fontFamily: "'Manrope', sans-serif",
         }}
       >
         {showEmailStage && (
@@ -141,7 +144,7 @@ export function LoginModal({
                 fontSize: 20,
                 fontWeight: 600,
                 letterSpacing: "-0.3px",
-                color: "#1d1d1f",
+                color: c.fg,
                 textAlign: "center",
               }}
             >
@@ -151,7 +154,7 @@ export function LoginModal({
               style={{
                 margin: "0 0 24px",
                 fontSize: 13,
-                color: "#86868b",
+                color: c.muted,
                 textAlign: "center",
                 lineHeight: 1.5,
               }}
@@ -175,13 +178,13 @@ export function LoginModal({
               style={{
                 width: "100%",
                 padding: "12px 14px",
-                background: "#f5f5f7",
+                background: c.inputBg,
                 border: stage === "error"
-                  ? "0.5px solid #ff3b30"
-                  : "0.5px solid rgba(0,0,0,0.08)",
+                  ? `0.5px solid ${c.danger}`
+                  : `0.5px solid ${c.inputBorder}`,
                 borderRadius: 10,
                 fontSize: 14,
-                color: "#1d1d1f",
+                color: c.fg,
                 fontFamily: "inherit",
                 outline: "none",
                 boxSizing: "border-box",
@@ -193,7 +196,7 @@ export function LoginModal({
               <div
                 style={{
                   fontSize: 12,
-                  color: "#ff3b30",
+                  color: c.danger,
                   marginBottom: 12,
                   paddingLeft: 4,
                 }}
@@ -207,7 +210,7 @@ export function LoginModal({
               disabled={!isValidEmail || stage === "sending_email"}
               style={{
                 width: "100%",
-                background: isValidEmail && stage !== "sending_email" ? "#0071e3" : "#c7c7cc",
+                background: isValidEmail && stage !== "sending_email" ? c.accent : c.border,
                 border: "none",
                 color: "#ffffff",
                 fontSize: 14,
@@ -229,7 +232,7 @@ export function LoginModal({
                 width: "100%",
                 background: "transparent",
                 border: "none",
-                color: "#86868b",
+                color: c.muted,
                 fontSize: 13,
                 fontWeight: 500,
                 padding: "10px 0",
@@ -251,7 +254,7 @@ export function LoginModal({
                 fontSize: 20,
                 fontWeight: 600,
                 letterSpacing: "-0.3px",
-                color: "#1d1d1f",
+                color: c.fg,
                 textAlign: "center",
               }}
             >
@@ -261,7 +264,7 @@ export function LoginModal({
               style={{
                 margin: "0 0 24px",
                 fontSize: 13,
-                color: "#86868b",
+                color: c.muted,
                 textAlign: "center",
                 lineHeight: 1.5,
               }}
@@ -289,14 +292,14 @@ export function LoginModal({
               style={{
                 width: "100%",
                 padding: "14px 14px",
-                background: "#f5f5f7",
+                background: c.inputBg,
                 border: stage === "error"
-                  ? "0.5px solid #ff3b30"
-                  : "0.5px solid rgba(0,0,0,0.08)",
+                  ? `0.5px solid ${c.danger}`
+                  : `0.5px solid ${c.inputBorder}`,
                 borderRadius: 10,
                 fontSize: 22,
                 fontWeight: 600,
-                color: "#1d1d1f",
+                color: c.fg,
                 fontFamily: '"SF Mono", "Menlo", monospace',
                 outline: "none",
                 boxSizing: "border-box",
@@ -310,7 +313,7 @@ export function LoginModal({
               <div
                 style={{
                   fontSize: 12,
-                  color: "#ff3b30",
+                  color: c.danger,
                   marginBottom: 12,
                   paddingLeft: 4,
                   textAlign: "center",
@@ -325,7 +328,7 @@ export function LoginModal({
               disabled={!isValidCode || stage === "verifying"}
               style={{
                 width: "100%",
-                background: isValidCode && stage !== "verifying" ? "#0071e3" : "#c7c7cc",
+                background: isValidCode && stage !== "verifying" ? c.accent : c.border,
                 border: "none",
                 color: "#ffffff",
                 fontSize: 14,
@@ -351,7 +354,7 @@ export function LoginModal({
                 width: "100%",
                 background: "transparent",
                 border: "none",
-                color: "#86868b",
+                color: c.muted,
                 fontSize: 13,
                 fontWeight: 500,
                 padding: "10px 0",

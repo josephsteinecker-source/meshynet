@@ -36,6 +36,7 @@ export function Avatar({ name, src }: { name: string; src?: string }) {
     <div style={{
       width: 38, height: 38, borderRadius: "50%", background: bg, color: fg,
       display: "flex", alignItems: "center", justifyContent: "center",
+      fontFamily: "'Manrope', sans-serif",
       fontWeight: 600, fontSize: 13, flexShrink: 0,
     }}>
       {initials || "·"}

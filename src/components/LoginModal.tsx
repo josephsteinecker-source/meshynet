@@ -1,0 +1,369 @@
+// ============================================================
+// 7D: Login Modal — OTP kód email auth (Tauri-compatible)
+//
+// Magic link nefunguje v Tauri appkách: link sa otvorí v default browseri,
+// kde sa session uloží do localStorage browsera. Tauri webview má svoj
+// vlastný izolovaný localStorage a tú session nevidí. Riešenie: OTP kód
+// (6 čísel). User dostane kód v emaily, zadá ho priamo v Tauri appke,
+// Supabase vráti session — všetko bez redirectu, bez browsera.
+// ============================================================
+
+import { useState, useEffect } from "react";
+import { supabase } from "../lib/supabase";
+
+type LoginStage = "email" | "sending_email" | "code" | "verifying" | "error";
+
+export function LoginModal({
+  reason,
+  onClose,
+}: {
+  reason?: string;
+  onClose: () => void;
+}) {
+  const [email, setEmail] = useState("");
+  const [code, setCode] = useState("");
+  const [stage, setStage] = useState<LoginStage>("email");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  const isValidCode = /^\d{6,10}$/.test(code.trim());
+
+  // Krok 1: pošli OTP kód na email
+  const handleSendCode = async () => {
+    if (!isValidEmail || stage === "sending_email") return;
+    setStage("sending_email");
+    setErrorMsg("");
+    try {
+      // shouldCreateUser: true → ak user neexistuje, vytvorí sa.
+      // Trigger handle_new_user v DB automaticky vytvorí user_profile s tier='free'.
+      const { error } = await supabase.auth.signInWithOtp({
+        email: email.trim().toLowerCase(),
+        options: {
+          shouldCreateUser: true,
+        },
+      });
+      if (error) {
+        console.error("[MF] OTP send failed:", error);
+        setErrorMsg(error.message || "Nepodarilo sa odoslať kód. Skús znova.");
+        setStage("error");
+        return;
+      }
+      console.log("[MF] OTP code sent to:", email);
+      setStage("code");
+    } catch (err: any) {
+      console.error("[MF] OTP send unexpected error:", err);
+      setErrorMsg(err?.message || "Nečakaná chyba. Skús znova.");
+      setStage("error");
+    }
+  };
+
+  // Krok 2: over OTP kód → Supabase vráti session (uloží sa do Tauri localStorage)
+  const handleVerifyCode = async () => {
+    if (!isValidCode || stage === "verifying") return;
+    setStage("verifying");
+    setErrorMsg("");
+    try {
+      const { data, error } = await supabase.auth.verifyOtp({
+        email: email.trim().toLowerCase(),
+        token: code.trim(),
+        type: "email",
+      });
+      if (error) {
+        console.error("[MF] OTP verify failed:", error);
+        setErrorMsg(
+          /invalid|expired/i.test(error.message)
+            ? "Kód je nesprávny alebo už expiroval. Skontroluj e-mail."
+            : error.message || "Overenie zlyhalo. Skús znova."
+        );
+        setStage("error");
+        return;
+      }
+      console.log("[MF] OTP verified, user:", data.user?.email);
+      // onAuthStateChange v App komponente automaticky updatne session state,
+      // modal sa zavrie a UI prejde do prihláseného stavu.
+      onClose();
+    } catch (err: any) {
+      console.error("[MF] OTP verify unexpected error:", err);
+      setErrorMsg(err?.message || "Nečakaná chyba. Skús znova.");
+      setStage("error");
+    }
+  };
+
+  const showEmailStage = stage === "email" || stage === "sending_email"
+    || (stage === "error" && !code);
+  const showCodeStage = stage === "code" || stage === "verifying"
+    || (stage === "error" && code);
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: "fixed",
+        inset: 0,
+        background: "rgba(0,0,0,0.4)",
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 2147483647,
+        padding: 20,
+        animation: "mf-fadein 180ms ease",
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: "#ffffff",
+          borderRadius: 18,
+          padding: "32px 28px 24px",
+          maxWidth: 400,
+          width: "100%",
+          boxShadow: "0 20px 60px rgba(0,0,0,0.18)",
+          animation: "mf-slidein 220ms ease",
+          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+        }}
+      >
+        {showEmailStage && (
+          // Krok 1: zadaj email
+          <>
+            <h2
+              style={{
+                margin: "0 0 6px",
+                fontSize: 20,
+                fontWeight: 600,
+                letterSpacing: "-0.3px",
+                color: "#1d1d1f",
+                textAlign: "center",
+              }}
+            >
+              Prihlásenie
+            </h2>
+            <p
+              style={{
+                margin: "0 0 24px",
+                fontSize: 13,
+                color: "#86868b",
+                textAlign: "center",
+                lineHeight: 1.5,
+              }}
+            >
+              {reason || "Pošleme ti 6-miestny kód na e-mail. Žiadne heslá."}
+            </p>
+
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (stage === "error") setStage("email");
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && isValidEmail) handleSendCode();
+              }}
+              placeholder="tvoj@email.sk"
+              autoFocus
+              disabled={stage === "sending_email"}
+              style={{
+                width: "100%",
+                padding: "12px 14px",
+                background: "#f5f5f7",
+                border: stage === "error"
+                  ? "0.5px solid #ff3b30"
+                  : "0.5px solid rgba(0,0,0,0.08)",
+                borderRadius: 10,
+                fontSize: 14,
+                color: "#1d1d1f",
+                fontFamily: "inherit",
+                outline: "none",
+                boxSizing: "border-box",
+                marginBottom: 12,
+              }}
+            />
+
+            {stage === "error" && (
+              <div
+                style={{
+                  fontSize: 12,
+                  color: "#ff3b30",
+                  marginBottom: 12,
+                  paddingLeft: 4,
+                }}
+              >
+                {errorMsg}
+              </div>
+            )}
+
+            <button
+              onClick={handleSendCode}
+              disabled={!isValidEmail || stage === "sending_email"}
+              style={{
+                width: "100%",
+                background: isValidEmail && stage !== "sending_email" ? "#0071e3" : "#c7c7cc",
+                border: "none",
+                color: "#ffffff",
+                fontSize: 14,
+                fontWeight: 600,
+                padding: "12px 0",
+                cursor: isValidEmail && stage !== "sending_email" ? "pointer" : "default",
+                borderRadius: 10,
+                fontFamily: "inherit",
+                marginBottom: 8,
+                transition: "background 160ms ease",
+              }}
+            >
+              {stage === "sending_email" ? "Odosielam kód…" : "Poslať kód"}
+            </button>
+
+            <button
+              onClick={onClose}
+              style={{
+                width: "100%",
+                background: "transparent",
+                border: "none",
+                color: "#86868b",
+                fontSize: 13,
+                fontWeight: 500,
+                padding: "10px 0",
+                cursor: "pointer",
+                fontFamily: "inherit",
+              }}
+            >
+              Možno neskôr
+            </button>
+          </>
+        )}
+
+        {showCodeStage && (
+          // Krok 2: zadaj 6-miestny kód
+          <>
+            <h2
+              style={{
+                margin: "0 0 6px",
+                fontSize: 20,
+                fontWeight: 600,
+                letterSpacing: "-0.3px",
+                color: "#1d1d1f",
+                textAlign: "center",
+              }}
+            >
+              Zadaj kód
+            </h2>
+            <p
+              style={{
+                margin: "0 0 24px",
+                fontSize: 13,
+                color: "#86868b",
+                textAlign: "center",
+                lineHeight: 1.5,
+              }}
+            >
+              Poslali sme 6-miestny kód na <strong>{email}</strong>.
+            </p>
+
+            <input
+              type="text"
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              maxLength={10}
+              value={code}
+              onChange={(e) => {
+                const cleaned = e.target.value.replace(/\D/g, "").slice(0, 10);
+                setCode(cleaned);
+                if (stage === "error") setStage("code");
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && isValidCode) handleVerifyCode();
+              }}
+              placeholder="123456"
+              autoFocus
+              disabled={stage === "verifying"}
+              style={{
+                width: "100%",
+                padding: "14px 14px",
+                background: "#f5f5f7",
+                border: stage === "error"
+                  ? "0.5px solid #ff3b30"
+                  : "0.5px solid rgba(0,0,0,0.08)",
+                borderRadius: 10,
+                fontSize: 22,
+                fontWeight: 600,
+                color: "#1d1d1f",
+                fontFamily: '"SF Mono", "Menlo", monospace',
+                outline: "none",
+                boxSizing: "border-box",
+                marginBottom: 12,
+                letterSpacing: "8px",
+                textAlign: "center",
+              }}
+            />
+
+            {stage === "error" && (
+              <div
+                style={{
+                  fontSize: 12,
+                  color: "#ff3b30",
+                  marginBottom: 12,
+                  paddingLeft: 4,
+                  textAlign: "center",
+                }}
+              >
+                {errorMsg}
+              </div>
+            )}
+
+            <button
+              onClick={handleVerifyCode}
+              disabled={!isValidCode || stage === "verifying"}
+              style={{
+                width: "100%",
+                background: isValidCode && stage !== "verifying" ? "#0071e3" : "#c7c7cc",
+                border: "none",
+                color: "#ffffff",
+                fontSize: 14,
+                fontWeight: 600,
+                padding: "12px 0",
+                cursor: isValidCode && stage !== "verifying" ? "pointer" : "default",
+                borderRadius: 10,
+                fontFamily: "inherit",
+                marginBottom: 8,
+                transition: "background 160ms ease",
+              }}
+            >
+              {stage === "verifying" ? "Overujem…" : "Prihlásiť"}
+            </button>
+
+            <button
+              onClick={() => {
+                setCode("");
+                setErrorMsg("");
+                setStage("email");
+              }}
+              style={{
+                width: "100%",
+                background: "transparent",
+                border: "none",
+                color: "#86868b",
+                fontSize: 13,
+                fontWeight: 500,
+                padding: "10px 0",
+                cursor: "pointer",
+                fontFamily: "inherit",
+              }}
+            >
+              Použiť iný e-mail
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}

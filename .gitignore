@@ -34,3 +34,6 @@ src-tauri/gen/
 .env.development
 *.env
 !.env.example
+
+# Claude Code local agent state
+.claude/

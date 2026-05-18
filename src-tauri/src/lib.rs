@@ -1,4 +1,5 @@
 mod backend;
+mod og_metadata;
 
 use tauri::{command, AppHandle, Emitter, Manager, WebviewUrl, WebviewWindowBuilder};
 use std::sync::atomic::{AtomicBool, Ordering};
@@ -1058,6 +1059,174 @@ fn http_client() -> Option<reqwest::blocking::Client> {
         .ok()
 }
 
+// Enriches posts that lack imageUrl by fetching OG metadata from any external
+// article link found in the post body. Applied sequentially with a 200ms gap
+// between fetches to avoid hammering news sites.
+fn enrich_posts_with_og(posts: &mut Vec<JsonValue>) {
+    let mut first_fetch = true;
+    for (i, post) in posts.iter_mut().enumerate() {
+        let body = post.get("body")
+            .and_then(|v| v.as_str())
+            .unwrap_or("")
+            .to_string();
+
+        // Check "externalUrl" (set by FB attachment parser) first, then scan body text
+        let ext_url_attach = post.get("externalUrl")
+            .and_then(|v| v.as_str())
+            .filter(|s| !s.is_empty())
+            .map(String::from);
+        let ext_url = ext_url_attach.or_else(|| og_metadata::extract_external_url(&body));
+
+        let has_image = post.get("imageUrl")
+            .and_then(|v| v.as_str())
+            .map(|s| !s.is_empty())
+            .unwrap_or(false);
+        // Body is "junk" when, stripped of all URLs, almost nothing
+        // meaningful remains (e.g. "Čítajte viac: https://…").
+        let stripped_len = og_metadata::strip_urls(&body).trim().chars().count();
+        let body_is_junk = stripped_len < 40;
+        let skip_url = ext_url.as_deref().map(og_metadata::should_skip).unwrap_or(false);
+
+        eprintln!(
+            "[MF OG DEBUG] post #{} has_image={} body_is_junk={} stripped_len={} skip_url={} extracted_url={:?} body_first_80={:?}",
+            i, has_image, body_is_junk, stripped_len, skip_url, ext_url,
+            body.chars().take(80).collect::<String>()
+        );
+
+        let ext_url = match ext_url {
+            Some(u) => u,
+            None => continue,
+        };
+        if skip_url {
+            continue;
+        }
+
+        // OG only adds value if the image is missing or the body is junk.
+        if has_image && !body_is_junk {
+            continue;
+        }
+
+        if !first_fetch {
+            std::thread::sleep(Duration::from_millis(200));
+        }
+        first_fetch = false;
+
+        let og = match og_metadata::fetch_og(&ext_url) {
+            Ok(m) => m,
+            Err(_) => continue,
+        };
+
+        let obj = match post.as_object_mut() {
+            Some(o) => o,
+            None => continue,
+        };
+
+        // Don't clobber an already-scraped link-card image.
+        if !has_image {
+            if let Some(img) = og.image {
+                obj.insert("imageUrl".to_string(), JsonValue::String(img));
+            }
+        }
+
+        if body_is_junk {
+            if let Some(better) = og.title.or(og.description) {
+                obj.insert("body".to_string(), JsonValue::String(better));
+            }
+        }
+    }
+}
+
+// Extracts an external article URL from the FB JSON attachment context window.
+// FB stores the clean canonical URL in an ExternalWebLink; the l.php redirect
+// is a (double-encoded) fallback.
+fn extract_fb_attachment_url(html: &str) -> Option<String> {
+    // FB double-encodes the l.php target: each '%' of the percent-encoding is
+    // itself JSON-escaped as %, so `%2F` arrives as `%2F`. Decoding
+    // % -> % first turns those back into ordinary %2F / %3A sequences.
+    let normalized: String = html
+        .replace("\\u0025", "%")
+        .replace("\\u002F", "/")
+        .replace("\\u002f", "/")
+        .replace("\\/", "/");
+
+    let take_url = |after: &str| -> Option<String> {
+        let end = after
+            .find(|c: char| c == '"' || c.is_whitespace() || c == '\\')
+            .unwrap_or(after.len().min(800));
+        let url = &after[..end];
+        if (url.starts_with("https://") || url.starts_with("http://"))
+            && url.len() > 12
+            && !og_metadata::should_skip(url)
+        {
+            Some(url.to_string())
+        } else {
+            None
+        }
+    };
+
+    // Priority 1: FB's ExternalWebLink carries the clean canonical article URL.
+    // (Search the whole window — the link data often sits BEFORE the
+    // "attachments":[{ marker, so narrowing by marker would skip it.)
+    if let Some(wl) = normalized.find("\"web_link\":{") {
+        let seg = &normalized[wl..(wl + 1500).min(normalized.len())];
+        if let Some(u) = seg.find("\"url\":\"") {
+            if let Some(found) = take_url(&seg[u + 7..]) {
+                return Some(found);
+            }
+        }
+    }
+
+    // Priority 2: first plain "url":"http(s)://<external>" anywhere in window.
+    let mut s = 0usize;
+    while let Some(rel) = normalized[s..].find("\"url\":\"http") {
+        let p = s + rel + "\"url\":\"".len();
+        if let Some(found) = take_url(&normalized[p..]) {
+            return Some(found);
+        }
+        s = p;
+    }
+
+    // Priority 3 (last resort): l.facebook.com/l.php?u=<percent-encoded>
+    if let Some(pos) = normalized.find("l.facebook.com/l.php?u=") {
+        let after = &normalized[pos + "l.facebook.com/l.php?u=".len()..];
+        let end = after.find(|c: char| matches!(c, '&' | '"' | '\'' | ' ' | '\n' | '\r' | '\\'))
+            .unwrap_or(after.len().min(600));
+        let decoded = url_decode_pct(&after[..end]);
+        if decoded.starts_with("https://") && !og_metadata::should_skip(&decoded) {
+            return Some(decoded);
+        }
+    }
+
+    None
+}
+
+fn url_decode_pct(s: &str) -> String {
+    let mut out = String::with_capacity(s.len());
+    let bytes = s.as_bytes();
+    let mut i = 0;
+    while i < bytes.len() {
+        if bytes[i] == b'%' && i + 2 < bytes.len() {
+            if let (Some(h), Some(l)) = (hex_digit(bytes[i + 1]), hex_digit(bytes[i + 2])) {
+                out.push((h * 16 + l) as char);
+                i += 3;
+                continue;
+            }
+        }
+        out.push(bytes[i] as char);
+        i += 1;
+    }
+    out
+}
+
+fn hex_digit(b: u8) -> Option<u8> {
+    match b {
+        b'0'..=b'9' => Some(b - b'0'),
+        b'a'..=b'f' => Some(b - b'a' + 10),
+        b'A'..=b'F' => Some(b - b'A' + 10),
+        _ => None,
+    }
+}
+
 // HTTP klient pre mbasic.facebook.com — text-only mobilná verzia, server-rendered.
 // Pre anonymné requesty je to jediný spôsob ako dostať VIAC ako 1 post.
 fn http_client_mbasic() -> Option<reqwest::blocking::Client> {
@@ -1103,6 +1272,9 @@ fn scrape_facebook(profile_name: &str) -> Vec<JsonValue> {
     } else {
         scrape_facebook_www(profile_name)
     };
+
+    // ── OG metadata enrichment for posts without images ──────────────
+    enrich_posts_with_og(&mut posts);
 
     // ── Inline FB CDN images (rieši hotlink protection) ─────────────
     if !posts.is_empty() {
@@ -1742,6 +1914,14 @@ fn parse_fb_messages_json(
             let extended_window = &html[after_msg..extended_end];
             let (link_img, link_title) =
                 find_fb_attachment_data(extended_window, exclude_avatar_basename);
+            let attach_url = extract_fb_attachment_url(extended_window);
+
+            println!(
+                "[MF FB ATTACH] post #{} url={:?} title={:?}",
+                posts.len(),
+                attach_url.as_deref().map(|u| &u[..u.len().min(80)]),
+                link_title.as_deref(),
+            );
 
             let image_url = nearby_image.or(link_img);
 
@@ -1783,6 +1963,7 @@ fn parse_fb_messages_json(
                 "videoThumbUrl": null,
                 "permalink": format!("https://www.facebook.com/{}", profile_name),
                 "publishedAt": chrono_iso_now(),
+                "externalUrl": attach_url,
             });
 
             if let Some(ridx) = replace_idx {
@@ -2196,6 +2377,9 @@ fn scrape_instagram(profile_name: &str) -> Vec<JsonValue> {
             }
         }
     }
+
+    // ── OG metadata enrichment for posts without images ──────────────
+    enrich_posts_with_og(&mut posts);
 
     if !posts.is_empty() {
         let referer = format!("https://www.instagram.com/{}/", profile_name);

@@ -1848,6 +1848,7 @@ fn parse_fb_messages_json(
 
     for pattern in &patterns {
         let mut search_start = 0usize;
+        let mut prev_after_msg = 0usize;
         while let Some(rel_pos) = html[search_start..].find(pattern) {
             let pos = search_start + rel_pos;
             let after = &html[pos + pattern.len()..];
@@ -1904,11 +1905,14 @@ fn parse_fb_messages_json(
             let next_msg_offset = html[after_msg..]
                 .find(basic_msg_marker)
                 .unwrap_or(50_000);
-            let img_window_start = pos.saturating_sub(10_000);
+            // Clamp the backward look so it can't bleed into the previous
+            // post's media block and steal its image.
+            let img_window_start = pos.saturating_sub(10_000).max(prev_after_msg);
             let img_window_end = (after_msg + next_msg_offset).min(html.len());
             let img_window = &html[img_window_start..img_window_end];
             let nearby_image = find_fb_image(img_window, exclude_avatar_basename);
             let nearby_present = nearby_image.is_some();
+            prev_after_msg = after_msg;
 
             let extended_end = (after_msg + 60_000).min(html.len());
             let extended_window = &html[after_msg..extended_end];

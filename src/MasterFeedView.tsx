@@ -326,14 +326,19 @@ export function MasterFeedView({
 
     if (perSource.length === 0) return [];
 
-    const interleaved: Post[] = [];
-    const maxLen = Math.max(...perSource.map((arr) => arr.length));
-    for (let i = 0; i < maxLen; i++) {
-      for (const arr of perSource) {
-        if (i < arr.length) interleaved.push(arr[i]);
-      }
+    // Flat chronological sort DESC across ALL sources (newest first),
+    // replacing the old index-based interleave.
+    const allPosts: Post[] = [];
+    for (const arr of perSource) {
+      allPosts.push(...arr);
     }
-    return interleaved;
+    const sorted = allPosts.sort((a, b) => {
+      const tA = new Date(a.publishedAt).getTime();
+      const tB = new Date(b.publishedAt).getTime();
+      return tB - tA;
+    });
+
+    return sorted;
   }, [scrapedPosts, hiddenIds, sources]);
 
   const sourceCounts = useMemo<Record<Network, number>>(() => ({

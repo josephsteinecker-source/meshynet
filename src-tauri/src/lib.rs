@@ -1512,13 +1512,23 @@ fn process_mbasic_post(
     let preview: String = body_capped.chars().take(60).collect();
     println!("[MF FB-mbasic] post '{}…' → img={}", preview, image.is_some());
 
+    let fb_ts = extract_fb_timestamp(inner_html);
+    let published = fb_ts.map(epoch_to_iso).unwrap_or_else(chrono_iso_now);
+    #[cfg(debug_assertions)]
+    println!(
+        "[MF FB TS] post={:?} extracted_ts={:?} -> {}",
+        body_capped.chars().take(40).collect::<String>(),
+        fb_ts,
+        published
+    );
+
     posts.push(serde_json::json!({
         "id": format!("fb-{}-{}", profile_name, posts.len()),
         "body": body_capped,
         "imageUrl": image,
         "videoThumbUrl": null,
         "permalink": permalink,
-        "publishedAt": chrono_iso_now(),
+        "publishedAt": published,
     }));
 }
 
@@ -1960,13 +1970,23 @@ fn parse_fb_messages_json(
                 link_title.is_some()
             );
 
+            let fb_ts = extract_fb_timestamp(img_window);
+            let published = fb_ts.map(epoch_to_iso).unwrap_or_else(chrono_iso_now);
+            #[cfg(debug_assertions)]
+            println!(
+                "[MF FB TS] post={:?} extracted_ts={:?} -> {}",
+                trimmed.chars().take(40).collect::<String>(),
+                fb_ts,
+                published
+            );
+
             let new_post = serde_json::json!({
                 "id": format!("fb-{}-{}", profile_name, posts.len()),
                 "body": body_capped,
                 "imageUrl": image_url,
                 "videoThumbUrl": null,
                 "permalink": format!("https://www.facebook.com/{}", profile_name),
-                "publishedAt": chrono_iso_now(),
+                "publishedAt": published,
                 "externalUrl": attach_url,
             });
 
@@ -2921,6 +2941,27 @@ fn chrono_iso_now() -> String {
         .map(|d| d.as_secs())
         .unwrap_or(0);
     epoch_to_iso(now)
+}
+
+// Extracts a real post timestamp (unix epoch seconds) from FB JSON.
+// Tries "creation_time": then "publish_time": — first occurrence in the
+// (post-scoped) window wins, which also covers the nested creation_story case.
+fn extract_fb_timestamp(html: &str) -> Option<u64> {
+    for key in &["\"creation_time\":", "\"publish_time\":"] {
+        if let Some(p) = html.find(key) {
+            let after = &html[p + key.len()..];
+            let digits: String = after
+                .chars()
+                .take_while(|c| c.is_ascii_digit())
+                .collect();
+            if let Ok(ts) = digits.parse::<u64>() {
+                if ts > 1_000_000_000 {
+                    return Some(ts);
+                }
+            }
+        }
+    }
+    None
 }
 
 // ============================================================

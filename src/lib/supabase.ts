@@ -12,8 +12,8 @@
 
 import { createClient, type Session } from "@supabase/supabase-js";
 
-export const SUPABASE_URL = "https://rwmeubxvwjtolalmkxbe.supabase.co";
-export const SUPABASE_ANON_KEY = "sb_publishable_iew3IYCyDR1Nla1iyQeQVQ_riibAftF";
+export const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
+export const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: {

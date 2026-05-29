@@ -7,7 +7,7 @@ import type {
 } from "./types";
 import { NETWORK_KEYS } from "./types";
 import type { BillingResponse } from "./lib/billing";
-import { loadHidden, saveHidden, sourceKey, networkKey, generateId } from "./lib/storage";
+import { loadHidden, saveHidden, sourceKey, networkKey } from "./lib/storage";
 import { formatRelativeTime } from "./lib/format";
 import { REFRESH_INTERVAL_MS, POSTS_PER_SOURCE, REFRESH_DEBOUNCE_MS, refreshState } from "./lib/scraping";
 import { filterValidPermalinks, dedupePosts } from "./lib/post-filters";
@@ -21,13 +21,14 @@ import { UpgradeModal } from "./components/UpgradeModal";
 import { UserMenu } from "./components/UserMenu";
 
 export function MasterFeedView({
-  sources, setSources, initialFocusNetwork, onBackToIndex,
+  sources, addSourceToStore, removeSourceFromStore, initialFocusNetwork, onBackToIndex,
   billingStatus, billingLoaded,
   session, authLoaded, onOpenLogin, onLogout, onOpenPortal,
   onOpenSettings,
 }: {
   sources: SourcesByNetwork;
-  setSources: (s: SourcesByNetwork) => void;
+  addSourceToStore: (network: Network, name: string, scrapeQuery: string) => Promise<SourceConfig>;
+  removeSourceFromStore: (network: Network, sourceId: string) => Promise<void>;
   initialFocusNetwork?: Network | null;
   onBackToIndex: () => void;
   billingStatus: BillingResponse | null;
@@ -235,18 +236,7 @@ export function MasterFeedView({
         }
       }
 
-      const newSource: SourceConfig = {
-        id: generateId(),
-        nazov: name,
-        url: "",
-        scrapeQuery,
-      };
-      const k = networkKey(network);
-      const updated: SourcesByNetwork = {
-        ...sourcesRef.current,
-        [k]: [...sourcesRef.current[k], newSource],
-      };
-      setSources(updated);
+      const newSource = await addSourceToStore(network, name, scrapeQuery);
       setStatus((prev) => ({ ...prev, [network]: "connected" }));
 
       setScrapingIds((prev) => new Set(prev).add(newSource.id));
@@ -262,17 +252,12 @@ export function MasterFeedView({
         });
       }, 30000);
     },
-    [setSources, billingStatus, billingLoaded, scrapeProfile]
+    [addSourceToStore, billingStatus, billingLoaded, scrapeProfile]
   );
 
   const removeSource = useCallback(
     (network: Network, sourceId: string) => {
-      const k = networkKey(network);
-      const updated: SourcesByNetwork = {
-        ...sourcesRef.current,
-        [k]: sourcesRef.current[k].filter((s) => s.id !== sourceId),
-      };
-      setSources(updated);
+      void removeSourceFromStore(network, sourceId);
       setHiddenIds((prev) => {
         const next = new Set(prev);
         next.delete(sourceKey(network, sourceId));
@@ -291,7 +276,7 @@ export function MasterFeedView({
         return next;
       });
     },
-    [setSources]
+    [removeSourceFromStore]
   );
 
   const onClickNetwork = useCallback((n: Network) => {

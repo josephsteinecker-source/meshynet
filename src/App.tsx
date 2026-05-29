@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { supabase, type Session } from "./lib/supabase";
-import type { View, SourcesByNetwork } from "./types";
-import { loadSources, saveSources, totalSourceCount } from "./lib/storage";
+import type { View } from "./types";
+import { loadSources, totalSourceCount } from "./lib/storage";
 import { useBilling } from "./hooks/useBilling";
+import { useSources } from "./hooks/useSources";
 import { ThemeProvider } from "./lib/theme-context";
 import { IndexView } from "./IndexView";
 import { MasterFeedView } from "./MasterFeedView";
@@ -16,7 +17,6 @@ import { SettingsModal } from "./components/SettingsModal";
 
 function App() {
   const { t } = useTranslation();
-  const [sources, setSourcesState] = useState<SourcesByNetwork>(loadSources);
   const [view, setView] = useState<View>(() =>
     totalSourceCount(loadSources()) > 0 ? "feed" : "index"
   );
@@ -27,6 +27,8 @@ function App() {
 
   const { billingStatus, billingLoaded, refreshBilling } = useBilling(session, authLoaded);
   void refreshBilling;
+
+  const { sources, addSource, removeSource } = useSources(session, authLoaded);
 
   const [loginModalReason, setLoginModalReason] = useState<string | null>(null);
   const loginModalOpen = loginModalReason !== null;
@@ -54,11 +56,6 @@ function App() {
     return () => {
       subscription.unsubscribe();
     };
-  }, []);
-
-  const setSources = useCallback((s: SourcesByNetwork) => {
-    setSourcesState(s);
-    saveSources(s);
   }, []);
 
   const handleEnterFeed = useCallback(() => {
@@ -132,7 +129,8 @@ function App() {
     <ThemeProvider>
       <MasterFeedView
         sources={sources}
-        setSources={setSources}
+        addSourceToStore={addSource}
+        removeSourceFromStore={removeSource}
         onBackToIndex={handleBackToIndex}
         billingStatus={billingStatus}
         billingLoaded={billingLoaded}

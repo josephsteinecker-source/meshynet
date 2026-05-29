@@ -1,10 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { invoke } from "@tauri-apps/api/core";
 import { supabase, type Session } from "./lib/supabase";
-import type { View, StatusResponse, SourcesByNetwork } from "./types";
+import type { View, SourcesByNetwork } from "./types";
 import { loadSources, saveSources, totalSourceCount } from "./lib/storage";
-import { openExternal } from "./lib/tauri";
+import { useBilling } from "./hooks/useBilling";
 import { ThemeProvider } from "./lib/theme-context";
 import { IndexView } from "./IndexView";
 import { MasterFeedView } from "./MasterFeedView";
@@ -22,12 +21,12 @@ function App() {
     totalSourceCount(loadSources()) > 0 ? "feed" : "index"
   );
 
-  const [billingStatus, setBillingStatus] = useState<StatusResponse | null>(null);
-  const [billingLoaded, setBillingLoaded] = useState(false);
-
   // 7D: Auth state — sledovať či je user prihlásený cez Supabase
   const [session, setSession] = useState<Session | null>(null);
   const [authLoaded, setAuthLoaded] = useState(false);
+
+  const { billingStatus, billingLoaded, refreshBilling } = useBilling(session, authLoaded);
+  void refreshBilling;
 
   const [loginModalReason, setLoginModalReason] = useState<string | null>(null);
   const loginModalOpen = loginModalReason !== null;
@@ -56,66 +55,6 @@ function App() {
       subscription.unsubscribe();
     };
   }, []);
-
-  // Billing fetch — čaká na authLoaded a posiela JWT z aktuálnej session.
-  // Refetchne sa pri každej auth zmene (SIGNED_IN / TOKEN_REFRESHED / SIGNED_OUT),
-  // takže `billingStatus` sa drží konzistentne s aktuálnym stavom prihlásenia.
-  //
-  // Fallback: ak fetch zlyhá, predpokladáme Free tier so 3 profilmi per sieť.
-  // To zabezpečí že limit check v addSource nepadne do "fail-open" stavu
-  // a neprihlásení / chybový-stav user nemôže pridávať bez limitu.
-  useEffect(() => {
-    if (!authLoaded) {
-      // Ešte čakáme na auth restoration — neflešni billing fetch
-      return;
-    }
-
-    let cancelled = false;
-    const accessToken = session?.access_token || "";
-
-    console.log(
-      `[MF] Fetching billing status (session=${session ? "yes" : "no"}, ` +
-      `has_token=${accessToken.length > 0})...`
-    );
-
-    invoke<StatusResponse>("mf_get_status", { accessToken })
-      .then((resp) => {
-        if (cancelled) return;
-        console.log(
-          `[MF] Billing loaded: tier=${resp.status.tier}, ` +
-          `max_profiles_per_platform=${resp.status.max_profiles_per_platform}, ` +
-          `tiers=${resp.available_tiers.length}`
-        );
-        setBillingStatus(resp);
-        setBillingLoaded(true);
-      })
-      .catch((err) => {
-        if (cancelled) return;
-        console.warn(
-          "[MF] Billing fetch failed — using Free fallback (3 profiles/network):",
-          err
-        );
-        // Free-tier fallback — užívateľ stále podlieha limitu, len ho nemôže
-        // upgradovať (lebo nemáme available_tiers). To je bezpečnejšie než
-        // pôvodný "fail-open" behavior kde billingStatus zostal null a
-        // limit check sa preskočil úplne.
-        setBillingStatus({
-          status: {
-            user_id: session?.user?.id ?? null,
-            email: session?.user?.email ?? null,
-            tier: "free",
-            subscription_status: "none",
-            current_period_end: null,
-            cancel_at_period_end: false,
-            max_profiles_per_platform: 10,
-          },
-          available_tiers: [],
-        });
-        setBillingLoaded(true);
-      });
-
-    return () => { cancelled = true; };
-  }, [authLoaded, session]);
 
   const setSources = useCallback((s: SourcesByNetwork) => {
     setSourcesState(s);
@@ -152,11 +91,19 @@ function App() {
       return;
     }
     try {
-      const portalUrl = await invoke<string>("mf_create_portal_session", {
-        accessToken: session.access_token,
-      });
-      console.log(`[MF] Opening Stripe Customer Portal: ${portalUrl}`);
-      await openExternal(portalUrl);
+      const resp = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-portal-session`,
+        {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${session.access_token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const { url } = await resp.json();
+      console.log(`[MF] Opening Stripe Customer Portal: ${url}`);
+      window.open(url, "_blank");
     } catch (err: any) {
       console.error("[MF] Portal session failed:", err);
       alert(t("errors.portalFailed", { error: err?.message || err || t("errors.unknown") }));
@@ -166,11 +113,12 @@ function App() {
   if (view === "index") {
     return (
       <ThemeProvider>
-        <IndexView onEnter={handleEnterFeed} />
+        <IndexView onEnter={() => openLoginModal()} />
         {loginModalOpen && (
           <LoginModal
             reason={loginModalReason || undefined}
             onClose={() => setLoginModalReason(null)}
+            onAuthed={handleEnterFeed}
           />
         )}
         {showSettings && (

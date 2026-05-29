@@ -12,10 +12,10 @@
 
 import { createClient, type Session } from "@supabase/supabase-js";
 
-const SUPABASE_URL = "https://rwmeubxvwjtolalmkxbe.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_iew3IYCyDR1Nla1iyQeQVQ_riibAftF";
+export const SUPABASE_URL = "https://rwmeubxvwjtolalmkxbe.supabase.co";
+export const SUPABASE_ANON_KEY = "sb_publishable_iew3IYCyDR1Nla1iyQeQVQ_riibAftF";
 
-export const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: {
     // Persistovať session do localStorage — user zostane prihlásený medzi reštartmi appky
     persistSession: true,

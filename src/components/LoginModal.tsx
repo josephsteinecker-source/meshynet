@@ -11,6 +11,7 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { supabase } from "../lib/supabase";
+import { registerDevice } from "../lib/device";
 import { useTheme } from "../lib/theme-context";
 
 type LoginStage = "email" | "sending_email" | "code" | "verifying" | "error";
@@ -18,9 +19,11 @@ type LoginStage = "email" | "sending_email" | "code" | "verifying" | "error";
 export function LoginModal({
   reason,
   onClose,
+  onAuthed,
 }: {
   reason?: string;
   onClose: () => void;
+  onAuthed?: () => void;
 }) {
   const { t } = useTranslation();
   const { colors: c } = useTheme();
@@ -38,7 +41,7 @@ export function LoginModal({
   }, [onClose]);
 
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-  const isValidCode = /^\d{6,10}$/.test(code.trim());
+  const isValidCode = /^\d{6,8}$/.test(code.trim());
 
   // Krok 1: pošli OTP kód na email
   const handleSendCode = async () => {
@@ -91,8 +94,33 @@ export function LoginModal({
         return;
       }
       console.log("[MF] OTP verified, user:", data.user?.email);
+
+      // Register this device with the backend (revokes oldest over tier limit).
+      const jwt = data.session?.access_token;
+      if (jwt) {
+        try {
+          const reg = await registerDevice(jwt);
+          console.log("[MF] Device registered:", reg);
+          if (!reg.ok) {
+            setErrorMsg(
+              reg.error === "device_owned_by_other_user"
+                ? t("device.errors.ownedByOther")
+                : t("device.errors.registrationFailed")
+            );
+            setStage("error");
+            return; // keep modal open — user is verified but device not allowed
+          }
+        } catch (e: any) {
+          console.error("[MF] register_device failed:", e);
+          setErrorMsg(t("device.errors.registrationFailed"));
+          setStage("error");
+          return;
+        }
+      }
+
       // onAuthStateChange v App komponente automaticky updatne session state,
       // modal sa zavrie a UI prejde do prihláseného stavu.
+      onAuthed?.();
       onClose();
     } catch (err: any) {
       console.error("[MF] OTP verify unexpected error:", err);
@@ -161,7 +189,7 @@ export function LoginModal({
                 lineHeight: 1.5,
               }}
             >
-              {reason || t("login.defaultReason")}
+              {reason || t("auth.emailIntroSubtitle")}
             </p>
 
             <input
@@ -271,24 +299,24 @@ export function LoginModal({
                 lineHeight: 1.5,
               }}
             >
-              {t("login.codeSentTo", { email })}
+              {t("auth.otpSubtitle", { email })}
             </p>
 
             <input
               type="text"
               inputMode="numeric"
               autoComplete="one-time-code"
-              maxLength={10}
+              maxLength={8}
               value={code}
               onChange={(e) => {
-                const cleaned = e.target.value.replace(/\D/g, "").slice(0, 10);
+                const cleaned = e.target.value.replace(/\D/g, "").slice(0, 8);
                 setCode(cleaned);
                 if (stage === "error") setStage("code");
               }}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && isValidCode) handleVerifyCode();
               }}
-              placeholder="123456"
+              placeholder="12345678"
               autoFocus
               disabled={stage === "verifying"}
               style={{

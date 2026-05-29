@@ -31,7 +31,7 @@ function EnterButton({ onClick }: { onClick: () => void }) {
         filter: hovered ? "brightness(1.08)" : "none",
       }}
     >
-      {t("index.enter")}
+      {t("auth.registerOrLogin")}
     </button>
   );
 }

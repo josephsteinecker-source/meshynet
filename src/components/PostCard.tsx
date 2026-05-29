@@ -4,7 +4,6 @@ import type { Post } from "../types";
 import { Avatar } from "./Avatar";
 import { formatRelativeTime, isLikelyValidImage } from "../lib/format";
 import { extractYouTubeVideoId } from "../lib/youtube";
-import { openExternal } from "../lib/tauri";
 import { useTheme } from "../lib/theme-context";
 
 export function PostCard({ post }: { post: Post }) {
@@ -30,7 +29,7 @@ export function PostCard({ post }: { post: Post }) {
   // Embedded iframe samotný má pointer-events: auto a stopPropagation aby
   // kliky vnútri prehrávača (play/pause/seek) nešli na článok.
   const handleCardClick = () => {
-    if (post.permalink) openExternal(post.permalink);
+    if (post.permalink) window.open(post.permalink, "_blank");
   };
 
   const handleThumbnailClick = (e: React.MouseEvent) => {
@@ -43,7 +42,7 @@ export function PostCard({ post }: { post: Post }) {
 
   const handleOpenYouTube = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (post.permalink) openExternal(post.permalink);
+    if (post.permalink) window.open(post.permalink, "_blank");
   };
 
   return (

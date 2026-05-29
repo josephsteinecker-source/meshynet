@@ -1,17 +1,15 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { invoke } from "@tauri-apps/api/core";
-import { listen } from "@tauri-apps/api/event";
 import type { Session } from "./lib/supabase";
 import type {
   Network, NetworkStatus, SourcesByNetwork, SourceConfig,
-  Post, PricingTier, StatusResponse,
+  Post, PricingTier, Tier,
 } from "./types";
 import { NETWORK_KEYS } from "./types";
+import type { BillingResponse } from "./lib/billing";
 import { loadHidden, saveHidden, sourceKey, networkKey, generateId } from "./lib/storage";
 import { formatRelativeTime } from "./lib/format";
 import { REFRESH_INTERVAL_MS, POSTS_PER_SOURCE, REFRESH_DEBOUNCE_MS, refreshState } from "./lib/scraping";
-import { openExternal } from "./lib/tauri";
 import { filterValidPermalinks, dedupePosts } from "./lib/post-filters";
 import { BRAND_GRADIENT } from "./lib/theme";
 import { useTheme } from "./lib/theme-context";
@@ -32,7 +30,7 @@ export function MasterFeedView({
   setSources: (s: SourcesByNetwork) => void;
   initialFocusNetwork?: Network | null;
   onBackToIndex: () => void;
-  billingStatus: StatusResponse | null;
+  billingStatus: BillingResponse | null;
   billingLoaded: boolean;
   session: Session | null;
   authLoaded: boolean;
@@ -61,70 +59,88 @@ export function MasterFeedView({
   const sourcesRef = useRef(sources);
   useEffect(() => { sourcesRef.current = sources; }, [sources]);
 
-  useEffect(() => {
-    const unlistenPromise = listen<{
-      network: string;
-      sourceId: string;
-      posts: any[];
-    }>("mf-scraped-posts", (event) => {
-      const { network, sourceId, posts } = event.payload;
-      const k = networkKey(network as Network);
+  // web: posts received via scrapeProfile fetch response
+
+  const scrapeProfile = useCallback(
+    async (network: Network, profileName: string, sourceId: string) => {
+      const k = networkKey(network);
       const sourcesNow = sourcesRef.current[k] || [];
       const matchingSource = sourcesNow.find((s) => s.id === sourceId);
-
       if (!matchingSource) {
         console.log(
-          `[MF] Discarding late posts for removed source ${sourceId} (${network})`
+          `[MF] Discarding scrape for removed source ${sourceId} (${network})`
         );
+        setScrapingIds((prev) => {
+          if (!prev.has(sourceId)) return prev;
+          const next = new Set(prev);
+          next.delete(sourceId);
+          return next;
+        });
         return;
       }
-
       const sourceName = matchingSource.nazov;
-      const incoming = Array.isArray(posts) ? posts : [];
 
-      console.log(
-        `[MF] Received ${incoming.length} post(s) for "${sourceName}" (${network}). ` +
-        `Will display up to ${POSTS_PER_SOURCE}.`
-      );
+      try {
+        const resp = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/scrape-profile`,
+          {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${session?.access_token ?? ""}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              platform: network.toLowerCase(),
+              identifier: profileName,
+              sourceId,
+            }),
+          }
+        );
+        const data = await resp.json();
+        const posts = Array.isArray(data.posts) ? data.posts : [];
 
-      const networkTyped = network as Network;
-      const baseTime = Date.now();
-      const allMapped: Post[] = incoming.map((p: any, idx: number) => ({
-        id: `scrape-${sourceId}-${idx}-${p.id || baseTime}`,
-        network: networkTyped,
-        sourceId,
-        sourceName,
-        body: p.body || "",
-        imageUrl: p.imageUrl || undefined,
-        videoThumbUrl: p.videoThumbUrl || undefined,
-        permalink: p.permalink || "",
-        publishedAt: p.publishedAt
-          ? new Date(p.publishedAt)
-          : new Date(baseTime - idx * 1000),
-      }));
+        console.log(
+          `[MF] Received ${posts.length} post(s) for "${sourceName}" (${network}). ` +
+          `Will display up to ${POSTS_PER_SOURCE}.`
+        );
 
-      const validPermalink = filterValidPermalinks(allMapped, networkTyped, sourceName);
-      const deduped = dedupePosts(validPermalink, sourceName);
-      const mapped = deduped.slice(0, POSTS_PER_SOURCE);
+        const baseTime = Date.now();
+        const allMapped: Post[] = posts.map((p: any, idx: number) => ({
+          id: `scrape-${sourceId}-${idx}-${p.id || baseTime}`,
+          network,
+          sourceId,
+          sourceName,
+          body: p.content_text || "",
+          imageUrl: p.image_url || undefined,
+          videoThumbUrl: p.video_url || undefined,
+          permalink: p.link_url || p.post_url || p.url || "",
+          publishedAt: p.posted_at
+            ? new Date(p.posted_at)
+            : new Date(baseTime - idx * 1000),
+        }));
 
-      setScrapedPosts((prev) => {
-        const next = new Map(prev);
-        next.set(sourceId, mapped);
-        return next;
-      });
+        const validPermalink = filterValidPermalinks(allMapped, network, sourceName);
+        const deduped = dedupePosts(validPermalink, sourceName);
+        const mapped = deduped.slice(0, POSTS_PER_SOURCE);
 
-      setScrapingIds((prev) => {
-        if (!prev.has(sourceId)) return prev;
-        const next = new Set(prev);
-        next.delete(sourceId);
-        return next;
-      });
-    });
-
-    return () => {
-      unlistenPromise.then((fn) => fn()).catch(() => {});
-    };
-  }, []);
+        setScrapedPosts((prev) => {
+          const next = new Map(prev);
+          next.set(sourceId, mapped);
+          return next;
+        });
+      } catch (e) {
+        console.warn(`[MF] scrape "${sourceName}" failed:`, e);
+      } finally {
+        setScrapingIds((prev) => {
+          if (!prev.has(sourceId)) return prev;
+          const next = new Set(prev);
+          next.delete(sourceId);
+          return next;
+        });
+      }
+    },
+    [session]
+  );
 
   useEffect(() => { saveHidden(hiddenIds); }, [hiddenIds]);
 
@@ -164,18 +180,7 @@ export function MasterFeedView({
     setStatus(nextStatus);
 
     for (const { source, network } of allScrapeSources) {
-      invoke("mf_scrape_profile", {
-        network,
-        profileName: source.scrapeQuery!,
-        sourceId: source.id,
-      }).catch((e) => {
-        console.warn(`[MF] re-scrape "${source.nazov}" failed:`, e);
-        setScrapingIds((prev) => {
-          const next = new Set(prev);
-          next.delete(source.id);
-          return next;
-        });
-      });
+      void scrapeProfile(network, source.scrapeQuery!, source.id);
     }
 
     setTimeout(() => {
@@ -192,7 +197,7 @@ export function MasterFeedView({
 
     setLastRefresh(new Date());
     setRefreshing(false);
-  }, []);
+  }, [scrapeProfile]);
 
   const manualRefresh = useCallback(() => {
     refreshState.lastRefreshAt = 0;
@@ -246,20 +251,7 @@ export function MasterFeedView({
 
       setScrapingIds((prev) => new Set(prev).add(newSource.id));
       console.log(`[MF] Adding "${name}" (${network}) → triggering scrape...`);
-      try {
-        await invoke("mf_scrape_profile", {
-          network,
-          profileName: scrapeQuery,
-          sourceId: newSource.id,
-        });
-      } catch (e) {
-        console.error(`[MF] mf_scrape_profile failed for ${name}:`, e);
-        setScrapingIds((prev) => {
-          const next = new Set(prev);
-          next.delete(newSource.id);
-          return next;
-        });
-      }
+      void scrapeProfile(network, scrapeQuery, newSource.id);
 
       setTimeout(() => {
         setScrapingIds((prev) => {
@@ -270,7 +262,7 @@ export function MasterFeedView({
         });
       }, 30000);
     },
-    [setSources, billingStatus, billingLoaded]
+    [setSources, billingStatus, billingLoaded, scrapeProfile]
   );
 
   const removeSource = useCallback(
@@ -372,18 +364,26 @@ export function MasterFeedView({
     }
 
     try {
-      const checkoutUrl = await invoke<string>("mf_create_checkout_session", {
-        tierId: tier.tier_id,
-        accessToken: session.access_token,
-      });
-      console.log(`[MF] Opening Stripe Checkout: ${checkoutUrl}`);
-      await openExternal(checkoutUrl);
+      const resp = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-checkout-session`,
+        {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${session.access_token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ tier_id: tier.tier_id }),
+        }
+      );
+      const { url } = await resp.json();
+      console.log(`[MF] Opening Stripe Checkout: ${url}`);
+      window.open(url, "_blank");
       setUpgradeModalNetwork(null);
     } catch (err: any) {
       console.error("[MF] Checkout session failed:", err);
       alert(t("errors.paymentFailed", { error: err?.message || err || t("errors.unknown") }));
     }
-  }, [session, onOpenLogin]);
+  }, [session, onOpenLogin, t]);
 
   return (
     <div style={{
@@ -558,9 +558,9 @@ export function MasterFeedView({
 
       {upgradeModalNetwork && billingStatus && (
         <UpgradeModal
-          currentTier={billingStatus.status.tier}
+          currentTier={billingStatus.status.tier as Tier}
           network={upgradeModalNetwork}
-          availableTiers={billingStatus.available_tiers}
+          availableTiers={billingStatus.available_tiers as unknown as PricingTier[]}
           onClose={() => setUpgradeModalNetwork(null)}
           onPickTier={handlePickTier}
         />

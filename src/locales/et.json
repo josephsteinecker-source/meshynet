@@ -119,5 +119,19 @@
     "unknown": "tundmatu viga",
     "paymentFailed": "Makset ei saanud avada.\n\nViga: {{error}}\n\nProovi uuesti või võta meiega ühendust.",
     "portalFailed": "Tellimuse haldust ei saanud avada.\n\nViga: {{error}}\n\nProovi uuesti või võta meiega ühendust."
+  },
+  "auth": {
+    "otpSubtitle": "Saatsime koodi aadressile {{email}}.",
+    "registerOrLogin": "Registreeru / Logi sisse",
+    "emailIntroSubtitle": "Saadame sulle koodi e-postile. Paroole pole vaja."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Seadme registreerimine ebaõnnestus. Proovi uuesti või võta ühendust toega.",
+      "ownedByOther": "See seade on juba registreeritud teisele kontole. Võta ühendust toega."
+    },
+    "notifications": {
+      "autoSignedOut": "Sind logiti automaatselt välja, kuna logisid sisse teises seadmes."
+    }
   }
 }

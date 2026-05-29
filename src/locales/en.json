@@ -119,5 +119,19 @@
     "unknown": "unknown error",
     "paymentFailed": "Failed to open payment.\n\nError: {{error}}\n\nPlease try again or contact us.",
     "portalFailed": "Failed to open subscription management.\n\nError: {{error}}\n\nPlease try again or contact us."
+  },
+  "auth": {
+    "otpSubtitle": "We've sent a code to {{email}}.",
+    "registerOrLogin": "Sign up / Sign in",
+    "emailIntroSubtitle": "We'll send you a code by email. No passwords."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Device registration failed. Please try again or contact support.",
+      "ownedByOther": "This device is already registered to another account. Contact support."
+    },
+    "notifications": {
+      "autoSignedOut": "You were automatically signed out because you signed in on another device."
+    }
   }
 }

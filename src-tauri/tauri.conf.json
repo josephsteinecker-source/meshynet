@@ -1,7 +1,7 @@
 {
-  "productName": "MasterFeed",
+  "productName": "MeshyNet",
   "version": "0.1.0",
-  "identifier": "com.masterfeed.app",
+  "identifier": "com.meshynet.app",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
@@ -11,7 +11,7 @@
   "app": {
     "windows": [
       {
-        "title": "MasterFeed",
+        "title": "MeshyNet",
         "label": "main",
         "width": 800,
         "height": 600

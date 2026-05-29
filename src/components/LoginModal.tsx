@@ -11,7 +11,7 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { supabase } from "../lib/supabase";
-import { registerDevice } from "../lib/device";
+import { registerDevice, isTauri } from "../lib/device";
 import { useTheme } from "../lib/theme-context";
 
 type LoginStage = "email" | "sending_email" | "code" | "verifying" | "error";
@@ -97,7 +97,7 @@ export function LoginModal({
 
       // Register this device with the backend (revokes oldest over tier limit).
       const jwt = data.session?.access_token;
-      if (jwt) {
+      if (jwt && isTauri()) {
         try {
           const reg = await registerDevice(jwt);
           console.log("[MF] Device registered:", reg);

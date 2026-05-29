@@ -119,5 +119,19 @@
     "unknown": "okänt fel",
     "paymentFailed": "Kunde inte öppna betalning.\n\nFel: {{error}}\n\nFörsök igen eller kontakta oss.",
     "portalFailed": "Kunde inte öppna prenumerationshantering.\n\nFel: {{error}}\n\nFörsök igen eller kontakta oss."
+  },
+  "auth": {
+    "otpSubtitle": "Vi har skickat en kod till {{email}}.",
+    "registerOrLogin": "Registrera / Logga in",
+    "emailIntroSubtitle": "Vi skickar dig en kod via e-post. Inga lösenord."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Det gick inte att registrera enheten. Försök igen eller kontakta supporten.",
+      "ownedByOther": "Den här enheten är redan registrerad på ett annat konto. Kontakta supporten."
+    },
+    "notifications": {
+      "autoSignedOut": "Du loggades ut automatiskt eftersom du loggade in på en annan enhet."
+    }
   }
 }

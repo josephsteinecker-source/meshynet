@@ -124,5 +124,19 @@
     "unknown": "nežinoma klaida",
     "paymentFailed": "Nepavyko atidaryti mokėjimo.\n\nKlaida: {{error}}\n\nBandykite dar kartą arba susisiekite su mumis.",
     "portalFailed": "Nepavyko atidaryti prenumeratos valdymo.\n\nKlaida: {{error}}\n\nBandykite dar kartą arba susisiekite su mumis."
+  },
+  "auth": {
+    "otpSubtitle": "Išsiuntėme kodą adresu {{email}}.",
+    "registerOrLogin": "Registruotis / Prisijungti",
+    "emailIntroSubtitle": "Atsiųsime tau kodą el. paštu. Jokių slaptažodžių."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Nepavyko užregistruoti įrenginio. Bandyk dar kartą arba susisiek su palaikymo komanda.",
+      "ownedByOther": "Šis įrenginys jau užregistruotas kitoje paskyroje. Susisiek su palaikymo komanda."
+    },
+    "notifications": {
+      "autoSignedOut": "Buvai automatiškai atjungtas, nes prisijungei kitame įrenginyje."
+    }
   }
 }

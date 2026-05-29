@@ -119,5 +119,19 @@
     "unknown": "errore sconosciuto",
     "paymentFailed": "Impossibile aprire il pagamento.\n\nErrore: {{error}}\n\nRiprova o contattaci.",
     "portalFailed": "Impossibile aprire la gestione dell'abbonamento.\n\nErrore: {{error}}\n\nRiprova o contattaci."
+  },
+  "auth": {
+    "otpSubtitle": "Abbiamo inviato un codice a {{email}}.",
+    "registerOrLogin": "Registrati / Accedi",
+    "emailIntroSubtitle": "Ti invieremo un codice via e-mail. Nessuna password."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Registrazione del dispositivo non riuscita. Riprova o contatta l'assistenza.",
+      "ownedByOther": "Questo dispositivo è già registrato a un altro account. Contatta l'assistenza."
+    },
+    "notifications": {
+      "autoSignedOut": "Sei stato disconnesso automaticamente perché hai effettuato l'accesso su un altro dispositivo."
+    }
   }
 }

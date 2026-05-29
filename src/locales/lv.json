@@ -124,5 +124,19 @@
     "unknown": "nezināma kļūda",
     "paymentFailed": "Neizdevās atvērt maksājumu.\n\nKļūda: {{error}}\n\nLūdzu, mēģini vēlreiz vai sazinieties ar mums.",
     "portalFailed": "Neizdevās atvērt abonementa pārvaldību.\n\nKļūda: {{error}}\n\nLūdzu, mēģini vēlreiz vai sazinieties ar mums."
+  },
+  "auth": {
+    "otpSubtitle": "Nosūtījām kodu uz {{email}}.",
+    "registerOrLogin": "Reģistrēties / Pieteikties",
+    "emailIntroSubtitle": "Nosūtīsim tev kodu uz e-pastu. Bez parolēm."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Ierīces reģistrācija neizdevās. Mēģini vēlreiz vai sazinies ar atbalstu.",
+      "ownedByOther": "Šī ierīce jau ir reģistrēta citā kontā. Sazinies ar atbalstu."
+    },
+    "notifications": {
+      "autoSignedOut": "Tu tiki automātiski izrakstīts, jo pieteicies citā ierīcē."
+    }
   }
 }

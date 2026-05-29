@@ -124,5 +124,19 @@
     "unknown": "nieznany błąd",
     "paymentFailed": "Nie udało się otworzyć płatności.\n\nBłąd: {{error}}\n\nSpróbuj ponownie lub skontaktuj się z nami.",
     "portalFailed": "Nie udało się otworzyć zarządzania subskrypcją.\n\nBłąd: {{error}}\n\nSpróbuj ponownie lub skontaktuj się z nami."
+  },
+  "auth": {
+    "otpSubtitle": "Wysłaliśmy kod na adres {{email}}.",
+    "registerOrLogin": "Zarejestruj się / Zaloguj się",
+    "emailIntroSubtitle": "Wyślemy Ci kod na e-mail. Bez haseł."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Rejestracja urządzenia nie powiodła się. Spróbuj ponownie lub skontaktuj się z pomocą techniczną.",
+      "ownedByOther": "To urządzenie jest już zarejestrowane na innym koncie. Skontaktuj się z pomocą techniczną."
+    },
+    "notifications": {
+      "autoSignedOut": "Zostałeś automatycznie wylogowany, ponieważ zalogowano się na innym urządzeniu."
+    }
   }
 }

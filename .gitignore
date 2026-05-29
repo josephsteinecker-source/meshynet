@@ -37,3 +37,4 @@ src-tauri/gen/
 
 # Claude Code local agent state
 .claude/
+.vercel

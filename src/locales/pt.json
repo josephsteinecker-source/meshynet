@@ -119,5 +119,19 @@
     "unknown": "erro desconhecido",
     "paymentFailed": "Não foi possível abrir o pagamento.\n\nErro: {{error}}\n\nTenta novamente ou contacta-nos.",
     "portalFailed": "Não foi possível abrir a gestão de subscrição.\n\nErro: {{error}}\n\nTenta novamente ou contacta-nos."
+  },
+  "auth": {
+    "otpSubtitle": "Enviámos um código para {{email}}.",
+    "registerOrLogin": "Registar / Iniciar sessão",
+    "emailIntroSubtitle": "Vamos enviar-te um código por e-mail. Sem palavras-passe."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Falha ao registar o dispositivo. Tenta novamente ou contacta o suporte.",
+      "ownedByOther": "Este dispositivo já está registado noutra conta. Contacta o suporte."
+    },
+    "notifications": {
+      "autoSignedOut": "A tua sessão foi terminada automaticamente porque iniciaste sessão noutro dispositivo."
+    }
   }
 }

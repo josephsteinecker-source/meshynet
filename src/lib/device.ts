@@ -5,6 +5,10 @@
 // register → on login; checkStatus → periodically (before billing).
 // ============================================================
 
+export function isTauri(): boolean {
+  return typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;
+}
+
 import { invoke } from "@tauri-apps/api/core";
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./supabase";
 

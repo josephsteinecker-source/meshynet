@@ -129,5 +129,19 @@
     "unknown": "neznana napaka",
     "paymentFailed": "Plačila ni bilo mogoče odpreti.\n\nNapaka: {{error}}\n\nPoskusi znova ali nas kontaktiraj.",
     "portalFailed": "Upravljanja naročnine ni bilo mogoče odpreti.\n\nNapaka: {{error}}\n\nPoskusi znova ali nas kontaktiraj."
+  },
+  "auth": {
+    "otpSubtitle": "Kodo smo poslali na {{email}}.",
+    "registerOrLogin": "Registracija / Prijava",
+    "emailIntroSubtitle": "Poslali ti bomo kodo na e-pošto. Brez gesel."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Registracija naprave ni uspela. Poskusi znova ali se obrni na podporo.",
+      "ownedByOther": "Ta naprava je že registrirana na drug račun. Obrni se na podporo."
+    },
+    "notifications": {
+      "autoSignedOut": "Samodejno si bil odjavljen, ker si se prijavil v drugi napravi."
+    }
   }
 }

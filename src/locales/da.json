@@ -119,5 +119,19 @@
     "unknown": "ukendt fejl",
     "paymentFailed": "Betaling kunne ikke åbnes.\n\nFejl: {{error}}\n\nPrøv igen eller kontakt os.",
     "portalFailed": "Abonnementsadministration kunne ikke åbnes.\n\nFejl: {{error}}\n\nPrøv igen eller kontakt os."
+  },
+  "auth": {
+    "otpSubtitle": "Vi har sendt en kode til {{email}}.",
+    "registerOrLogin": "Opret konto / Log ind",
+    "emailIntroSubtitle": "Vi sender dig en kode på e-mail. Ingen adgangskoder."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Registrering af enheden mislykkedes. Prøv igen, eller kontakt support.",
+      "ownedByOther": "Denne enhed er allerede registreret på en anden konto. Kontakt support."
+    },
+    "notifications": {
+      "autoSignedOut": "Du blev automatisk logget ud, fordi du loggede ind på en anden enhed."
+    }
   }
 }

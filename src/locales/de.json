@@ -119,5 +119,19 @@
     "unknown": "unbekannter Fehler",
     "paymentFailed": "Zahlung konnte nicht geöffnet werden.\n\nFehler: {{error}}\n\nBitte erneut versuchen oder uns kontaktieren.",
     "portalFailed": "Abonnementverwaltung konnte nicht geöffnet werden.\n\nFehler: {{error}}\n\nBitte erneut versuchen oder uns kontaktieren."
+  },
+  "auth": {
+    "otpSubtitle": "Wir haben einen Code an {{email}} gesendet.",
+    "registerOrLogin": "Registrieren / Anmelden",
+    "emailIntroSubtitle": "Wir senden dir einen Code per E-Mail. Keine Passwörter."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Geräteregistrierung fehlgeschlagen. Bitte versuche es erneut oder kontaktiere den Support.",
+      "ownedByOther": "Dieses Gerät ist bereits einem anderen Konto zugeordnet. Kontaktiere den Support."
+    },
+    "notifications": {
+      "autoSignedOut": "Du wurdest automatisch abgemeldet, weil du dich auf einem anderen Gerät angemeldet hast."
+    }
   }
 }

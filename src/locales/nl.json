@@ -119,5 +119,19 @@
     "unknown": "onbekende fout",
     "paymentFailed": "Betaling kon niet worden geopend.\n\nFout: {{error}}\n\nProbeer opnieuw of neem contact met ons op.",
     "portalFailed": "Abonnementsbeheer kon niet worden geopend.\n\nFout: {{error}}\n\nProbeer opnieuw of neem contact met ons op."
+  },
+  "auth": {
+    "otpSubtitle": "We hebben een code naar {{email}} gestuurd.",
+    "registerOrLogin": "Registreren / Inloggen",
+    "emailIntroSubtitle": "We sturen je een code per e-mail. Geen wachtwoorden."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Registratie van het apparaat is mislukt. Probeer het opnieuw of neem contact op met support.",
+      "ownedByOther": "Dit apparaat is al geregistreerd op een ander account. Neem contact op met support."
+    },
+    "notifications": {
+      "autoSignedOut": "Je bent automatisch uitgelogd omdat je op een ander apparaat bent ingelogd."
+    }
   }
 }

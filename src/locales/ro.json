@@ -124,5 +124,19 @@
     "unknown": "eroare necunoscută",
     "paymentFailed": "Nu s-a putut deschide plata.\n\nEroare: {{error}}\n\nÎncearcă din nou sau contactează-ne.",
     "portalFailed": "Nu s-a putut deschide gestionarea abonamentului.\n\nEroare: {{error}}\n\nÎncearcă din nou sau contactează-ne."
+  },
+  "auth": {
+    "otpSubtitle": "Am trimis un cod la {{email}}.",
+    "registerOrLogin": "Înregistrare / Autentificare",
+    "emailIntroSubtitle": "Îți vom trimite un cod pe e-mail. Fără parole."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Înregistrarea dispozitivului a eșuat. Încearcă din nou sau contactează asistența.",
+      "ownedByOther": "Acest dispozitiv este deja înregistrat pe alt cont. Contactează asistența."
+    },
+    "notifications": {
+      "autoSignedOut": "Ai fost deconectat automat deoarece te-ai autentificat pe alt dispozitiv."
+    }
   }
 }

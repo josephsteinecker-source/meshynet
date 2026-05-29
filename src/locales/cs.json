@@ -124,5 +124,19 @@
     "unknown": "neznámá chyba",
     "paymentFailed": "Nepodařilo se otevřít platbu.\n\nChyba: {{error}}\n\nZkus to prosím znovu nebo nás kontaktuj.",
     "portalFailed": "Nepodařilo se otevřít správu předplatného.\n\nChyba: {{error}}\n\nZkus to prosím znovu nebo nás kontaktuj."
+  },
+  "auth": {
+    "otpSubtitle": "Poslali jsme ti kód na {{email}}.",
+    "registerOrLogin": "Registrovat / Přihlásit",
+    "emailIntroSubtitle": "Pošleme ti kód na e-mail. Žádná hesla."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Registrace zařízení selhala. Zkus to znovu nebo kontaktuj podporu.",
+      "ownedByOther": "Toto zařízení je již registrované k jinému účtu. Kontaktuj podporu."
+    },
+    "notifications": {
+      "autoSignedOut": "Byl jsi automaticky odhlášen, protože ses přihlásil na jiném zařízení."
+    }
   }
 }

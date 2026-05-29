@@ -119,5 +119,19 @@
     "unknown": "erreur inconnue",
     "paymentFailed": "Impossible d'ouvrir le paiement.\n\nErreur : {{error}}\n\nVeuillez réessayer ou nous contacter.",
     "portalFailed": "Impossible d'ouvrir la gestion de l'abonnement.\n\nErreur : {{error}}\n\nVeuillez réessayer ou nous contacter."
+  },
+  "auth": {
+    "otpSubtitle": "Nous avons envoyé un code à {{email}}.",
+    "registerOrLogin": "S'inscrire / Se connecter",
+    "emailIntroSubtitle": "Nous t'enverrons un code par e-mail. Pas de mot de passe."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Échec de l'enregistrement de l'appareil. Réessaie ou contacte le support.",
+      "ownedByOther": "Cet appareil est déjà associé à un autre compte. Contacte le support."
+    },
+    "notifications": {
+      "autoSignedOut": "Tu as été déconnecté automatiquement car tu t'es connecté sur un autre appareil."
+    }
   }
 }

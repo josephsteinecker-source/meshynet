@@ -134,5 +134,19 @@
     "unknown": "żball mhux magħruf",
     "paymentFailed": "Ma setax jinfetaħ il-ħlas.\n\nŻball: {{error}}\n\nJekk jogħġbok erġa' pprova jew ikkuntattjana.",
     "portalFailed": "Ma setax jinfetaħ il-ġestjoni tal-abbonament.\n\nŻball: {{error}}\n\nJekk jogħġbok erġa' pprova jew ikkuntattjana."
+  },
+  "auth": {
+    "otpSubtitle": "Bgħatna kodiċi lil {{email}}.",
+    "registerOrLogin": "Irreġistra / Idħol",
+    "emailIntroSubtitle": "Nibgħatlek kodiċi bl-email. Mingħajr passwords."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Ir-reġistrazzjoni tal-apparat falliet. Erġa' pprova jew ikkuntattja s-support.",
+      "ownedByOther": "Dan l-apparat huwa diġà rreġistrat ma' kont ieħor. Ikkuntattja s-support."
+    },
+    "notifications": {
+      "autoSignedOut": "Ġejt skonnettjat awtomatikament għax dħalt fuq apparat ieħor."
+    }
   }
 }

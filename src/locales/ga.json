@@ -134,5 +134,19 @@
     "unknown": "earráid anaithnid",
     "paymentFailed": "Níorbh fhéidir an íocaíocht a oscailt.\n\nEarráid: {{error}}\n\nBain triail eile as nó déan teagmháil linn.",
     "portalFailed": "Níorbh fhéidir bainistíocht an tsíntiúis a oscailt.\n\nEarráid: {{error}}\n\nBain triail eile as nó déan teagmháil linn."
+  },
+  "auth": {
+    "otpSubtitle": "Sheolamar cód chuig {{email}}.",
+    "registerOrLogin": "Cláraigh / Logáil isteach",
+    "emailIntroSubtitle": "Seolfaimid cód chugat ar ríomhphost. Gan pasfhocail."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Theip ar chlárú an ghléis. Bain triail eile as nó déan teagmháil leis an tacaíocht.",
+      "ownedByOther": "Tá an gléas seo cláraithe le cuntas eile cheana féin. Déan teagmháil leis an tacaíocht."
+    },
+    "notifications": {
+      "autoSignedOut": "Logáladh amach go huathoibríoch thú toisc gur logáil tú isteach ar ghléas eile."
+    }
   }
 }

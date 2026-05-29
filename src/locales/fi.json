@@ -119,5 +119,19 @@
     "unknown": "tuntematon virhe",
     "paymentFailed": "Maksua ei voitu avata.\n\nVirhe: {{error}}\n\nYritä uudelleen tai ota meihin yhteyttä.",
     "portalFailed": "Tilauksen hallintaa ei voitu avata.\n\nVirhe: {{error}}\n\nYritä uudelleen tai ota meihin yhteyttä."
+  },
+  "auth": {
+    "otpSubtitle": "Lähetimme koodin osoitteeseen {{email}}.",
+    "registerOrLogin": "Rekisteröidy / Kirjaudu sisään",
+    "emailIntroSubtitle": "Lähetämme sinulle koodin sähköpostiin. Ei salasanoja."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Laitteen rekisteröinti epäonnistui. Yritä uudelleen tai ota yhteyttä tukeen.",
+      "ownedByOther": "Tämä laite on jo rekisteröity toiselle tilille. Ota yhteyttä tukeen."
+    },
+    "notifications": {
+      "autoSignedOut": "Sinut kirjattiin automaattisesti ulos, koska kirjauduit sisään toisella laitteella."
+    }
   }
 }

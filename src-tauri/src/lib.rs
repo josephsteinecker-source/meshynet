@@ -1937,7 +1937,22 @@ fn parse_fb_messages_json(
                 link_title.as_deref(),
             );
 
-            let image_url = nearby_image.or(link_img);
+            let body_preview = trimmed.chars().take(60).collect::<String>();
+            let image_url = nearby_image.as_ref().or(link_img.as_ref()).cloned();
+
+            #[cfg(debug_assertions)]
+            eprintln!(
+                "[MF FB-POST] msg_pos={} after_msg={} next_msg_offset={} \
+                 img_win=[{}..{}] ext_win=[{}..{}] \
+                 nearby={:?} link={:?} chosen={:?} body_preview={:?}",
+                pos, after_msg, next_msg_offset,
+                img_window_start, img_window_end,
+                after_msg, extended_end,
+                nearby_image.as_deref().map(|s| &s[..s.len().min(120)]),
+                link_img.as_deref().map(|s| &s[..s.len().min(120)]),
+                image_url.as_deref().map(|s| &s[..s.len().min(120)]),
+                body_preview,
+            );
 
             let body_with_title = match &link_title {
                 Some(t) if !trimmed.contains(t.as_str())
@@ -2214,7 +2229,11 @@ fn find_fb_link_card_image(
             .replace("&amp;", "&");
         let lower = cleaned.to_lowercase();
 
+        // Pokrýva oba FB CDN host varianty:
+        //   external-bts2-1.xx.fbcdn.net  (starý, s pomlčkou)
+        //   external.fbts7-1.fna.fbcdn.net (nový, s bodkou — SME a iné media outlety)
         let is_link_card = lower.contains("external-")
+            || lower.contains("external.")
             || lower.contains("/external")
             || lower.contains("safe_image.php")
             || lower.contains("lookaside.fbsbx.com");
@@ -2997,6 +3016,129 @@ async fn mf_get_status(access_token: String) -> Result<JsonValue, String> {
 }
 
 // ============================================================
+// Device registration + status check
+// ============================================================
+
+#[derive(serde::Serialize, serde::Deserialize, Debug)]
+pub struct DeviceInfo {
+    pub device_id: String,
+    pub device_name: String,
+    pub device_kind: String, // "desktop" | "mobile"
+    pub os: String,
+}
+
+#[tauri::command]
+fn mf_get_device_info() -> Result<DeviceInfo, String> {
+    let device_id = machine_uid::get()
+        .map_err(|e| format!("Failed to read machine UID: {}", e))?;
+
+    let hostname = std::process::Command::new("hostname")
+        .output()
+        .ok()
+        .and_then(|o| String::from_utf8(o.stdout).ok())
+        .map(|s| s.trim().to_string())
+        .filter(|s| !s.is_empty())
+        .unwrap_or_else(|| "Unknown Device".to_string());
+
+    let os_name = std::env::consts::OS;
+
+    let os_version = {
+        #[cfg(target_os = "macos")]
+        {
+            std::process::Command::new("sw_vers")
+                .arg("-productVersion")
+                .output()
+                .ok()
+                .and_then(|o| String::from_utf8(o.stdout).ok())
+                .map(|s| s.trim().to_string())
+                .unwrap_or_else(|| "unknown".to_string())
+        }
+        #[cfg(not(target_os = "macos"))]
+        {
+            "unknown".to_string()
+        }
+    };
+
+    Ok(DeviceInfo {
+        device_id,
+        device_name: format!("{} ({})", hostname, os_name),
+        device_kind: "desktop".to_string(),
+        os: format!("{} {}", os_name, os_version),
+    })
+}
+
+#[tauri::command]
+async fn mf_register_device(
+    jwt: String,
+    supabase_url: String,
+    supabase_anon_key: String,
+) -> Result<serde_json::Value, String> {
+    let info = mf_get_device_info()?;
+    let client = reqwest::Client::new();
+    let url = format!("{}/rest/v1/rpc/register_device", supabase_url);
+
+    let body = serde_json::json!({
+        "p_device_id":   info.device_id,
+        "p_device_name": info.device_name,
+        "p_device_kind": info.device_kind,
+        "p_os":          info.os,
+    });
+
+    let resp = client
+        .post(&url)
+        .header("apikey", &supabase_anon_key)
+        .header("Authorization", format!("Bearer {}", jwt))
+        .header("Content-Type", "application/json")
+        .json(&body)
+        .send()
+        .await
+        .map_err(|e| format!("register_device request failed: {}", e))?;
+
+    let status = resp.status();
+    let text = resp.text().await.unwrap_or_default();
+    eprintln!("[MF DEVICE] register_device status={} body={}", status, text);
+
+    if !status.is_success() {
+        return Err(format!("register_device HTTP {}: {}", status, text));
+    }
+    serde_json::from_str(&text)
+        .map_err(|e| format!("Invalid JSON: {} (body: {})", e, text))
+}
+
+#[tauri::command]
+async fn mf_check_device_status(
+    jwt: String,
+    supabase_url: String,
+    supabase_anon_key: String,
+) -> Result<serde_json::Value, String> {
+    let info = mf_get_device_info()?;
+    let client = reqwest::Client::new();
+    let url = format!("{}/rest/v1/rpc/check_device_status", supabase_url);
+
+    let body = serde_json::json!({ "p_device_id": info.device_id });
+
+    let resp = client
+        .post(&url)
+        .header("apikey", &supabase_anon_key)
+        .header("Authorization", format!("Bearer {}", jwt))
+        .header("Content-Type", "application/json")
+        .json(&body)
+        .send()
+        .await
+        .map_err(|e| format!("check_device_status request failed: {}", e))?;
+
+    let status = resp.status();
+    let text = resp.text().await.unwrap_or_default();
+    eprintln!("[MF DEVICE] check_status status={} body={}", status, text);
+
+    if !status.is_success() {
+        return Err(format!("check_device_status HTTP {}: {}", status, text));
+    }
+    serde_json::from_str(&text)
+        .map_err(|e| format!("Invalid JSON: {} (body: {})", e, text))
+}
+
+// ============================================================
 // 💳 7D: Stripe Checkout session
 // ============================================================
 // Frontend zavolá tento command s tier_id ("plus" alebo "unlimited") a JWT
@@ -3525,6 +3667,9 @@ pub fn run() {
     mf_get_status,
     mf_create_checkout_session,
     mf_create_portal_session,
+    mf_get_device_info,
+    mf_register_device,
+    mf_check_device_status,
 ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

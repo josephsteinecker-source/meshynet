@@ -124,5 +124,19 @@
     "unknown": "nepoznata greška",
     "paymentFailed": "Plaćanje se nije moglo otvoriti.\n\nGreška: {{error}}\n\nMolimo pokušaj ponovo ili nas kontaktiraj.",
     "portalFailed": "Upravljanje pretplatom se nije moglo otvoriti.\n\nGreška: {{error}}\n\nMolimo pokušaj ponovo ili nas kontaktiraj."
+  },
+  "auth": {
+    "otpSubtitle": "Poslali smo kôd na {{email}}.",
+    "registerOrLogin": "Registracija / Prijava",
+    "emailIntroSubtitle": "Poslat ćemo ti kod na e-mail. Bez lozinki."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Registracija uređaja nije uspjela. Pokušaj ponovno ili se obrati podršci.",
+      "ownedByOther": "Ovaj je uređaj već registriran na drugi račun. Obrati se podršci."
+    },
+    "notifications": {
+      "autoSignedOut": "Automatski si odjavljen jer si se prijavio na drugom uređaju."
+    }
   }
 }

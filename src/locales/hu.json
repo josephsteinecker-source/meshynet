@@ -119,5 +119,19 @@
     "unknown": "ismeretlen hiba",
     "paymentFailed": "Nem sikerült megnyitni a fizetést.\n\nHiba: {{error}}\n\nKérjük, próbáld újra vagy vedd fel velünk a kapcsolatot.",
     "portalFailed": "Nem sikerült megnyitni az előfizetés kezelését.\n\nHiba: {{error}}\n\nKérjük, próbáld újra vagy vedd fel velünk a kapcsolatot."
+  },
+  "auth": {
+    "otpSubtitle": "Küldtünk egy kódot a következő címre: {{email}}.",
+    "registerOrLogin": "Regisztráció / Bejelentkezés",
+    "emailIntroSubtitle": "Küldünk egy kódot e-mailben. Nincs jelszó."
+  },
+  "device": {
+    "errors": {
+      "registrationFailed": "Az eszköz regisztrációja sikertelen. Próbáld újra, vagy fordulj az ügyfélszolgálathoz.",
+      "ownedByOther": "Ez az eszköz már egy másik fiókhoz van regisztrálva. Fordulj az ügyfélszolgálathoz."
+    },
+    "notifications": {
+      "autoSignedOut": "Automatikusan kijelentkeztettünk, mert egy másik eszközön jelentkeztél be."
+    }
   }
 }

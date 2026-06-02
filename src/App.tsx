@@ -6,7 +6,6 @@ import { loadSources, totalSourceCount } from "./lib/storage";
 import { useBilling } from "./hooks/useBilling";
 import { useSources } from "./hooks/useSources";
 import { ThemeProvider } from "./lib/theme-context";
-import { IndexView } from "./IndexView";
 import { MasterFeedView } from "./MasterFeedView";
 import { LoginModal } from "./components/LoginModal";
 import { SettingsModal } from "./components/SettingsModal";
@@ -110,17 +109,11 @@ function App() {
   if (view === "index") {
     return (
       <ThemeProvider>
-        <IndexView onEnter={() => openLoginModal()} />
-        {loginModalOpen && (
-          <LoginModal
-            reason={loginModalReason || undefined}
-            onClose={() => setLoginModalReason(null)}
-            onAuthed={handleEnterFeed}
-          />
-        )}
-        {showSettings && (
-          <SettingsModal onClose={() => setShowSettings(false)} />
-        )}
+        <LoginModal
+          reason={undefined}
+          onClose={() => {}}
+          onAuthed={handleEnterFeed}
+        />
       </ThemeProvider>
     );
   }

@@ -74,7 +74,7 @@ async function migrateLocalToSupabase(
       const key = `${platform}:${identifier.toLowerCase()}`;
       if (existingKeys.has(key)) continue;
       rowsToInsert.push({
-        id: s.id || generateId(),
+        id: generateId(),
         user_id: userId,
         platform,
         identifier,

@@ -222,6 +222,18 @@ export function MasterFeedView({
 
   const addSource = useCallback(
     async (network: Network, name: string, scrapeQuery: string) => {
+      if (/\s/.test(scrapeQuery)) {
+        const examples: Record<Network, string> = {
+          Facebook: "fender, sme.sk",
+          Instagram: "natgeo, nasa",
+          YouTube: "@mkbhd, @veritasium",
+        };
+        alert(
+          `${network} URL nemôže obsahovať medzery. Zadaj presne tak ako je v URL (napr. ${examples[network]})`
+        );
+        throw new Error("MF_INVALID_IDENTIFIER");
+      }
+
       if (billingLoaded && billingStatus) {
         const limit = billingStatus.status.max_profiles_per_platform;
         const k = networkKey(network);
